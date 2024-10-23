@@ -1,0 +1,59 @@
+<ng-container *ngrxLet="(vm$ | async)! as vm">
+  <hlm-dialog>
+    <hlm-dialog-header>
+      <h3 hlmDialogTitle>Login</h3>
+      <p hlmDialogDescription>
+        Make to enter username or email
+      </p>
+    </hlm-dialog-header>
+      <div class="py-4 grid gap-4">
+        <form [formGroup]="loginForm" (ngSubmit)="submit()">
+          <div class="items-center grid grid-cols-4 gap-4 my-5">
+            <label hlmLabel for="username_or_email" class="text-right"
+              >Username/Email</label
+            >
+            <input
+              hlmInput
+              id="username_or_email"
+              class="col-span-3"
+              formControlName="username_or_email"
+            />
+          </div>
+          <div class="items-center grid grid-cols-4 gap-4 my-5">
+            <label hlmLabel for="password" class="text-right">Password</label>
+            <input
+              hlmInput
+              id="password"
+              class="col-span-3"
+              formControlName="password"
+            />
+          </div>
+          <div class="items-center grid grid-cols-4 gap-4 my-5">
+            <div class="text-right">
+              <span class="text-sm font-medium">
+                @if(!vm.success && vm.message) {
+                  Error: 
+                }
+              </span>
+            </div>
+            <div class="col-span-3">
+              <span class="text-sm font-medium">
+                @if(!vm.success && vm.message) {
+                  {{ vm.message }}
+                }
+              </span>
+            </div>
+          </div>
+        </form>
+      </div>
+    <hlm-dialog-footer>
+      <button hlmBtn type="submit" class="w-full" (click)="submit()">
+        @if(vm.logging) {
+          <hlm-spinner class="w-5 h-5" />
+        } @else {
+          LOGIN
+        }
+      </button>
+    </hlm-dialog-footer>
+  </hlm-dialog>
+</ng-container>

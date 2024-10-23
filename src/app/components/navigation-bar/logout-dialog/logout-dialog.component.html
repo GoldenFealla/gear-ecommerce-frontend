@@ -1,0 +1,17 @@
+<hlm-dialog>
+    <ng-container *ngrxLet="(vm$ | async)! as vm">
+        <hlm-dialog-header>
+            <h3 hlmDialogTitle>Logout</h3>
+            <p hlmDialogDescription>Are you sure to log out?</p>
+        </hlm-dialog-header>
+        <hlm-dialog-footer>
+            <button hlmBtn type="button" (click)="cancel()" variant="outline">Cancel</button>
+            <button hlmBtn type="submit" (click)="confirm()">
+            @if(vm.logging) {
+                <hlm-spinner class="w-5 h-5" />
+            } @else {
+                Logout
+            }</button>
+        </hlm-dialog-footer>
+    </ng-container>
+</hlm-dialog>

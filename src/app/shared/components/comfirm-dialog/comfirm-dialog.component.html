@@ -1,0 +1,10 @@
+<hlm-dialog>
+    <hlm-dialog-header>
+        <h3 hlmDialogTitle>{{title}}</h3>
+        <p hlmDialogDescription>{{description}}</p>
+    </hlm-dialog-header>
+    <hlm-dialog-footer>
+        <button hlmBtn type="button" (click)="cancel()" variant="outline">No</button>
+        <button hlmBtn type="submit" (click)="confirm()">Yes</button>
+      </hlm-dialog-footer>
+</hlm-dialog>

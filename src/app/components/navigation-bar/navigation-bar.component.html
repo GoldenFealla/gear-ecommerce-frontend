@@ -1,0 +1,24 @@
+<div class="flex flex-row justify-around p-3">
+    <span class="flex flex-row items-center">
+        <h1 class="font-bold text-xl">
+            GEAR ECOMMERCE
+        </h1>
+    </span>
+    <span class="flex flex-row items-center">
+        <button class="m-1" hlmBtn size="icon" variant='ghost' (click)="toggleTheme()">
+            @if((theme$ | async) === "light") {
+                <hlm-icon size="sm" name="lucideSun"></hlm-icon>
+            } @else { 
+                <hlm-icon size="sm" name="lucideMoon"></hlm-icon>
+            }
+        </button>
+        <button class="m-1" hlmBtn size="icon" variant='ghost'>
+            <hlm-icon size="sm" name="lucideShoppingCart"></hlm-icon>
+        </button>
+        @if(logged$ | async) {
+            <button class="m-1" hlmBtn (click)="logout()">Logout</button>
+        } @else {
+            <button class="m-1" hlmBtn (click)="login()">Login</button>
+        }
+    </span>
+</div>
