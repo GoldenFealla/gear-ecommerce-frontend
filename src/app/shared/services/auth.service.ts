@@ -5,7 +5,12 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '@environments/environment.development';
 
 // models
-import { LoginForm, UserCredential, UserInfo } from '@models/auth';
+import {
+  LoginForm,
+  RegisterForm,
+  UserCredential,
+  UserInfo,
+} from '@models/auth';
 import { Response } from '@models/response';
 
 const { api } = environment;
@@ -19,6 +24,11 @@ export class AuthService {
   logged() {
     const url = new URL('/user/check', api).href;
     return this._httpClient.get<Response<UserInfo | null>>(url);
+  }
+
+  register(form: RegisterForm) {
+    const url = new URL('/user/register', api).href;
+    return this._httpClient.post<Response<UserCredential>>(url, form);
   }
 
   login(form: LoginForm) {

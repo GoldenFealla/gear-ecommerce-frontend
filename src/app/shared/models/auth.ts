@@ -13,3 +13,9 @@ export type LoginForm = {
   username_or_email: string;
   password: string;
 };
+
+export type RegisterForm = {
+  username: string;
+  email: string;
+  password: string;
+};

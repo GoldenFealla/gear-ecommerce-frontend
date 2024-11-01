@@ -7,8 +7,8 @@ import {
   type OnInit,
 } from '@angular/core';
 import {
-  FormGroup,
   FormControl,
+  FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -36,21 +36,20 @@ import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
 import { HlmSpinnerComponent } from '@spartan-ng/ui-spinner-helm';
 
 // Models
-import { LoginForm } from '../../../shared/models/auth';
+import { RegisterForm } from '@shared/models/auth';
 
 // Component Store
-import { LoginDialogStore } from './login-dialog.store';
+import { RegisterDialogStore } from './register-dialog.store';
 
-export type LoginDialogResult = 'success' | 'error' | 'cancel' | 'register';
+export type RegisterDialogResult = 'success' | 'error' | 'cancel' | 'login';
 
 @Component({
-  selector: 'app-login-dialog',
+  selector: 'app-register-dialog',
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule,
     LetDirective,
-
+    ReactiveFormsModule,
     BrnDialogTriggerDirective,
     BrnDialogContentDirective,
 
@@ -66,19 +65,33 @@ export type LoginDialogResult = 'success' | 'error' | 'cancel' | 'register';
     HlmInputDirective,
     HlmButtonDirective,
   ],
-  templateUrl: './login-dialog.component.html',
-  styleUrl: './login-dialog.component.scss',
-  providers: [LoginDialogStore],
+  templateUrl: './register-dialog.component.html',
+  styleUrl: './register-dialog.component.scss',
+  providers: [RegisterDialogStore],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginDialogComponent {
+export class RegisterDialogComponent implements OnInit {
   @HostBinding('class') private readonly _class: string = 'flex flex-col gap-4';
 
   private readonly _dialogRef =
-    inject<BrnDialogRef<LoginDialogResult>>(BrnDialogRef);
-  private readonly _loginDialogStore = inject(LoginDialogStore);
+    inject<BrnDialogRef<RegisterDialogResult>>(BrnDialogRef);
+  private readonly _registerDialogStore = inject(RegisterDialogStore);
 
-  vm$ = this._loginDialogStore.vm$;
+  vm$ = this._registerDialogStore.vm$;
+
+  registerForm = new FormGroup({
+    username: new FormControl('', [
+      Validators.required,
+      Validators.min(6),
+      Validators.max(20),
+    ]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.min(8),
+      Validators.max(24),
+    ]),
+  });
 
   ngOnInit() {
     this.vm$.subscribe({
@@ -90,32 +103,24 @@ export class LoginDialogComponent {
     });
   }
 
-  loginForm = new FormGroup({
-    username_or_email: new FormControl('', Validators.required),
-    password: new FormControl('', [
-      Validators.required,
-      Validators.min(8),
-      Validators.max(24),
-    ]),
-  });
-
-  close() {
+  cancel() {
     this._dialogRef.close('cancel');
   }
 
-  register() {
-    this._dialogRef.close('register');
+  login() {
+    this._dialogRef.close('login');
   }
 
   submit() {
-    const value = this.loginForm.value;
-    if (this.loginForm.valid) {
-      const result: LoginForm = {
-        username_or_email: value.username_or_email!,
+    const value = this.registerForm.value;
+    if (this.registerForm.valid) {
+      const result: RegisterForm = {
+        username: value.username!,
+        email: value.email!,
         password: value.password!,
       };
 
-      this._loginDialogStore.login(result);
+      this._registerDialogStore.register(result);
     }
   }
 }

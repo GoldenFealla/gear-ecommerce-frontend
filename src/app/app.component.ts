@@ -4,9 +4,9 @@ import { RouterOutlet } from '@angular/router';
 
 // Spartan
 import { HlmSpinnerComponent } from '@spartan-ng/ui-spinner-helm';
+import { HlmToasterComponent } from '@spartan-ng/ui-sonner-helm';
 
 // ngrx
-import { Store } from '@ngrx/store';
 import { LetDirective } from '@ngrx/component';
 
 // Components
@@ -14,9 +14,6 @@ import { NavigationBarComponent } from './components/navigation-bar/navigation-b
 
 // Component Store
 import { AppStore } from './app.store';
-
-// Store
-import { AuthState } from '@store/auth/auth.state';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -26,6 +23,7 @@ import { AuthState } from '@store/auth/auth.state';
     LetDirective,
 
     HlmSpinnerComponent,
+    HlmToasterComponent,
 
     NavigationBarComponent,
   ],

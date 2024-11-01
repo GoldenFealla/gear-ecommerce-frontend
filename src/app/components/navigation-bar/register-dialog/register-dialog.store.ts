@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { exhaustMap, tap } from 'rxjs';
 
-// toast
+// Toast
 import { toast } from 'ngx-sonner';
 
 // ngrx
@@ -13,71 +13,75 @@ import { Store } from '@ngrx/store';
 // Services
 import { AuthService } from '@services/auth.service';
 
+// Models
+import { RegisterForm } from '@models/auth';
+
 // Store
 import { AuthState } from '@store/auth/auth.state';
 import { AuthActions } from '@store/auth/auth.actions';
 
-export interface LoginDialogState {
-  logging: boolean;
+export interface RegisterDialogState {
+  registering: boolean;
   success: boolean;
   message: string;
 }
 
 @Injectable()
-export class LogoutDialogStore extends ComponentStore<LoginDialogState> {
+export class RegisterDialogStore extends ComponentStore<RegisterDialogState> {
   constructor(
     private authService: AuthService,
     private store: Store<{ auth: AuthState }>
   ) {
     super({
-      logging: false,
+      registering: false,
       success: false,
       message: '',
     });
   }
   // *********** Updaters ************ //
-  setLoggingOut = this.updater((state) => ({
+  setRegister = this.updater((state) => ({
     ...state,
-    logging: true,
+    registering: true,
   }));
 
-  setLogoutSuccess = this.updater((state) => ({
+  setRegisterSuccess = this.updater((state) => ({
     ...state,
-    logging: false,
+    registering: false,
     success: true,
     message: '',
   }));
 
-  setLogoutError = this.updater((state, errorMsg: string) => ({
+  setRegisterError = this.updater((state, errorMsg: string) => ({
     ...state,
-    logging: false,
+    registering: false,
     success: false,
     message: errorMsg,
   }));
 
   // *********** Selectors *********** //
-  logging$ = this.select((state) => state.logging);
+  registering$ = this.select((state) => state.registering);
   success$ = this.select((state) => state.success);
   message$ = this.select((state) => state.message);
 
   // *********** Effects ************* //
-  logout = this.effect<void>((trigger$) => {
+  register = this.effect<RegisterForm>((trigger$) => {
     return trigger$.pipe(
-      tap(() => this.setLoggingOut()),
-      exhaustMap(() =>
-        this.authService.logout().pipe(
+      tap(() => this.setRegister()),
+      exhaustMap((form) =>
+        this.authService.register(form).pipe(
           tapResponse({
-            next: () => {
-              this.store.dispatch(AuthActions.Logout());
-              this.setLogoutSuccess();
-              toast('Logout Suceeded', {
-                description: 'You successfully logged out',
+            next: (value) => {
+              const data = value.data;
+              this.store.dispatch(AuthActions.Login({ userInfo: data.user }));
+              this.setRegisterSuccess();
+              toast('Register Suceeded', {
+                description: 'You successfully Registered',
               });
             },
             error: (error: HttpErrorResponse) => {
-              this.setLogoutError(error.error.message);
-              toast('Logout Failed', {
-                description: 'An error occured while logging out',
+              this.setRegisterError(error.error.message);
+              toast('Register Failed', {
+                description: 'An error occured while registering',
               });
             },
           })
@@ -88,7 +92,7 @@ export class LogoutDialogStore extends ComponentStore<LoginDialogState> {
 
   // *********** ViewModel *********** //
   readonly vm$ = this.select(this.state$, (state) => ({
-    logging: state.logging,
+    registering: state.registering,
     success: state.success,
     message: state.message,
   }));

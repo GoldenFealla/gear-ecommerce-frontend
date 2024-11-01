@@ -1,0 +1,78 @@
+<hlm-dialog>
+    <ng-container *ngrxLet="(vm$ | async)! as vm">
+        <hlm-dialog-header>
+            <h3 hlmDialogTitle>Register</h3>
+            <p hlmDialogDescription>Create a new one to join us</p>
+        </hlm-dialog-header>
+        <div class="py-4 grid gap-4">
+            <form [formGroup]="registerForm" (ngSubmit)="submit()">
+              <div class="items-center grid grid-cols-4 gap-4 mt-2 mb-5">
+                <label hlmLabel for="username" class="text-right"
+                  >Username</label
+                >
+                <input
+                  hlmInput
+                  id="username"
+                  type="text"
+                  class="col-span-3"
+                  formControlName="username"
+                />
+              </div>
+              <div class="items-center grid grid-cols-4 gap-4 mt-2 mb-5">
+                <label hlmLabel for="email" class="text-right"
+                  >Email</label
+                >
+                <input
+                  hlmInput
+                  id="email"
+                  type="email"
+                  class="col-span-3"
+                  formControlName="email"
+                />
+              </div>
+              <div class="items-center grid grid-cols-4 gap-4 mt-2 mb-5">
+                <label hlmLabel for="password" class="text-right">Password</label>
+                <input
+                  hlmInput
+                  id="password"
+                  type="password"
+                  class="col-span-3"
+                  minlength="8"
+                  maxlength="24"
+                  formControlName="password"
+                />
+              </div>
+              <div class="items-center grid grid-cols-4 gap-4 mt-2 mb-5">
+                <div class="text-right">
+                  <span class="text-sm font-medium text-destructive">
+                    @if(!vm.success && vm.message) {
+                      Error: 
+                    }
+                  </span>
+                </div>
+                <div class="col-span-3">
+                  <span class="text-sm font-medium text-destructive">
+                    @if(!vm.success && vm.message) {
+                      {{ vm.message }}
+                    }
+                  </span>
+                </div>
+              </div>
+              <button class="w-full" hlmBtn type="submit" (click)="submit()">
+                @if(vm.registering) {
+                  <hlm-spinner class="w-5 h-5" />
+                } @else {
+                  REGISTER
+                }
+              </button>
+            </form>
+          </div>
+        <hlm-dialog-footer>
+          <div class="w-full flex flex-col items-center">
+            <span class="mt-2 text-sm">
+              Already have an account? <a class="text-primary cursor-pointer underline" (click)="login()">Login</a>
+            </span>
+          </div>
+        </hlm-dialog-footer>
+    </ng-container>
+</hlm-dialog>

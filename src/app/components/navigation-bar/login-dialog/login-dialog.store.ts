@@ -2,8 +2,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { exhaustMap, tap } from 'rxjs';
 
-//jwt
-import jwt from 'jsonwebtoken';
+// toast
+import { toast } from 'ngx-sonner';
 
 // ngrx
 import { ComponentStore } from '@ngrx/component-store';
@@ -74,9 +74,15 @@ export class LoginDialogStore extends ComponentStore<LoginDialogState> {
               const data = value.data;
               this.store.dispatch(AuthActions.Login({ userInfo: data.user }));
               this.setLoginSuccess();
+              toast('Login Suceeded', {
+                description: 'You successfully logged in',
+              });
             },
             error: (error: HttpErrorResponse) => {
               this.setLoginError(error.error.message);
+              toast('Login Failed', {
+                description: 'An error occured while logging in',
+              });
             },
           })
         )

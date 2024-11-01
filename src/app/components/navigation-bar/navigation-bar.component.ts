@@ -17,7 +17,14 @@ import { provideIcons } from '@ng-icons/core';
 import { lucideShoppingCart, lucideMoon, lucideSun } from '@ng-icons/lucide';
 
 // Components
-import { LoginDialogComponent } from './login-dialog/login-dialog.component';
+import {
+  LoginDialogComponent,
+  LoginDialogResult,
+} from './login-dialog/login-dialog.component';
+import {
+  RegisterDialogResult,
+  RegisterDialogComponent,
+} from './register-dialog/register-dialog.component';
 import { LogoutDialogComponent } from './logout-dialog/logout-dialog.component';
 
 // Services
@@ -58,12 +65,36 @@ export class NavigationBarComponent {
   }
 
   login() {
-    const dialogRef = this._hlmDialogService.open(LoginDialogComponent, {
+    const loginDialogRef = this._hlmDialogService.open(LoginDialogComponent, {
       contentClass: 'sm:!max-w-[750px] min-w-[500px]',
     });
-    dialogRef.closed$.subscribe((result: boolean) => {
-      if (result) {
+
+    loginDialogRef.closed$.subscribe((result: LoginDialogResult) => {
+      if (result === 'success') {
         this._router.navigateByUrl('/');
+      }
+
+      if (result === 'register') {
+        this.register();
+      }
+    });
+  }
+
+  register() {
+    const registerDialogRef = this._hlmDialogService.open(
+      RegisterDialogComponent,
+      {
+        contentClass: 'sm:!max-w-[750px] min-w-[500px]',
+      }
+    );
+
+    registerDialogRef.closed$.subscribe((result: RegisterDialogResult) => {
+      if (result === 'success') {
+        this._router.navigateByUrl('/');
+      }
+
+      if (result === 'login') {
+        this.login();
       }
     });
   }
