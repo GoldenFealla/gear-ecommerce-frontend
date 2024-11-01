@@ -30,7 +30,7 @@
         ".\\src/app/libs/ui/ui-accordion-helm/src/index.ts"
       ],
       "@spartan-ng/ui-alert-helm": [
-        "src/app/shared/models/*ui-alert-helm/src/index.ts"
+        ".\\src/app/libs/ui/ui-alert-helm/src/index.ts"
       ],
       "@spartan-ng/ui-alertdialog-helm": [
         ".\\src/app/libs/ui/ui-alertdialog-helm/src/index.ts"

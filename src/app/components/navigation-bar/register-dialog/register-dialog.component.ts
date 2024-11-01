@@ -7,9 +7,11 @@ import {
   type OnInit,
 } from '@angular/core';
 import {
+  AbstractControl,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
+  ValidationErrors,
   Validators,
 } from '@angular/forms';
 
@@ -34,6 +36,13 @@ import {
 import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
 import { HlmSpinnerComponent } from '@spartan-ng/ui-spinner-helm';
+import {
+  HlmAlertDescriptionDirective,
+  HlmAlertDirective,
+  HlmAlertIconDirective,
+  HlmAlertTitleDirective,
+} from '@spartan-ng/ui-alert-helm';
+import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
 
 // Models
 import { RegisterForm } from '@shared/models/auth';
@@ -41,7 +50,22 @@ import { RegisterForm } from '@shared/models/auth';
 // Component Store
 import { RegisterDialogStore } from './register-dialog.store';
 
+// Icon
+import { provideIcons } from '@ng-icons/core';
+import { lucideTriangleAlert, lucideEye, lucideEyeOff } from '@ng-icons/lucide';
+
 export type RegisterDialogResult = 'success' | 'error' | 'cancel' | 'login';
+
+export function matchPasswordValidator(
+  control: AbstractControl
+): ValidationErrors | null {
+  const password = control.get('password');
+  const confirmPassword = control.get('confirmPassword');
+
+  return password && confirmPassword && password.value !== confirmPassword.value
+    ? { unmatch: true }
+    : null;
+}
 
 @Component({
   selector: 'app-register-dialog',
@@ -61,13 +85,22 @@ export type RegisterDialogResult = 'success' | 'error' | 'cancel' | 'login';
     HlmDialogDescriptionDirective,
     HlmSpinnerComponent,
 
+    HlmAlertDirective,
+    HlmAlertDescriptionDirective,
+    HlmAlertIconDirective,
+    HlmAlertTitleDirective,
+
     HlmLabelDirective,
     HlmInputDirective,
     HlmButtonDirective,
+    HlmIconComponent,
   ],
   templateUrl: './register-dialog.component.html',
   styleUrl: './register-dialog.component.scss',
-  providers: [RegisterDialogStore],
+  providers: [
+    provideIcons({ lucideTriangleAlert, lucideEye, lucideEyeOff }),
+    RegisterDialogStore,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterDialogComponent implements OnInit {
@@ -79,19 +112,43 @@ export class RegisterDialogComponent implements OnInit {
 
   vm$ = this._registerDialogStore.vm$;
 
-  registerForm = new FormGroup({
-    username: new FormControl('', [
-      Validators.required,
-      Validators.min(6),
-      Validators.max(20),
-    ]),
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [
-      Validators.required,
-      Validators.min(8),
-      Validators.max(24),
-    ]),
-  });
+  registerForm = new FormGroup(
+    {
+      username: new FormControl('', [
+        Validators.required,
+        Validators.min(6),
+        Validators.max(20),
+      ]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.min(8),
+        Validators.max(24),
+      ]),
+      confirmPassword: new FormControl('', Validators.required),
+    },
+    [matchPasswordValidator]
+  );
+
+  // getter
+  get username() {
+    return this.registerForm.get('username');
+  }
+
+  get email() {
+    return this.registerForm.get('email');
+  }
+
+  get password() {
+    return this.registerForm.get('password');
+  }
+
+  get confirmPassword() {
+    return this.registerForm.get('confirmPassword');
+  }
+
+  showPassword = false;
+  showConfirmPassword = false;
 
   ngOnInit() {
     this.vm$.subscribe({

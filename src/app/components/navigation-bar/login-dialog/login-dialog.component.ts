@@ -13,9 +13,6 @@ import {
   Validators,
 } from '@angular/forms';
 
-// ngrx
-import { LetDirective } from '@ngrx/component';
-
 // Spartan
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 import {
@@ -34,12 +31,23 @@ import {
 import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
 import { HlmSpinnerComponent } from '@spartan-ng/ui-spinner-helm';
+import {
+  HlmAlertDescriptionDirective,
+  HlmAlertDirective,
+  HlmAlertIconDirective,
+  HlmAlertTitleDirective,
+} from '@spartan-ng/ui-alert-helm';
+import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
 
 // Models
 import { LoginForm } from '../../../shared/models/auth';
 
 // Component Store
 import { LoginDialogStore } from './login-dialog.store';
+
+// Icon
+import { provideIcons } from '@ng-icons/core';
+import { lucideTriangleAlert, lucideEye, lucideEyeOff } from '@ng-icons/lucide';
 
 export type LoginDialogResult = 'success' | 'error' | 'cancel' | 'register';
 
@@ -49,7 +57,6 @@ export type LoginDialogResult = 'success' | 'error' | 'cancel' | 'register';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    LetDirective,
 
     BrnDialogTriggerDirective,
     BrnDialogContentDirective,
@@ -60,15 +67,24 @@ export type LoginDialogResult = 'success' | 'error' | 'cancel' | 'register';
     HlmDialogFooterComponent,
     HlmDialogTitleDirective,
     HlmDialogDescriptionDirective,
-    HlmSpinnerComponent,
 
+    HlmAlertDirective,
+    HlmAlertDescriptionDirective,
+    HlmAlertIconDirective,
+    HlmAlertTitleDirective,
+
+    HlmSpinnerComponent,
     HlmLabelDirective,
     HlmInputDirective,
     HlmButtonDirective,
+    HlmIconComponent,
   ],
   templateUrl: './login-dialog.component.html',
   styleUrl: './login-dialog.component.scss',
-  providers: [LoginDialogStore],
+  providers: [
+    provideIcons({ lucideTriangleAlert, lucideEye, lucideEyeOff }),
+    LoginDialogStore,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginDialogComponent {
@@ -91,13 +107,22 @@ export class LoginDialogComponent {
   }
 
   loginForm = new FormGroup({
-    username_or_email: new FormControl('', Validators.required),
-    password: new FormControl('', [
+    username_or_email: new FormControl<string>('', [Validators.required]),
+    password: new FormControl<string>('', [
       Validators.required,
       Validators.min(8),
       Validators.max(24),
     ]),
   });
+
+  // getter
+  get username_or_email() {
+    return this.loginForm.get('username_or_email');
+  }
+
+  get password() {
+    return this.loginForm.get('password');
+  }
 
   close() {
     this._dialogRef.close('cancel');

@@ -81,7 +81,7 @@ export class LoginDialogStore extends ComponentStore<LoginDialogState> {
             error: (error: HttpErrorResponse) => {
               this.setLoginError(error.error.message);
               toast('Login Failed', {
-                description: 'An error occured while logging in',
+                description: `Error: ${error.error.message}`,
               });
             },
           })

@@ -1,68 +1,121 @@
-<ng-container *ngrxLet="(vm$ | async)! as vm">
+@let vm = (vm$ | async)!;
+
+<ng-container>
   <hlm-dialog>
     <hlm-dialog-header>
       <h3 hlmDialogTitle>Login</h3>
-      <p hlmDialogDescription>
-        Make to enter username or email
-      </p>
+      <p hlmDialogDescription>Make to enter username or email</p>
     </hlm-dialog-header>
-      <div class="py-4 grid gap-4">
-        <form [formGroup]="loginForm" (ngSubmit)="submit()">
-          <div class="items-center grid grid-cols-4 gap-4 mt-2 mb-5">
-            <label hlmLabel for="username_or_email" class="text-right"
-              >Username/Email</label
-            >
-            <input
-              hlmInput
-              id="username_or_email"
-              type="text"
-              class="col-span-3"
-              formControlName="username_or_email"
-            />
-          </div>
-          <div class="items-center grid grid-cols-4 gap-4 mt-2 mb-5">
-            <label hlmLabel for="password" class="text-right">Password</label>
-            <input
-              hlmInput
-              id="password"
-              type="password"
-              class="col-span-3"
-              minlength="8"
-              maxlength="24"
-              formControlName="password"
-            />
-          </div>
-          <div class="items-center grid grid-cols-4 gap-4 mt-2 mb-5">
-            <div class="text-right">
-              <span class="text-sm font-medium text-destructive">
-                @if(!vm.success && vm.message) {
-                  Error: 
-                }
-              </span>
-            </div>
-            <div class="col-span-3">
-              <span class="text-sm font-medium text-destructive">
-                @if(!vm.success && vm.message) {
-                  {{ vm.message }}
-                }
-              </span>
-            </div>
-          </div>
-          <button class="w-full" hlmBtn type="submit" (click)="submit()">
-            @if(vm.logging) {
-              <hlm-spinner class="w-5 h-5" />
-            } @else {
-              LOGIN
-            }
-          </button>
-        </form>
-      </div>
+    <div class="py-4 grid gap-4">
+      <form [formGroup]="loginForm" (ngSubmit)="submit()">
+        <ng-container [ngTemplateOutlet]="usernameOrEmailField" />
+        <ng-container [ngTemplateOutlet]="passwordField" />
+        <ng-container [ngTemplateOutlet]="displayError" />
+        <button class="w-full" hlmBtn type="submit" (click)="submit()">
+          @if(vm.logging) {
+          <hlm-spinner class="w-5 h-5" />
+          } @else { LOGIN }
+        </button>
+      </form>
+    </div>
     <hlm-dialog-footer>
       <div class="w-full flex flex-col items-center">
         <span class="mt-2 text-sm">
-          Don't have an account? <a class="text-primary cursor-pointer underline" (click)="register()">Create one</a>
+          Don't have an account?
+          <a class="text-primary cursor-pointer underline" (click)="register()"
+            >Create one</a
+          >
         </span>
       </div>
     </hlm-dialog-footer>
   </hlm-dialog>
+
+  <ng-template #usernameOrEmailField>
+    <div class="items-center grid grid-cols-10 gap-1 mt-2">
+      <label hlmLabel for="username_or_email" class="text-right col-span-3 mr-2">Username/Email*</label >
+      <input
+        hlmInput
+        id="username_or_email"
+        type="text"
+        class="col-span-7"
+        [formControl]="loginForm.controls.username_or_email"
+      />
+    </div>
+    <div class="items-center grid grid-cols-10 gap-1 mb-2 min-h-6">
+      @let uoe = username_or_email;
+
+      <div class="text-right col-span-3">
+        <span></span>
+      </div>
+      
+      @if(uoe?.invalid && (uoe?.dirty || uoe?.touched)) {
+      <div class="col-span-7">
+        <span class="font-bold text-xs text-destructive">
+          @if(uoe?.hasError("required")) {
+            This field is required
+          } 
+        </span>
+      </div>
+      }
+    </div>
+  </ng-template>
+
+  <ng-template #passwordField>
+    <div class="items-center grid grid-cols-10 gap-1 mt-2">
+      <label  hlmLabel for="password" class="text-right col-span-3 mr-2">Password*</label>
+      <input
+        hlmInput
+        id="password"
+        type="password"
+        class="col-span-6"
+        minlength="8"
+        maxlength="24"
+        [formControl]="loginForm.controls.password"
+        #passwordInput
+      />
+      <button 
+        hlmBtn size="icon" 
+        variant="outline" 
+        class="col-span-1 place-self-end" 
+        (click)="passwordInput.type = passwordInput.type === 'password' ? 'lucideEyeOff' : 'password'">
+        @if(passwordInput.type === 'password') {
+          <hlm-icon size='sm' name="lucideEye" />
+        } 
+        @if(passwordInput.type === 'text') {
+          <hlm-icon size='sm' name="lucideEyeOff" />
+        } 
+      </button>
+    </div>
+    <div class="items-center grid grid-cols-10 gap-1 mb-2 min-h-6">
+      @let p = password;
+
+      <div class="text-right col-span-3">
+        <span></span>
+      </div>
+      
+      @if(p?.invalid && (p?.dirty || p?.touched)) {
+      <div class="col-span-7">
+          <span class="font-bold text-xs text-destructive">
+            @if(p?.hasError("required")) {
+              This field is required
+            } @if(p?.hasError("minlength")) {
+              The password must be have more 8 characters long
+            } @if(p?.hasError("maxlength")) {
+              The password must be have less 24 characters long
+            } 
+          </span>
+      </div>
+      }
+    </div>
+  </ng-template>
+
+  <ng-template #displayError>
+    @if(!vm.success && vm.message) {
+      <div hlmAlert variant="destructive" class="mb-5">
+        <hlm-icon hlmAlertIcon name="lucideTriangleAlert" />
+        <h4 hlmAlertTitle>Error</h4>
+        <p hlmAlertDesc>{{ vm.message }}</p>
+      </div>
+    }
+  </ng-template>
 </ng-container>
