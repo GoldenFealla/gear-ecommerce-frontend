@@ -55,6 +55,12 @@ import { provideIcons } from '@ng-icons/core';
 import { lucideTriangleAlert, lucideEye, lucideEyeOff } from '@ng-icons/lucide';
 
 export type RegisterDialogResult = 'success' | 'error' | 'cancel' | 'login';
+export enum RegisterDialogState {
+  SUCCESS = 'success',
+  ERROR = 'error',
+  CANCEL = 'cancel',
+  LOGIN = 'login',
+}
 
 export function matchPasswordValidator(
   control: AbstractControl
@@ -154,18 +160,18 @@ export class RegisterDialogComponent implements OnInit {
     this.vm$.subscribe({
       next: (value) => {
         if (value.success) {
-          this._dialogRef.close('success');
+          this._dialogRef.close(RegisterDialogState.SUCCESS);
         }
       },
     });
   }
 
   cancel() {
-    this._dialogRef.close('cancel');
+    this._dialogRef.close(RegisterDialogState.CANCEL);
   }
 
   login() {
-    this._dialogRef.close('login');
+    this._dialogRef.close(RegisterDialogState.LOGIN);
   }
 
   submit() {

@@ -20,10 +20,12 @@ import { lucideShoppingCart, lucideMoon, lucideSun } from '@ng-icons/lucide';
 import {
   LoginDialogComponent,
   LoginDialogResult,
+  LoginDialogState,
 } from './login-dialog/login-dialog.component';
 import {
   RegisterDialogResult,
   RegisterDialogComponent,
+  RegisterDialogState,
 } from './register-dialog/register-dialog.component';
 import { LogoutDialogComponent } from './logout-dialog/logout-dialog.component';
 
@@ -70,11 +72,11 @@ export class NavigationBarComponent {
     });
 
     loginDialogRef.closed$.subscribe((result: LoginDialogResult) => {
-      if (result === 'success') {
+      if (result === LoginDialogState.SUCCESS) {
         this._router.navigateByUrl('/');
       }
 
-      if (result === 'register') {
+      if (result === LoginDialogState.REGISTER) {
         this.register();
       }
     });
@@ -89,11 +91,11 @@ export class NavigationBarComponent {
     );
 
     registerDialogRef.closed$.subscribe((result: RegisterDialogResult) => {
-      if (result === 'success') {
+      if (result === RegisterDialogState.SUCCESS) {
         this._router.navigateByUrl('/');
       }
 
-      if (result === 'login') {
+      if (result === RegisterDialogState.LOGIN) {
         this.login();
       }
     });
