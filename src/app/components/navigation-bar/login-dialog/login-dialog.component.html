@@ -77,6 +77,7 @@
         hlmBtn size="icon" 
         variant="outline" 
         class="col-span-1 place-self-end" 
+        type="button"
         (click)="passwordInput.type = passwordInput.type === 'password' ? 'lucideEyeOff' : 'password'">
         @if(passwordInput.type === 'password') {
           <hlm-icon size='sm' name="lucideEye" />
