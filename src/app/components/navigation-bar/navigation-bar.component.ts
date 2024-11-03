@@ -7,20 +7,41 @@ import { Store } from '@ngrx/store';
 
 // Spartan
 import { HlmDialogService } from '@spartan-ng/ui-dialog-helm';
-
 import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
-
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
+import {
+  HlmAvatarComponent,
+  HlmAvatarFallbackDirective,
+  HlmAvatarImageDirective,
+} from '@spartan-ng/ui-avatar-helm';
+import { BrnMenuTriggerDirective } from '@spartan-ng/ui-menu-brain';
+import {
+  HlmMenuComponent,
+  HlmMenuGroupComponent,
+  HlmMenuItemDirective,
+  HlmMenuItemIconDirective,
+  HlmMenuItemSubIndicatorComponent,
+  HlmMenuLabelComponent,
+  HlmMenuSeparatorComponent,
+  HlmMenuShortcutComponent,
+  HlmSubMenuComponent,
+} from '@spartan-ng/ui-menu-helm';
 
 // Icon
 import { provideIcons } from '@ng-icons/core';
-import { lucideShoppingCart, lucideMoon, lucideSun } from '@ng-icons/lucide';
+import {
+  lucideShoppingCart,
+  lucideMoon,
+  lucideSun,
+  lucideUser,
+  lucideSettings,
+  lucideLogOut,
+} from '@ng-icons/lucide';
 
 // Components
 import {
   LoginDialogComponent,
   LoginDialogResult,
-  LoginDialogState,
 } from './login-dialog/login-dialog.component';
 import {
   RegisterDialogResult,
@@ -38,11 +59,39 @@ import { AuthState } from '@store/auth/auth.state';
 @Component({
   selector: 'app-navigation-bar',
   standalone: true,
-  imports: [CommonModule, HlmIconComponent, HlmButtonDirective],
+  imports: [
+    CommonModule,
+
+    HlmIconComponent,
+
+    HlmButtonDirective,
+
+    HlmAvatarComponent,
+    HlmAvatarFallbackDirective,
+    HlmAvatarImageDirective,
+
+    BrnMenuTriggerDirective,
+    HlmMenuComponent,
+    HlmMenuGroupComponent,
+    HlmMenuItemDirective,
+    HlmMenuItemIconDirective,
+    HlmMenuItemSubIndicatorComponent,
+    HlmMenuLabelComponent,
+    HlmMenuSeparatorComponent,
+    HlmMenuShortcutComponent,
+    HlmSubMenuComponent,
+  ],
   templateUrl: './navigation-bar.component.html',
   styleUrl: './navigation-bar.component.scss',
   providers: [
-    provideIcons({ lucideShoppingCart, lucideMoon, lucideSun }),
+    provideIcons({
+      lucideShoppingCart,
+      lucideMoon,
+      lucideSun,
+      lucideUser,
+      lucideSettings,
+      lucideLogOut,
+    }),
     ThemeService,
   ],
   changeDetection: ChangeDetectionStrategy.Default,
@@ -54,13 +103,9 @@ export class NavigationBarComponent {
   private readonly _router = inject(Router);
 
   theme$ = this._themeService.theme$;
-  logged$ = this._store.select(
+  userInfo$ = this._store.select(
     (state: { auth: AuthState }) => state.auth.userInfo
   );
-
-  ngOnInit() {
-    this.logged$.subscribe(console.log);
-  }
 
   toggleTheme(): void {
     this._themeService.toggleDarkMode();
@@ -72,11 +117,11 @@ export class NavigationBarComponent {
     });
 
     loginDialogRef.closed$.subscribe((result: LoginDialogResult) => {
-      if (result === LoginDialogState.SUCCESS) {
+      if (result === LoginDialogResult.SUCCESS) {
         this._router.navigateByUrl('/');
       }
 
-      if (result === LoginDialogState.REGISTER) {
+      if (result === LoginDialogResult.REGISTER) {
         this.register();
       }
     });

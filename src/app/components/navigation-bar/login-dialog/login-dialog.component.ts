@@ -49,8 +49,7 @@ import { LoginDialogStore } from './login-dialog.store';
 import { provideIcons } from '@ng-icons/core';
 import { lucideTriangleAlert, lucideEye, lucideEyeOff } from '@ng-icons/lucide';
 
-export type LoginDialogResult = 'success' | 'error' | 'cancel' | 'register';
-export enum LoginDialogState {
+export enum LoginDialogResult {
   SUCCESS = 'success',
   ERROR = 'error',
   CANCEL = 'cancel',
@@ -106,7 +105,7 @@ export class LoginDialogComponent {
     this.vm$.subscribe({
       next: (value) => {
         if (value.success) {
-          this._dialogRef.close(LoginDialogState.SUCCESS);
+          this._dialogRef.close(LoginDialogResult.SUCCESS);
         }
       },
     });
@@ -131,11 +130,11 @@ export class LoginDialogComponent {
   }
 
   close() {
-    this._dialogRef.close(LoginDialogState.CANCEL);
+    this._dialogRef.close(LoginDialogResult.CANCEL);
   }
 
   register() {
-    this._dialogRef.close(LoginDialogState.REGISTER);
+    this._dialogRef.close(LoginDialogResult.REGISTER);
   }
 
   submit() {

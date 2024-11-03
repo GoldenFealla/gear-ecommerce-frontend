@@ -1,3 +1,5 @@
+@let userInfo = userInfo$ | async;
+
 <div class="flex flex-row justify-around p-3">
     <span class="flex flex-row items-center">
         <h1 class="font-bold text-xl">
@@ -5,20 +7,59 @@
         </h1>
     </span>
     <span class="flex flex-row items-center">
-        <button class="m-1" hlmBtn size="icon" variant='ghost' (click)="toggleTheme()">
-            @if((theme$ | async) === "light") {
-                <hlm-icon size="sm" name="lucideSun"></hlm-icon>
-            } @else { 
-                <hlm-icon size="sm" name="lucideMoon"></hlm-icon>
+        <span class="m-1">
+            <button hlmBtn size="icon" variant='ghost' (click)="toggleTheme()">
+                @if((theme$ | async) === "light") {
+                    <hlm-icon size="sm" name="lucideSun"></hlm-icon>
+                } @else { 
+                    <hlm-icon size="sm" name="lucideMoon"></hlm-icon>
+                }
+            </button>
+        </span>
+        <span class="m-1">
+            <button hlmBtn size="icon" variant='ghost'>
+                <hlm-icon size="sm" name="lucideShoppingCart"></hlm-icon>
+            </button>
+        </span>
+        <span class="m-1">
+            @if(userInfo) {
+                <ng-container [ngTemplateOutlet]="avatar"></ng-container>
+            } @else {
+                <button hlmBtn (click)="login()">Login</button>
             }
-        </button>
-        <button class="m-1" hlmBtn size="icon" variant='ghost'>
-            <hlm-icon size="sm" name="lucideShoppingCart"></hlm-icon>
-        </button>
-        @if(logged$ | async) {
-            <button class="m-1" hlmBtn (click)="logout()">Logout</button>
-        } @else {
-            <button class="m-1" hlmBtn (click)="login()">Login</button>
-        }
+        </span>
     </span>
 </div>
+
+<ng-template #avatar>
+    <button hlmBtn size="icon" variant='ghost' [brnMenuTriggerFor]="dropdown" class="rounded-full">
+        <hlm-avatar class="p-1">
+            <img alt="User logo" hlmAvatarImage />
+            <span class="bg-[#FD005B] text-white text-xs" hlmAvatarFallback>U</span>
+        </hlm-avatar>
+    </button>
+    <ng-template #dropdown>
+        <hlm-menu class="w-56">
+            <hlm-menu-label>My Account</hlm-menu-label>
+            <hlm-menu-separator />
+            <hlm-menu-group>
+                <button hlmMenuItem class="cursor-pointer">
+                    <hlm-icon name="lucideUser" hlmMenuIcon />
+                    <span>Profile</span>
+                    <!-- <hlm-menu-shortcut>⇧⌘P</hlm-menu-shortcut> -->
+                </button>
+                <button hlmMenuItem class="cursor-pointer">
+                    <hlm-icon name="lucideSettings" hlmMenuIcon />
+                    <span>Settings</span>
+                    <!-- <hlm-menu-shortcut>⌘B</hlm-menu-shortcut> -->
+                </button>
+            </hlm-menu-group>
+            <hlm-menu-separator />
+            <button hlmMenuItem (click)="logout()" class="cursor-pointer">
+                <hlm-icon name="lucideLogOut" hlmMenuIcon />
+                <span>Logout</span>
+                <!-- <hlm-menu-shortcut>⇧⌘Q</hlm-menu-shortcut> -->
+            </button>
+        </hlm-menu>
+    </ng-template>
+</ng-template>
