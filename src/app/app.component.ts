@@ -15,28 +15,28 @@ import { NavigationBarComponent } from './components/navigation-bar/navigation-b
 // Component Store
 import { AppStore } from './app.store';
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterOutlet,
-    LetDirective,
+    selector: 'app-root',
+    standalone: true,
+    imports: [
+        CommonModule,
+        RouterOutlet,
+        LetDirective,
 
-    HlmSpinnerComponent,
-    HlmToasterComponent,
+        HlmSpinnerComponent,
+        HlmToasterComponent,
 
-    NavigationBarComponent,
-  ],
-  providers: [AppStore],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+        NavigationBarComponent,
+    ],
+    providers: [AppStore],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  private readonly _componentStore = inject(AppStore);
+    private readonly _componentStore = inject(AppStore);
 
-  ngOnInit() {
-    this._componentStore.check();
-  }
+    ngOnInit() {
+        this._componentStore.check();
+    }
 
-  vm$ = this._componentStore.vm$;
+    vm$ = this._componentStore.vm$;
 }

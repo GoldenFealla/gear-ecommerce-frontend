@@ -1,27 +1,25 @@
 <hlm-toaster />
 
-<ng-container *ngrxLet="vm$ | async as vm">
-    @defer() {
-        <ng-container [ngTemplateOutlet]="body"></ng-container>
-    } @loading (after 100ms; minimum 500ms) {
-        <div class="w-full h-full flex flex-col justify-center items-center">
-            <hlm-spinner  />
-            <p class="font-bold mt-2">
-                LOADING
-            </p>
-        </div>
-    } @placeholder (minimum 500ms) { 
-        <div class="w-full h-full flex flex-col justify-center items-center">
-            <hlm-spinner  />
-            <p class="font-bold mt-2">
-                LOADING
-            </p>
-        </div>
-    }
-</ng-container>
+@defer() {
+<ng-container [ngTemplateOutlet]="body"></ng-container>
+} @loading (after 100ms; minimum 500ms) {
+<ng-container [ngTemplateOutlet]="loading"></ng-container>
+} @placeholder (minimum 500ms) {
+<ng-container [ngTemplateOutlet]="loading"></ng-container>
+}
+
+<ng-template #loading>
+    <div class="w-full h-full flex flex-col justify-center items-center">
+        <hlm-spinner />
+        <p class="font-bold mt-2">LOADING</p>
+    </div>
+</ng-template>
 
 <ng-template #body>
-  <nav class="shadow-md">
-    <app-navigation-bar> </app-navigation-bar>
-  </nav>
+    <nav class="max-w-screen-xl mx-auto shadow-md">
+        <app-navigation-bar> </app-navigation-bar>
+    </nav>
+    <div class="max-w-screen-xl mx-auto p-3">
+        <router-outlet></router-outlet>
+    </div>
 </ng-template>

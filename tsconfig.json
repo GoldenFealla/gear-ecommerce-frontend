@@ -25,6 +25,7 @@
       "@store/*": ["src/app/store/*"],
       "@models/*": ["src/app/shared/models/*"],
       "@interceptors/*": ["src/app/shared/interceptors/*"],
+      "@pages/*": ["src/app/pages/*"],
       "@environments/*": [".\\src/environments/*"],
       "@spartan-ng/ui-accordion-helm": [
         ".\\src/app/libs/ui/ui-accordion-helm/src/index.ts"

@@ -5,13 +5,14 @@
             <p hlmDialogDescription>Are you sure to log out?</p>
         </hlm-dialog-header>
         <hlm-dialog-footer>
-            <button hlmBtn type="button" (click)="cancel()" variant="outline">Cancel</button>
+            <button hlmBtn type="button" (click)="cancel()" variant="outline">
+                Cancel
+            </button>
             <button hlmBtn type="submit" (click)="confirm()">
-            @if(vm.logging) {
+                @if(vm.logging) {
                 <hlm-spinner class="w-5 h-5" />
-            } @else {
-                Logout
-            }</button>
+                } @else { Logout }
+            </button>
         </hlm-dialog-footer>
     </ng-container>
 </hlm-dialog>
