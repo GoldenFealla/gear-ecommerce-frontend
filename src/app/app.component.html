@@ -16,10 +16,12 @@
 </ng-template>
 
 <ng-template #body>
-    <nav class="max-w-screen-xl mx-auto shadow-md">
-        <app-navigation-bar> </app-navigation-bar>
+    <nav class="shadow-md sticky top-0 bg-[hsl(var(--background))]" #nav>
+        <div class="max-w-screen-xl mx-auto ">
+            <app-navigation-bar> </app-navigation-bar>
+        </div>
     </nav>
-    <div class="max-w-screen-xl mx-auto p-3">
-        <router-outlet></router-outlet>
-    </div>
+        <div class="max-w-screen-xl mx-auto p-3">
+            <router-outlet></router-outlet>
+        </div>
 </ng-template>

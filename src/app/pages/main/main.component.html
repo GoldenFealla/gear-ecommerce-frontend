@@ -1,1 +1,42 @@
-<p>main works!</p>,
+@defer() {
+<ng-container [ngTemplateOutlet]="body"></ng-container>
+} @loading (after 100ms; minimum 500ms) {
+<ng-container [ngTemplateOutlet]="loading"></ng-container>
+} @placeholder (minimum 500ms) {
+<ng-container [ngTemplateOutlet]="loading"></ng-container>
+}
+
+<ng-template #loading>
+    <div class="w-full h-full flex flex-col justify-center items-center">
+        <hlm-spinner />
+        <p class="font-bold mt-2">LOADING</p>
+    </div>
+</ng-template>
+
+<ng-template #body>
+    <div class="flex flex-row space-x-4">
+        <div>
+            <ng-container [ngTemplateOutlet]="categoriesRef"></ng-container>
+        </div>
+        <div class="w-full self-stretch">
+            <ng-container [ngTemplateOutlet]="deals"></ng-container>
+        </div>
+    </div>
+    <ng-container [ngTemplateOutlet]="productsRef"></ng-container>
+</ng-template>
+
+<ng-template #categoriesRef>
+    <category-list></category-list>
+</ng-template>
+<ng-template #deals>
+    <carousel></carousel>
+</ng-template>
+<ng-template #productsRef>
+    <div class="grid grid-cols-[repeat(auto-fit,minmax(14rem,max-content))] gap-2 w-full mt-6">
+        @for (product of products; track product.id) {
+            <div>
+                <product-card class="col-span-1" [product]="product"></product-card>
+            </div>
+        }
+    </div>
+</ng-template>

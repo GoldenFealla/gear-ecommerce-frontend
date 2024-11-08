@@ -1,0 +1,25 @@
+<div class="flex items-center justify-center w-full h-full">
+    <hlm-carousel class="w-full h-full" [options]="{
+        loop: true,
+        duration: 50,
+    }" #carousel>
+        <hlm-carousel-content class="w-full h-full" >
+            @for (item of items; track item) {
+            <hlm-carousel-item class="w-full h-full">
+                <section hlmCard class="w-full h-full">
+                    <p
+                        hlmCardContent
+                        class="h-full flex items-center justify-center p-0"
+                    >
+                        <span class="text-4xl font-semibold">{{
+                            item
+                        }}</span>
+                    </p>
+                </section>
+            </hlm-carousel-item>
+            }
+        </hlm-carousel-content>
+        <button hlm-carousel-previous class="left-5"></button>
+        <button hlm-carousel-next class="right-10"></button>
+    </hlm-carousel>
+</div>

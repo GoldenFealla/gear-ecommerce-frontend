@@ -1,0 +1,13 @@
+<div class="flex flex-col w-48 bg-transparent" hlmCard>
+    @for (category of categories;track $index) {
+    <button
+        hlmBtn
+        variant="ghost"
+        class="w-full justify-start"
+        brnHoverCardTrigger
+    >
+        <hlm-icon size="sm" class="mr-4" [name]="category.icon" />
+        {{ category.title }}
+    </button>
+    }
+</div>
