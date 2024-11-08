@@ -14,8 +14,8 @@
 </ng-template>
 
 <ng-template #body>
-    <div class="flex flex-row space-x-4">
-        <div>
+    <div class="flex flex-row sm:space-x-4">
+        <div class="hidden sm:block">
             <ng-container [ngTemplateOutlet]="categoriesRef"></ng-container>
         </div>
         <div class="w-full self-stretch">
@@ -32,10 +32,10 @@
     <carousel></carousel>
 </ng-template>
 <ng-template #productsRef>
-    <div class="grid grid-cols-[repeat(auto-fit,minmax(14rem,max-content))] gap-2 w-full mt-6">
+    <div class="flex flex-col sm:grid sm:grid-cols-[repeat(auto-fit,minmax(14rem,max-content))] sm:gap-2 w-full mt-6">
         @for (product of products; track product.id) {
             <div>
-                <product-card class="col-span-1" [product]="product"></product-card>
+                <product-card class="mb-2 sm:mb-0 col-span-1" [product]="product"></product-card>
             </div>
         }
     </div>

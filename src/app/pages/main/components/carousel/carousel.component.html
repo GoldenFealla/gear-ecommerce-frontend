@@ -1,11 +1,11 @@
-<div class="flex items-center justify-center w-full h-full">
+<div class="flex items-center justify-center w-full h-40 sm:h-full" (mousedown)="dragging()" (mouseup)="stopDrag()">
     <hlm-carousel class="w-full h-full" [options]="{
         loop: true,
-        duration: 50,
+        duration: 5,
     }" #carousel>
-        <hlm-carousel-content class="w-full h-full" >
+        <hlm-carousel-content class="w-full h-full ml-0" >
             @for (item of items; track item) {
-            <hlm-carousel-item class="w-full h-full">
+            <hlm-carousel-item class="w-full h-full pl-0">
                 <section hlmCard class="w-full h-full">
                     <p
                         hlmCardContent
@@ -19,7 +19,7 @@
             </hlm-carousel-item>
             }
         </hlm-carousel-content>
-        <button hlm-carousel-previous class="left-5"></button>
-        <button hlm-carousel-next class="right-10"></button>
+        <button hlm-carousel-previous class="left-5" (click)="reset()"></button>
+        <button hlm-carousel-next class="right-5" (click)="reset()"></button>
     </hlm-carousel>
 </div>

@@ -53,6 +53,33 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
         }, 5000);
     }
 
+    dragging() {
+        console.log('dragging');
+        if (this.ci) {
+            clearInterval(this.ci);
+        }
+    }
+
+    stopDrag() {
+        this.ci = setInterval(() => {
+            if (this.c) {
+                this.c.scrollNext();
+            }
+        }, 5000);
+    }
+
+    reset() {
+        if (this.ci) {
+            clearInterval(this.ci);
+        }
+
+        this.ci = setInterval(() => {
+            if (this.c) {
+                this.c.scrollNext();
+            }
+        }, 5000);
+    }
+
     ngOnDestroy() {
         if (this.ci) {
             clearInterval(this.ci);
