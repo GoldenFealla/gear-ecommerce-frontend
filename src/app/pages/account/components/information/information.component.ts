@@ -25,7 +25,7 @@ import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
 
 // Icon
 import { provideIcons } from '@ng-icons/core';
-import { bootstrapCopy } from '@ng-icons/bootstrap-icons';
+import { bootstrapCopy, bootstrapPencilFill } from '@ng-icons/bootstrap-icons';
 
 // toast
 import { toast } from 'ngx-sonner';
@@ -52,7 +52,7 @@ import { toast } from 'ngx-sonner';
     ],
     templateUrl: './information.component.html',
     styleUrl: './information.component.scss',
-    providers: [provideIcons({ bootstrapCopy })],
+    providers: [provideIcons({ bootstrapCopy, bootstrapPencilFill })],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InformationComponent {
@@ -71,8 +71,8 @@ export class InformationComponent {
 
     userInfoForm = new FormGroup({
         id: new FormControl({ value: '', disabled: true }),
-        username: new FormControl({ value: '', disabled: !this.isEditing }),
-        email: new FormControl({ value: '', disabled: !this.isEditing }),
+        username: new FormControl({ value: '', disabled: true }),
+        email: new FormControl({ value: '', disabled: true }),
     });
 
     handleOnCopyID() {
@@ -83,4 +83,17 @@ export class InformationComponent {
             toast('✓ Copied');
         }
     }
+
+    handleOnChangeEdit() {
+        this.isEditing = true;
+        this.userInfoForm.enable();
+        this.userInfoForm.controls.id.disable();
+    }
+
+    handleOnCancel() {
+        this.isEditing = false;
+        this.userInfoForm.disable();
+    }
+
+    handleOnSave() {}
 }

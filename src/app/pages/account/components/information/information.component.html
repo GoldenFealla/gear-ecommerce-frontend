@@ -4,6 +4,27 @@
     <ng-container [ngTemplateOutlet]="emailField"></ng-container>
 </form>
 
+@if (isEditing) {
+    <div class="w-full flex flex-row justify-end">
+        <button hlmBtn (click)="handleOnCancel()" variant="outline" class="mr-2">
+            Cancel
+        </button>
+        <button hlmBtn>
+            Save
+        </button>
+    </div>
+} 
+
+@if (!isEditing) {
+    <div class="w-full flex flex-row justify-end">
+        <button hlmBtn (click)="handleOnChangeEdit()">
+            <hlm-icon size='sm' name="bootstrapPencilFill" class="mr-2"></hlm-icon>
+            Edit
+        </button>
+    </div>
+}
+
+
 <ng-template #idField>
     <div class="flex flex-col sm:items-center sm:grid sm:grid-cols-10 gap-1 mt-2">
         <label hlmLabel for="id-field" class="text-left sm:text-right sm:col-span-2 mr-2"
