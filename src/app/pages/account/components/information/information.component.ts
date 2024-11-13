@@ -18,10 +18,17 @@ import {
     HlmAlertIconDirective,
     HlmAlertTitleDirective,
 } from '@spartan-ng/ui-alert-helm';
-import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
-
+import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
+import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
+
+// Icon
+import { provideIcons } from '@ng-icons/core';
+import { bootstrapCopy } from '@ng-icons/bootstrap-icons';
+
+// toast
+import { toast } from 'ngx-sonner';
 
 @Component({
     selector: 'account-information',
@@ -37,6 +44,7 @@ import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
         HlmAlertIconDirective,
         HlmAlertTitleDirective,
 
+        HlmButtonDirective,
         HlmIconComponent,
 
         HlmLabelDirective,
@@ -44,6 +52,7 @@ import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
     ],
     templateUrl: './information.component.html',
     styleUrl: './information.component.scss',
+    providers: [provideIcons({ bootstrapCopy })],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InformationComponent {
@@ -65,4 +74,13 @@ export class InformationComponent {
         username: new FormControl({ value: '', disabled: !this.isEditing }),
         email: new FormControl({ value: '', disabled: !this.isEditing }),
     });
+
+    handleOnCopyID() {
+        const id = this.userInfo()?.id;
+
+        if (id) {
+            navigator.clipboard.writeText(id);
+            toast('✓ Copied');
+        }
+    }
 }
