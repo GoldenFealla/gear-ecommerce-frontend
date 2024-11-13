@@ -33,11 +33,11 @@
     </hlm-dialog>
 
     <ng-template #usernameOrEmailField>
-        <div class="items-center grid grid-cols-10 gap-1 mt-2">
+        <div class="flex flex-col sm:items-center sm:grid sm:grid-cols-10 gap-1 mt-2">
             <label
                 hlmLabel
                 for="username_or_email"
-                class="text-right col-span-3 mr-2"
+                class="text-left sm:text-right col-span-3 mr-2"
                 >Username/Email*</label
             >
             <input
@@ -48,10 +48,10 @@
                 [formControl]="loginForm.controls.username_or_email"
             />
         </div>
-        <div class="items-center grid grid-cols-10 gap-1 mb-2 min-h-6">
+        <div class="flex flex-col sm:items-center sm:grid sm:grid-cols-10 gap-1 mb-2 min-h-6">
             @let uoe = username_or_email;
 
-            <div class="text-right col-span-3">
+            <div class="text-left sm:text-right col-span-3">
                 <span></span>
             </div>
 
@@ -66,44 +66,46 @@
     </ng-template>
 
     <ng-template #passwordField>
-        <div class="items-center grid grid-cols-10 gap-1 mt-2">
-            <label hlmLabel for="password" class="text-right col-span-3 mr-2"
+        <div class="flex flex-col sm:items-center sm:grid sm:grid-cols-10 gap-1 mt-2">
+            <label hlmLabel for="password" class="text-left sm:text-right col-span-3 mr-2"
                 >Password*</label
             >
-            <input
-                hlmInput
-                id="password"
-                type="password"
-                class="col-span-6"
-                minlength="8"
-                maxlength="24"
-                [formControl]="loginForm.controls.password"
-                #passwordInput
-            />
-            <button
-                hlmBtn
-                size="icon"
-                variant="outline"
-                class="col-span-1 place-self-end"
-                type="button"
-                (click)="
-                    passwordInput.type =
-                        passwordInput.type === 'password'
-                            ? 'lucideEyeOff'
-                            : 'password'
-                "
-            >
-                @if(passwordInput.type === 'password') {
-                <hlm-icon size="sm" name="lucideEye" />
-                } @if(passwordInput.type === 'text') {
-                <hlm-icon size="sm" name="lucideEyeOff" />
-                }
-            </button>
+            <div class="flex flex-row col-span-7">
+                <input
+                    hlmInput
+                    id="password"
+                    type="password"
+                    class="w-full"
+                    minlength="8"
+                    maxlength="24"
+                    [formControl]="loginForm.controls.password"
+                    #passwordInput
+                />
+                <button
+                    hlmBtn
+                    size="icon"
+                    variant="outline"
+                    type="button"
+                    class="ml-2 h-10 w-12"
+                    (click)="
+                        passwordInput.type =
+                            passwordInput.type === 'password'
+                                ? 'lucideEyeOff'
+                                : 'password'
+                    "
+                >
+                    @if(passwordInput.type === 'password') {
+                    <hlm-icon size="sm" name="lucideEye" />
+                    } @if(passwordInput.type === 'text') {
+                    <hlm-icon size="sm" name="lucideEyeOff" />
+                    }
+                </button>
+            </div>
         </div>
-        <div class="items-center grid grid-cols-10 gap-1 mb-2 min-h-6">
+        <div class="flex flex-col sm:items-center sm:grid sm:grid-cols-10 gap-1 mb-2 min-h-6">
             @let p = password;
 
-            <div class="text-right col-span-3">
+            <div class="text-left sm:text-right col-span-3">
                 <span></span>
             </div>
 

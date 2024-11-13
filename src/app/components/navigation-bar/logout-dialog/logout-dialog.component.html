@@ -4,11 +4,11 @@
             <h3 hlmDialogTitle>Logout</h3>
             <p hlmDialogDescription>Are you sure to log out?</p>
         </hlm-dialog-header>
-        <hlm-dialog-footer>
-            <button hlmBtn type="button" (click)="cancel()" variant="outline">
+        <hlm-dialog-footer class="mt-2">
+            <button hlmBtn type="button" (click)="cancel()" variant="outline" class="m-1 sm:m-0">
                 Cancel
             </button>
-            <button hlmBtn type="submit" (click)="confirm()">
+            <button hlmBtn type="submit" (click)="confirm()" class="m-1 sm:m-0">
                 @if(vm.logging) {
                 <hlm-spinner class="w-5 h-5" />
                 } @else { Logout }

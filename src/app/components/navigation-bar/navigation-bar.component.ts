@@ -110,7 +110,7 @@ export class NavigationBarComponent {
         const loginDialogRef = this._hlmDialogService.open(
             LoginDialogComponent,
             {
-                contentClass: 'sm:!max-w-[750px] min-w-[500px]',
+                contentClass: 'sm:!max-w-[750px] min-w-[350px]',
             }
         );
 
@@ -129,7 +129,7 @@ export class NavigationBarComponent {
         const registerDialogRef = this._hlmDialogService.open(
             RegisterDialogComponent,
             {
-                contentClass: 'sm:!max-w-[750px] min-w-[500px]',
+                contentClass: 'sm:!max-w-[750px] min-w-[350px]',
             }
         );
 
@@ -146,7 +146,7 @@ export class NavigationBarComponent {
 
     logout() {
         const dialogRef = this._hlmDialogService.open(LogoutDialogComponent, {
-            contentClass: 'sm:!max-w-[750px]  min-w-[500px]',
+            contentClass: 'sm:!max-w-[750px]  min-w-[350px]',
         });
         dialogRef.closed$.subscribe((result: boolean) => {
             if (result) {
