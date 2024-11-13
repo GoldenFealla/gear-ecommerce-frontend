@@ -1,5 +1,6 @@
 import { UserInfo } from '@shared/models/auth';
 
 export type AuthState = {
-  userInfo: UserInfo | null;
+    isChecked: boolean;
+    userInfo: UserInfo | null;
 };

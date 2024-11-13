@@ -1,13 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { ActivatedRoute, RouterOutlet } from '@angular/router';
 
 // Spartan
 import { HlmSpinnerComponent } from '@spartan-ng/ui-spinner-helm';
 import { HlmToasterComponent } from '@spartan-ng/ui-sonner-helm';
-
-// ngrx
-import { LetDirective } from '@ngrx/component';
 
 // Components
 import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
@@ -20,7 +17,6 @@ import { AppStore } from './app.store';
     imports: [
         CommonModule,
         RouterOutlet,
-        LetDirective,
 
         HlmSpinnerComponent,
         HlmToasterComponent,

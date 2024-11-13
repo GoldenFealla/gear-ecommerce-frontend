@@ -4,15 +4,18 @@ import { AuthState } from './auth.state';
 import { AuthActions } from './auth.actions';
 
 const initialState: AuthState = {
-  userInfo: null,
+    isChecked: false,
+    userInfo: null,
 };
 
 export const AuthReducer = createReducer(
-  initialState,
-  on(AuthActions.Login, (state, { userInfo }) => ({
-    userInfo: userInfo,
-  })),
-  on(AuthActions.Logout, (state) => ({
-    userInfo: null,
-  }))
+    initialState,
+    on(AuthActions.Login, (state, { userInfo }) => ({
+        isChecked: true,
+        userInfo: userInfo,
+    })),
+    on(AuthActions.Logout, (state) => ({
+        isChecked: true,
+        userInfo: null,
+    }))
 );

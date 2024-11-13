@@ -1,0 +1,53 @@
+<form [formGroup]="userInfoForm" action="">
+    <ng-container [ngTemplateOutlet]="idField"></ng-container>
+    <ng-container [ngTemplateOutlet]="usernameField"></ng-container>
+    <ng-container [ngTemplateOutlet]="emailField"></ng-container>
+</form>
+
+<ng-template #idField>
+    <div class="flex flex-col sm:items-center sm:grid sm:grid-cols-10 gap-1 mt-2">
+        <label hlmLabel for="id-field" class="text-left sm:text-right sm:col-span-2 mr-2"
+            >ID*</label
+        >
+        <input
+            hlmInput
+            id="id-field"
+            type="text"
+            class="col-span-8"
+            [formControl]="userInfoForm.controls.id"
+        />
+    </div>
+    <div class="flex sm:items-center grid grid-cols-10 gap-1 mb-2 min-h-6"></div>
+</ng-template>
+
+<ng-template #usernameField>
+    <div class="flex flex-col sm:items-center sm:grid sm:grid-cols-10 gap-1 mt-2">
+        <label hlmLabel for="username-field" class="text-left sm:text-right sm:col-span-2 mr-2"
+            >Username*</label
+        >
+        <input
+            hlmInput
+            id="username-field"
+            type="text"
+            class="col-span-8"
+            [formControl]="userInfoForm.controls.username"
+        />
+    </div>
+    <div class="items-center grid grid-cols-10 gap-1 mb-2 min-h-6"></div>
+</ng-template>
+
+<ng-template #emailField>
+    <div class="flex flex-col sm:items-center sm:grid sm:grid-cols-10 gap-1 mt-2">
+        <label hlmLabel for="email-field" class="text-left sm:text-right sm:col-span-2 mr-2"
+            >Email*</label
+        >
+        <input
+            hlmInput
+            id="email-field"
+            type="text"
+            class="col-span-8"
+            [formControl]="userInfoForm.controls.email"
+        />
+    </div>
+    <div class="items-center grid grid-cols-10 gap-1 mb-2 min-h-6"></div>
+</ng-template>

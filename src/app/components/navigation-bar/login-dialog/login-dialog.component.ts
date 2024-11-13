@@ -10,6 +10,7 @@ import {
     FormControl,
     ReactiveFormsModule,
     Validators,
+    FormsModule,
 } from '@angular/forms';
 
 // Spartan
@@ -60,13 +61,10 @@ export enum LoginDialogResult {
     standalone: true,
     imports: [
         CommonModule,
+        FormsModule,
         ReactiveFormsModule,
 
-        BrnDialogTriggerDirective,
-        BrnDialogContentDirective,
-
         HlmDialogComponent,
-        HlmDialogContentComponent,
         HlmDialogHeaderComponent,
         HlmDialogFooterComponent,
         HlmDialogTitleDirective,

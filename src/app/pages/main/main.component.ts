@@ -8,8 +8,6 @@ import {
 
 // Spartan
 import { HlmSpinnerComponent } from '@spartan-ng/ui-spinner-helm';
-import { HlmSeparatorDirective } from '@spartan-ng/ui-separator-helm';
-import { BrnSeparatorComponent } from '@spartan-ng/ui-separator-brain';
 
 // Components
 import { CategoryListComponent } from './components/category-list/category-list.component';
@@ -21,6 +19,10 @@ import { ProductsService } from './services/products.service';
 // Model
 import { Product } from '@shared/models/product';
 import { CarouselComponent } from './components/carousel/carousel.component';
+import { ActivatedRoute } from '@angular/router';
+
+// toast
+import { toast } from 'ngx-sonner';
 
 @Component({
     selector: 'app-main',
@@ -39,6 +41,7 @@ import { CarouselComponent } from './components/carousel/carousel.component';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainComponent implements OnInit {
+    private _route = inject(ActivatedRoute);
     private _productService = inject(ProductsService);
 
     products: Product[] = [];
@@ -49,5 +52,16 @@ export class MainComponent implements OnInit {
                 this.products = res.products;
             },
         });
+
+        const queryParams = this._route.snapshot.queryParams;
+        const { login, type } = queryParams;
+
+        if (login && type) {
+            if (login === 'false' && type === 'account') {
+                toast('You are not logged in', {
+                    description: 'You need to login to use account function',
+                });
+            }
+        }
     }
 }

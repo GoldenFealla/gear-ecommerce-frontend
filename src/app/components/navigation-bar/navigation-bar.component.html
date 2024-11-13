@@ -1,7 +1,7 @@
 @let userInfo = userInfo$ | async;
 
 <div class="flex flex-row justify-between p-3">
-    <span class="flex flex-row items-center">
+    <span class="flex flex-row items-center cursor-pointer" [routerLink]="['/']">
         <h1 class="font-bold text-xl">
             GEAR ECOMMERCE
         </h1>
@@ -43,9 +43,9 @@
             <hlm-menu-label>My Account</hlm-menu-label>
             <hlm-menu-separator />
             <hlm-menu-group>
-                <button hlmMenuItem class="cursor-pointer">
+                <button hlmMenuItem class="cursor-pointer" [routerLink]="['/account']">
                     <hlm-icon name="lucideUser" hlmMenuIcon />
-                    <span>Profile</span>
+                    <span>Account</span>
                     <!-- <hlm-menu-shortcut>⇧⌘P</hlm-menu-shortcut> -->
                 </button>
                 <button hlmMenuItem class="cursor-pointer">

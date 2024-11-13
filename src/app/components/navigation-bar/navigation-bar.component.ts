@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 // ngrx
 import { Store } from '@ngrx/store';
@@ -20,11 +20,8 @@ import {
     HlmMenuGroupComponent,
     HlmMenuItemDirective,
     HlmMenuItemIconDirective,
-    HlmMenuItemSubIndicatorComponent,
     HlmMenuLabelComponent,
     HlmMenuSeparatorComponent,
-    HlmMenuShortcutComponent,
-    HlmSubMenuComponent,
 } from '@spartan-ng/ui-menu-helm';
 
 // Icon
@@ -61,6 +58,7 @@ import { AuthState } from '@store/auth/auth.state';
     standalone: true,
     imports: [
         CommonModule,
+        RouterLink,
 
         HlmIconComponent,
 
@@ -75,11 +73,8 @@ import { AuthState } from '@store/auth/auth.state';
         HlmMenuGroupComponent,
         HlmMenuItemDirective,
         HlmMenuItemIconDirective,
-        HlmMenuItemSubIndicatorComponent,
         HlmMenuLabelComponent,
         HlmMenuSeparatorComponent,
-        HlmMenuShortcutComponent,
-        HlmSubMenuComponent,
     ],
     templateUrl: './navigation-bar.component.html',
     styleUrl: './navigation-bar.component.scss',
