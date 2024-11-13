@@ -15,14 +15,9 @@ import {
 
 // Spartan
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
-import {
-    BrnDialogContentDirective,
-    BrnDialogRef,
-    BrnDialogTriggerDirective,
-} from '@spartan-ng/ui-dialog-brain';
+import { BrnDialogRef } from '@spartan-ng/ui-dialog-brain';
 import {
     HlmDialogComponent,
-    HlmDialogContentComponent,
     HlmDialogDescriptionDirective,
     HlmDialogFooterComponent,
     HlmDialogHeaderComponent,

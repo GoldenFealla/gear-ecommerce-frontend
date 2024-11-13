@@ -7,19 +7,11 @@ import {
     type OnInit,
 } from '@angular/core';
 
-// ngrx
-import { LetDirective } from '@ngrx/component';
-
 // Spartan
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
-import {
-    BrnDialogContentDirective,
-    BrnDialogRef,
-    BrnDialogTriggerDirective,
-} from '@spartan-ng/ui-dialog-brain';
+import { BrnDialogRef } from '@spartan-ng/ui-dialog-brain';
 import {
     HlmDialogComponent,
-    HlmDialogContentComponent,
     HlmDialogDescriptionDirective,
     HlmDialogFooterComponent,
     HlmDialogHeaderComponent,
@@ -37,20 +29,14 @@ import { LogoutDialogStore } from './logout-dialog.store';
     standalone: true,
     imports: [
         CommonModule,
-        LetDirective,
-        BrnDialogTriggerDirective,
-        BrnDialogContentDirective,
 
         HlmDialogComponent,
-        HlmDialogContentComponent,
         HlmDialogHeaderComponent,
         HlmDialogFooterComponent,
         HlmDialogTitleDirective,
         HlmDialogDescriptionDirective,
         HlmSpinnerComponent,
 
-        HlmLabelDirective,
-        HlmInputDirective,
         HlmButtonDirective,
     ],
     templateUrl: './logout-dialog.component.html',

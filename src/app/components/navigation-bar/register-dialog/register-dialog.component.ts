@@ -15,19 +15,11 @@ import {
     Validators,
 } from '@angular/forms';
 
-// ngrx
-import { LetDirective } from '@ngrx/component';
-
 // Spartan
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
-import {
-    BrnDialogContentDirective,
-    BrnDialogRef,
-    BrnDialogTriggerDirective,
-} from '@spartan-ng/ui-dialog-brain';
+import { BrnDialogRef } from '@spartan-ng/ui-dialog-brain';
 import {
     HlmDialogComponent,
-    HlmDialogContentComponent,
     HlmDialogDescriptionDirective,
     HlmDialogFooterComponent,
     HlmDialogHeaderComponent,
@@ -80,13 +72,9 @@ export function matchPasswordValidator(
     standalone: true,
     imports: [
         CommonModule,
-        LetDirective,
         ReactiveFormsModule,
-        BrnDialogTriggerDirective,
-        BrnDialogContentDirective,
 
         HlmDialogComponent,
-        HlmDialogContentComponent,
         HlmDialogHeaderComponent,
         HlmDialogFooterComponent,
         HlmDialogTitleDirective,

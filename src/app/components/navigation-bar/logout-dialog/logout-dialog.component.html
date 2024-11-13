@@ -1,5 +1,7 @@
+@let vm = (vm$ | async)!;
+
 <hlm-dialog>
-    <ng-container *ngrxLet="(vm$ | async)! as vm">
+    <ng-container>
         <hlm-dialog-header>
             <h3 hlmDialogTitle>Logout</h3>
             <p hlmDialogDescription>Are you sure to log out?</p>
