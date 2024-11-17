@@ -71,16 +71,7 @@ export class InformationComponent {
     private readonly _informationStore = inject(InformationStore);
 
     constructor() {
-        effect(() => {
-            this.userInfoForm.patchValue({
-                id: this.userInfo()?.id,
-                username: this.userInfo()?.username,
-                email: this.userInfo()?.email,
-                first_name: this.userInfo()?.first_name,
-                last_name: this.userInfo()?.last_name,
-                phone: this.userInfo()?.phone,
-            });
-        });
+        effect(() => this.updateOriginalValue());
     }
 
     readonly vm$ = this._informationStore.vm$;
@@ -98,12 +89,12 @@ export class InformationComponent {
             Validators.required,
             Validators.email,
         ]),
-        first_name: new FormControl({ value: '', disabled: true }, [
+        firstName: new FormControl({ value: '', disabled: true }, [
             Validators.required,
             Validators.min(2),
             Validators.max(30),
         ]),
-        last_name: new FormControl({ value: '', disabled: true }, [
+        lastName: new FormControl({ value: '', disabled: true }, [
             Validators.required,
             Validators.min(2),
             Validators.max(30),
@@ -112,6 +103,17 @@ export class InformationComponent {
             Validators.required,
         ]),
     });
+
+    updateOriginalValue() {
+        this.userInfoForm.patchValue({
+            id: this.userInfo()?.id,
+            username: this.userInfo()?.username,
+            email: this.userInfo()?.email,
+            firstName: this.userInfo()?.first_name,
+            lastName: this.userInfo()?.last_name,
+            phone: this.userInfo()?.phone,
+        });
+    }
 
     handleOnCopyID() {
         const id = this.userInfo()?.id;
@@ -129,6 +131,7 @@ export class InformationComponent {
     }
 
     handleOnCancel() {
+        this.updateOriginalValue();
         this.isEditing = false;
         this.userInfoForm.disable();
     }
@@ -139,8 +142,8 @@ export class InformationComponent {
             const result: UpdateUserForm = {
                 username: value.username!,
                 email: value.email!,
-                first_name: value.first_name!,
-                last_name: value.last_name!,
+                first_name: value.firstName!,
+                last_name: value.lastName!,
                 phone: value.phone!,
             };
 
