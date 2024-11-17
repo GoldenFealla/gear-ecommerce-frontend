@@ -62,6 +62,9 @@ export class InformationComponent {
                 id: this.userInfo()?.id,
                 username: this.userInfo()?.username,
                 email: this.userInfo()?.email,
+                first_name: this.userInfo()?.first_name,
+                last_name: this.userInfo()?.last_name,
+                phone: this.userInfo()?.phone,
             });
         });
     }
@@ -73,6 +76,9 @@ export class InformationComponent {
         id: new FormControl({ value: '', disabled: true }),
         username: new FormControl({ value: '', disabled: true }),
         email: new FormControl({ value: '', disabled: true }),
+        first_name: new FormControl({ value: '', disabled: true }),
+        last_name: new FormControl({ value: '', disabled: true }),
+        phone: new FormControl({ value: '', disabled: true }),
     });
 
     handleOnCopyID() {

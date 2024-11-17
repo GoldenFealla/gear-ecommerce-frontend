@@ -117,6 +117,17 @@ export class RegisterDialogComponent implements OnInit {
                 Validators.max(20),
             ]),
             email: new FormControl('', [Validators.required, Validators.email]),
+            firstName: new FormControl('', [
+                Validators.required,
+                Validators.min(2),
+                Validators.max(30),
+            ]),
+            lastName: new FormControl('', [
+                Validators.required,
+                Validators.min(6),
+                Validators.max(30),
+            ]),
+            phone: new FormControl('', [Validators.required]),
             password: new FormControl('', [
                 Validators.required,
                 Validators.min(8),
@@ -126,23 +137,6 @@ export class RegisterDialogComponent implements OnInit {
         },
         [matchPasswordValidator]
     );
-
-    // getter
-    get username() {
-        return this.registerForm.get('username');
-    }
-
-    get email() {
-        return this.registerForm.get('email');
-    }
-
-    get password() {
-        return this.registerForm.get('password');
-    }
-
-    get confirmPassword() {
-        return this.registerForm.get('confirmPassword');
-    }
 
     showPassword = false;
     showConfirmPassword = false;
@@ -172,6 +166,9 @@ export class RegisterDialogComponent implements OnInit {
                 username: value.username!,
                 email: value.email!,
                 password: value.password!,
+                first_name: value.firstName!,
+                last_name: value.lastName!,
+                phone: value.phone!,
             };
 
             this._registerDialogStore.register(result);
