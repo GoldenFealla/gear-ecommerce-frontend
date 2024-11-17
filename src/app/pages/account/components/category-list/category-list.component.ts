@@ -47,6 +47,8 @@ export class CategoryListComponent implements OnInit {
         'information' | 'addresses' | 'bills'
     >();
 
+    _current: 'information' | 'addresses' | 'bills' = 'information';
+
     categories: Category[] = [
         {
             title: 'Information',
@@ -66,6 +68,8 @@ export class CategoryListComponent implements OnInit {
     ];
 
     handleOnChangeCategory(category: 'information' | 'addresses' | 'bills') {
+        if (this._current === category) return;
+        this._current = category;
         this.current.emit(category);
     }
 }
