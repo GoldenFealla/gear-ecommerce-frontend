@@ -3,12 +3,18 @@ import {
     ChangeDetectionStrategy,
     Component,
     effect,
+    inject,
     input,
 } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+    FormControl,
+    FormGroup,
+    ReactiveFormsModule,
+    Validators,
+} from '@angular/forms';
 
 // Models
-import { UserInfo } from '@shared/models/auth';
+import { UpdateUserForm, UserInfo } from '@shared/models/auth';
 
 // Spartan
 import { HlmSpinnerComponent } from '@spartan-ng/ui-spinner-helm';
@@ -29,6 +35,9 @@ import { bootstrapCopy, bootstrapPencilFill } from '@ng-icons/bootstrap-icons';
 
 // toast
 import { toast } from 'ngx-sonner';
+
+// Store
+import { InformationStore } from './information.store';
 
 @Component({
     selector: 'account-information',
@@ -52,10 +61,15 @@ import { toast } from 'ngx-sonner';
     ],
     templateUrl: './information.component.html',
     styleUrl: './information.component.scss',
-    providers: [provideIcons({ bootstrapCopy, bootstrapPencilFill })],
+    providers: [
+        provideIcons({ bootstrapCopy, bootstrapPencilFill }),
+        InformationStore,
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InformationComponent {
+    private readonly _informationStore = inject(InformationStore);
+
     constructor() {
         effect(() => {
             this.userInfoForm.patchValue({
@@ -69,16 +83,34 @@ export class InformationComponent {
         });
     }
 
+    readonly vm$ = this._informationStore.vm$;
     userInfo = input<UserInfo | null>(null);
     isEditing = false;
 
     userInfoForm = new FormGroup({
         id: new FormControl({ value: '', disabled: true }),
-        username: new FormControl({ value: '', disabled: true }),
-        email: new FormControl({ value: '', disabled: true }),
-        first_name: new FormControl({ value: '', disabled: true }),
-        last_name: new FormControl({ value: '', disabled: true }),
-        phone: new FormControl({ value: '', disabled: true }),
+        username: new FormControl({ value: '', disabled: true }, [
+            Validators.required,
+            Validators.min(6),
+            Validators.max(20),
+        ]),
+        email: new FormControl({ value: '', disabled: true }, [
+            Validators.required,
+            Validators.email,
+        ]),
+        first_name: new FormControl({ value: '', disabled: true }, [
+            Validators.required,
+            Validators.min(2),
+            Validators.max(30),
+        ]),
+        last_name: new FormControl({ value: '', disabled: true }, [
+            Validators.required,
+            Validators.min(2),
+            Validators.max(30),
+        ]),
+        phone: new FormControl({ value: '', disabled: true }, [
+            Validators.required,
+        ]),
     });
 
     handleOnCopyID() {
@@ -101,5 +133,25 @@ export class InformationComponent {
         this.userInfoForm.disable();
     }
 
-    handleOnSave() {}
+    handleOnSave() {
+        const value = this.userInfoForm.getRawValue();
+        if (this.userInfoForm.valid) {
+            const result: UpdateUserForm = {
+                username: value.username!,
+                email: value.email!,
+                first_name: value.first_name!,
+                last_name: value.last_name!,
+                phone: value.phone!,
+            };
+
+            this._informationStore.update({
+                id: value.id!,
+                form: result,
+                success: () => {
+                    this.isEditing = false;
+                    this.userInfoForm.disable();
+                },
+            });
+        }
+    }
 }
