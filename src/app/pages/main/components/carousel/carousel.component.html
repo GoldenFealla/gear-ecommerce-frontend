@@ -1,7 +1,6 @@
 <div class="flex items-center justify-center w-full h-40 sm:h-full" (mousedown)="dragging()" (mouseup)="stopDrag()">
     <hlm-carousel class="w-full h-full" [options]="{
         loop: true,
-        duration: 5,
     }" #carousel>
         <hlm-carousel-content class="w-full h-full ml-0" >
             @for (item of items; track item) {
