@@ -1,0 +1,21 @@
+@let vm = (vm$ | async)!;
+
+<ng-container>
+    <hlm-dialog>
+        <hlm-dialog-header>
+            <h3 hlmDialogTitle>Delete Address</h3>
+            <p hlmDialogDescription>Are you sure to delete this address?</p>
+        </hlm-dialog-header>
+        <hlm-dialog-footer>
+            <button hlmBtn type="button" (click)="handleOnCancel()" variant="ghost">Cancel</button>
+            <button hlmBtn type="submit" (click)="handleOnSubmit()" variant="destructive">
+                @if(vm.deleting) {
+                    <hlm-spinner class="w-5 h-5 mr-2" />
+                    Deleling
+                } @else { 
+                    Delele 
+                }
+            </button>
+        </hlm-dialog-footer>
+    </hlm-dialog>
+<ng-container>

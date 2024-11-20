@@ -1,38 +1,52 @@
 @let vm = (vm$ | async)!;
 
-<form [formGroup]="userInfoForm" action="">
-    <ng-container [ngTemplateOutlet]="idField"></ng-container>
-    <ng-container [ngTemplateOutlet]="usernameField"></ng-container>
-    <ng-container [ngTemplateOutlet]="emailField"></ng-container>
-    <ng-container [ngTemplateOutlet]="firstNameField"></ng-container>
-    <ng-container [ngTemplateOutlet]="lastNameField"></ng-container>
-    <ng-container [ngTemplateOutlet]="phoneField"></ng-container>
-    <ng-container [ngTemplateOutlet]="displayError"></ng-container>
-</form>
-
-@if (isEditing) {
-    <div class="w-full flex flex-row justify-end">
-        <button hlmBtn (click)="handleOnCancel()" variant="outline" class="mr-2">
-            Cancel
-        </button>
-        <button hlmBtn (click)="handleOnSave()">
-            @if(vm.updating) {
-                <hlm-spinner class="w-5 h-5" />
-            } @else { 
-                SAVE 
-            }
-        </button>
+<div hlmCard>
+    <div hlmCardHeader>
+        <h2 hlmCardTitle class="text-2xl">
+            <div class="flex flex-row items-center justify-between">
+                <span>Information</span>
+                <div class="h-10">
+                    @if (!isEditing) {
+                        <button hlmBtn (click)="handleOnChangeEdit()">
+                            <hlm-icon size='sm' name="bootstrapPencilFill" class="mr-2"></hlm-icon>
+                            Edit
+                        </button>
+                    }
+                </div>
+            </div>
+        </h2>
     </div>
-} 
-
-@if (!isEditing) {
-    <div class="w-full flex flex-row justify-end">
-        <button hlmBtn (click)="handleOnChangeEdit()">
-            <hlm-icon size='sm' name="bootstrapPencilFill" class="mr-2"></hlm-icon>
-            Edit
-        </button>
+    <div hlmCardContent>
+        <form [formGroup]="userInfoForm" action="">
+            <ng-container [ngTemplateOutlet]="idField"></ng-container>
+            <ng-container [ngTemplateOutlet]="usernameField"></ng-container>
+            <ng-container [ngTemplateOutlet]="emailField"></ng-container>
+            <ng-container [ngTemplateOutlet]="firstNameField"></ng-container>
+            <ng-container [ngTemplateOutlet]="lastNameField"></ng-container>
+            <ng-container [ngTemplateOutlet]="phoneField"></ng-container>
+            <ng-container [ngTemplateOutlet]="displayError"></ng-container>
+        </form>
+        <div class="h-10">
+            @if (isEditing) {
+                <div class="w-full flex flex-row justify-end">
+                    <button hlmBtn (click)="handleOnCancel()" variant="outline" class="mr-2">
+                        Cancel
+                    </button>
+                    <button hlmBtn (click)="handleOnSave()">
+                        @if(vm.updating) {
+                            <hlm-spinner class="w-5 h-5" />
+                        } @else { 
+                            SAVE 
+                        }
+                    </button>
+                </div>
+            } 
+        </div>
     </div>
-}
+</div>
+
+
+
 
 
 <ng-template #idField>

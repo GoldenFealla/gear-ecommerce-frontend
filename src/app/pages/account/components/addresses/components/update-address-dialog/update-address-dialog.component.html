@@ -1,0 +1,202 @@
+@let vm = (vm$ | async)!;
+
+<ng-container>
+    <hlm-dialog>
+        <hlm-dialog-header>
+            <h3 hlmDialogTitle>Add Address</h3>
+        </hlm-dialog-header>
+        <div class="py-4 grid gap-4">
+            <form [formGroup]="updateAddressForm" (ngSubmit)="handleOnSubmit()">
+                <ng-container [ngTemplateOutlet]="streetField"></ng-container>
+                <ng-container [ngTemplateOutlet]="regionField"></ng-container>
+                <ng-container [ngTemplateOutlet]="cityField"></ng-container>
+                <ng-container [ngTemplateOutlet]="postalField"></ng-container>
+                <ng-container [ngTemplateOutlet]="countryField"></ng-container>
+                <div class="w-full flex flex-row justify-end">
+                    <button type="button" hlmBtn (click)="handleOnCancel()" variant="outline" class="mr-2">
+                        Cancel
+                    </button>
+                    <button type="submit" hlmBtn (click)="handleOnSubmit()" [disabled]="updateAddressForm.pristine">
+                        @if(vm.updating) {
+                            <hlm-spinner class="w-5 h-5 mr-2" />
+                            Updating
+                        } @else { 
+                            Update 
+                        }
+                    </button>
+                </div>
+            </form>
+        </div>
+    </hlm-dialog>
+<ng-container>
+
+<ng-template #streetField>
+    <div class="flex flex-col sm:items-center sm:grid sm:grid-cols-10 gap-1 mt-2">
+        <label
+            hlmLabel
+            for="street"
+            class="text-left sm:text-right col-span-2 mr-2"
+            >Street*</label
+        >
+        <input
+            hlmInput
+            id="street"
+            type="text"
+            class="col-span-8"
+            [formControl]="updateAddressForm.controls.street"
+        />
+    </div>
+    <div class="flex flex-col sm:items-center sm:grid sm:grid-cols-10 gap-1 mb-2 min-h-6">
+        @let s = updateAddressForm.controls.street;
+
+        <div class="text-left sm:text-right col-span-2">
+            <span></span>
+        </div>
+
+        @if(s?.invalid && (s?.dirty || s?.touched)) {
+            <div class="col-span-8">
+                <span class="font-bold text-xs text-destructive">
+                    @if(s?.hasError("required")) { This field is required }
+                </span>
+            </div>
+        }
+    </div>
+</ng-template>
+
+<ng-template #regionField>
+    <div class="flex flex-col sm:items-center sm:grid sm:grid-cols-10 gap-1 mt-2">
+        <label
+            hlmLabel
+            for="region"
+            class="text-left sm:text-right col-span-2 mr-2"
+            >Region*</label
+        >
+        <input
+            hlmInput
+            id="region"
+            type="text"
+            class="col-span-8"
+            [formControl]="updateAddressForm.controls.region"
+        />
+    </div>
+    <div class="flex flex-col sm:items-center sm:grid sm:grid-cols-10 gap-1 mb-2 min-h-6">
+        @let r = updateAddressForm.controls.region;
+
+        <div class="text-left sm:text-right col-span-2">
+            <span></span>
+        </div>
+
+        @if(r?.invalid && (r?.dirty || r?.touched)) {
+            <div class="col-span-8">
+                <span class="font-bold text-xs text-destructive">
+                    @if(r?.hasError("required")) { This field is required }
+                </span>
+            </div>
+        }
+    </div>
+</ng-template>
+
+<ng-template #cityField>
+    <div class="flex flex-col sm:items-center sm:grid sm:grid-cols-10 gap-1 mt-2">
+        <label
+            hlmLabel
+            for="city"
+            class="text-left sm:text-right col-span-2 mr-2"
+            >City*</label
+        >
+        <input
+            hlmInput
+            id="city"
+            type="text"
+            class="col-span-8"
+            [formControl]="updateAddressForm.controls.city"
+        />
+    </div>
+    <div class="flex flex-col sm:items-center sm:grid sm:grid-cols-10 gap-1 mb-2 min-h-6">
+        @let c = updateAddressForm.controls.city;
+
+        <div class="text-left sm:text-right col-span-2">
+            <span></span>
+        </div>
+
+        @if(c?.invalid && (c?.dirty || c?.touched)) {
+            <div class="col-span-8">
+                <span class="font-bold text-xs text-destructive">
+                    @if(c?.hasError("required")) { This field is required }
+                </span>
+            </div>
+        }
+    </div>
+</ng-template>
+
+<ng-template #postalField>
+    <div class="flex flex-col sm:items-center sm:grid sm:grid-cols-10 gap-1 mt-2">
+        <label
+            hlmLabel
+            for="postal"
+            class="text-left sm:text-right col-span-2 mr-2"
+            >Postal*</label
+        >
+        <input
+            hlmInput
+            id="postal"
+            type="text"
+            class="col-span-8"
+            [formControl]="updateAddressForm.controls.postal"
+        />
+    </div>
+    <div class="flex flex-col sm:items-center sm:grid sm:grid-cols-10 gap-1 mb-2 min-h-6">
+        @let p = updateAddressForm.controls.postal;
+
+        <div class="text-left sm:text-right col-span-2">
+            <span></span>
+        </div>
+
+        @if(p?.invalid && (p?.dirty || p?.touched)) {
+            <div class="col-span-8">
+                <span class="font-bold text-xs text-destructive">
+                    @if(p?.hasError("required")) { This field is required }
+                </span>
+            </div>
+        }
+    </div>
+</ng-template>
+
+<ng-template #countryField>
+    <div class="flex flex-col sm:items-center sm:grid sm:grid-cols-10 gap-1 mt-2">
+        <label
+            hlmLabel
+            for="country"
+            class="text-left sm:text-right col-span-2 mr-2"
+            >Country*</label
+        >
+        <div class="col-span-8">
+            <brn-select class="inline-block w-full" placeholder="Select country" #countrySelect>
+                <hlm-select-trigger class="w-full">
+                    <hlm-select-value />
+                </hlm-select-trigger>
+                <hlm-select-content>
+                    @for (country of countryList; track $index) {
+                        <hlm-option [value]="country"> {{ country }} </hlm-option>
+                    }
+                </hlm-select-content>
+            </brn-select>
+        </div>
+        
+    </div>
+    <div class="flex flex-col sm:items-center sm:grid sm:grid-cols-10 gap-1 mb-2 min-h-6">
+        @let c = updateAddressForm.controls.country;
+
+        <div class="text-left sm:text-right col-span-2">
+            <span></span>
+        </div>
+
+        @if(c?.invalid && (c?.dirty || c?.touched)) {
+            <div class="col-span-8">
+                <span class="font-bold text-xs text-destructive">
+                    @if(c?.hasError("required")) { This field is required }
+                </span>
+            </div>
+        }
+    </div>
+</ng-template>

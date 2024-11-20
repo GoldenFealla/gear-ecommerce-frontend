@@ -19,30 +19,13 @@
             <ng-container [ngTemplateOutlet]="categoriesRef"></ng-container>
         </div>
         <div class="w-full self-stretch">
-            <div hlmCard>
-                <div hlmCardHeader>
-                    <h2 hlmCardTitle class="text-2xl">
-                        @if (currentCategory === 'information') {
-                        <span>Information</span>
-                        } @if (currentCategory === 'addresses') {
-                        <span>Addresses</span>
-                        } @if (currentCategory === 'bills') {
-                        <span>Your bill</span>
-                        }
-                    </h2>
-                </div>
-                <div hlmCardContent>
-                    @if (currentCategory === 'information') {
-                    <account-information
-                        [userInfo]="userInfo"
-                    ></account-information>
-                    } @if (currentCategory === 'addresses') {
-                    <account-addresses></account-addresses>
-                    } @if (currentCategory === 'bills') {
-                    <account-bills></account-bills>
-                    }
-                </div>
-            </div>
+            @if (currentCategory === 'information') {
+                <account-information [userInfo]="userInfo" ></account-information>
+            } @if (currentCategory === 'addresses') {
+                <account-addresses [userInfo]="userInfo"></account-addresses>
+            } @if (currentCategory === 'bills') {
+                <account-bills></account-bills>
+            }
         </div>
     </div>
 </ng-template>

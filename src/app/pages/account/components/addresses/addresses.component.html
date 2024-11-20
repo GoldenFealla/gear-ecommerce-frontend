@@ -1,2 +1,77 @@
+@let vm = (vm$ | async)!;
 
-Bills
+<div hlmCard>
+    <div hlmCardHeader>
+        <h2 hlmCardTitle class="text-2xl">
+            <div class="flex flex-row items-center justify-between">
+                <span>Address</span>
+                <div>
+                    <button hlmBtn (click)="handleOnAddAddress()">
+                        <hlm-icon name="bootstrapPlus"></hlm-icon>
+                        Address
+                    </button>
+                </div>
+            </div>
+        </h2>
+    </div>
+    <div hlmCardContent>
+        @if (vm.loading) {
+            <div class="w-full flex flex-col items-center justify-center">
+                <hlm-spinner />
+            </div>
+        }
+
+        @if (!vm.loading) {
+            @if (!vm.addresses) {
+                <span>No addresses found</span>
+            }
+    
+            @if (vm.addresses) {
+                @for (address of vm.addresses; track $index) {
+                    <ng-container 
+                        [ngTemplateOutlet]="addressCard" 
+                        [ngTemplateOutletContext]="{ address: address, order: $index }"
+                    >
+                    </ng-container>
+                }
+            }
+        }
+    </div>
+</div>
+
+<ng-template #addressCard let-address="address" let-order="order">
+    <div hlmCard class="mb-2">
+        <div hlmCardHeader>
+            <h2 hlmCardTitle class="text-xl">
+                <div class="flex flex-row items-center justify-between">
+                    <span>Address {{ order + 1 }}</span>
+                    <span>
+                        <button 
+                            hlmBtn 
+                            class="h-8 w-8 sm:w-min mx-0.5 px-2 sm:px-4 py-2" 
+                            variant="outline" 
+                            (click)="handleOnUpdateAddress(address)"
+                        >
+                            <hlm-icon class="sm:mr-1" size="xs" name="bootstrapPencilFill"></hlm-icon>
+                            <span class="hidden sm:inline"> Edit </span>
+                        </button>
+                        <button 
+                            hlmBtn 
+                            class="h-8 w-8 sm:w-min mx-0.5 px-2 sm:px-4 py-2" 
+                            variant="ghost"
+                            (click)="handleOnDeleteAddress(address.id)"
+                        >
+                            <hlm-icon class="sm:mr-1" size="xs" name="bootstrapTrash"></hlm-icon>
+                            <span class="hidden sm:inline"> Delete </span>
+                        </button>
+                    </span>
+                </div>
+            </h2>
+        </div>
+        <div hlmCardContent>
+            <span>
+                {{ address.street }}, {{ address.region }}, {{ address.city }}, {{ address.country }}
+            </span>
+        </div>
+    </div>
+</ng-template>

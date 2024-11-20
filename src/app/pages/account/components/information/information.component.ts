@@ -28,6 +28,12 @@ import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
 import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
+import {
+    HlmCardDirective,
+    HlmCardHeaderDirective,
+    HlmCardTitleDirective,
+    HlmCardContentDirective,
+} from '@spartan-ng/ui-card-helm';
 
 // Icon
 import { provideIcons } from '@ng-icons/core';
@@ -52,6 +58,11 @@ import { InformationStore } from './information.store';
         HlmAlertDirective,
         HlmAlertIconDirective,
         HlmAlertTitleDirective,
+
+        HlmCardDirective,
+        HlmCardHeaderDirective,
+        HlmCardTitleDirective,
+        HlmCardContentDirective,
 
         HlmButtonDirective,
         HlmIconComponent,
