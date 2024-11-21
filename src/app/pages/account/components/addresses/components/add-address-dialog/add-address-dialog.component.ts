@@ -74,10 +74,7 @@ export class AddAddressDialogComponent {
     vm$ = this._addAddressDialogStore.vm$;
 
     addAddressForm = new FormGroup({
-        street: new FormControl('', [Validators.required]),
-        region: new FormControl('', [Validators.required]),
-        city: new FormControl('', [Validators.required]),
-        postal: new FormControl('', [Validators.required]),
+        address: new FormControl('', [Validators.required]),
         country: new FormControl('', [Validators.required]),
     });
 
@@ -106,10 +103,7 @@ export class AddAddressDialogComponent {
 
         if (this.addAddressForm.valid) {
             const form: AddAddressForm = {
-                street: value.street!,
-                region: value.region!,
-                city: value.city!,
-                postal: value.postal!,
+                address: value.address!,
                 country: value.country!,
                 user_id: this._dialogContext.user_id,
             };

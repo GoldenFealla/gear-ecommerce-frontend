@@ -76,24 +76,17 @@ export class UpdateAddressDialogComponent {
     vm$ = this._updateAddressDialogStore.vm$;
 
     updateAddressForm = new FormGroup({
-        street: new FormControl('', [Validators.required]),
-        region: new FormControl('', [Validators.required]),
-        city: new FormControl('', [Validators.required]),
-        postal: new FormControl('', [Validators.required]),
+        address: new FormControl('', [Validators.required]),
         country: new FormControl('', [Validators.required]),
     });
 
     @ViewChild('countrySelect') countrySelect: BrnSelectComponent | undefined;
 
     ngOnInit() {
-        const { street, region, city, postal, country } =
-            this._dialogContext.address;
+        const { address, country } = this._dialogContext.address;
 
         this.updateAddressForm.patchValue({
-            street,
-            region,
-            city,
-            postal,
+            address,
             country,
         });
 
@@ -128,10 +121,7 @@ export class UpdateAddressDialogComponent {
 
         if (this.updateAddressForm.valid) {
             const form: UpdateAddressForm = {
-                street: value.street!,
-                region: value.region!,
-                city: value.city!,
-                postal: value.postal!,
+                address: value.address!,
                 country: value.country!,
             };
 

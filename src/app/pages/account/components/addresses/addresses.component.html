@@ -24,9 +24,9 @@
         @if (!vm.loading) {
             @if (!vm.addresses) {
                 <span>No addresses found</span>
-            }
-    
-            @if (vm.addresses) {
+            } @else if (vm.addresses.length === 0) {
+                <span>No addresses found</span>
+            } @else if (vm.addresses.length > 0) {
                 @for (address of vm.addresses; track $index) {
                     <ng-container 
                         [ngTemplateOutlet]="addressCard" 
@@ -70,7 +70,7 @@
         </div>
         <div hlmCardContent>
             <span>
-                {{ address.street }}, {{ address.region }}, {{ address.city }}, {{ address.country }}
+                {{ address.address }}, {{ address.country }}
             </span>
         </div>
     </div>
