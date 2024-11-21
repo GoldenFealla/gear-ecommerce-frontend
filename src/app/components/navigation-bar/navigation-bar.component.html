@@ -1,13 +1,13 @@
 @let userInfo = userInfo$ | async;
 
-<div class="flex flex-row justify-between px-2 py-3 xl:p-3">
+<div class="flex flex-row justify-between p-3">
     <span class="flex flex-row items-center cursor-pointer">
-        <h1 class="font-bold text-xl" [routerLink]="['/']">
+        <h1 class="font-bold text-xl pl-1" [routerLink]="['/']">
             GEAR ECOMMERCE
         </h1>
     </span>
     <span class="flex flex-row items-center">
-        <span class="m-1">
+        <span>
             <button hlmBtn size="icon" variant='ghost' (click)="toggleTheme()">
                 @if((theme$ | async) === "light") {
                     <hlm-icon size="sm" name="lucideSun"></hlm-icon>
@@ -16,12 +16,12 @@
                 }
             </button>
         </span>
-        <span class="m-1">
+        <span>
             <button hlmBtn size="icon" variant='ghost'>
                 <hlm-icon size="sm" name="lucideShoppingCart"></hlm-icon>
             </button>
         </span>
-        <span class="m-1">
+        <span>
             @if(userInfo) {
                 <ng-container [ngTemplateOutlet]="avatar"></ng-container>
             } @else {
