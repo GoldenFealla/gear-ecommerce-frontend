@@ -1,0 +1,15 @@
+<hlm-menu class="w-56">
+    <hlm-menu-label>Category</hlm-menu-label>
+    <hlm-menu-separator />
+    <hlm-menu-group>
+        @for (category of categories; track $index) {
+            <button 
+                hlmMenuItem 
+                (triggered)="handleOnChangeCategory(category)"
+            >
+                <hlm-icon [name]="category.icon" hlmMenuIcon />
+                <span>{{ category.title }}</span>
+            </button>
+        }
+    </hlm-menu-group>
+</hlm-menu>

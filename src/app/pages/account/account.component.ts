@@ -22,11 +22,11 @@ import { provideIcons } from '@ng-icons/core';
 import { bootstrapList, bootstrapPlus } from '@ng-icons/bootstrap-icons';
 import { CategoryListMobileComponent } from './components/category-list-mobile/category-list-mobile.component';
 
-export type AccountCategory = 'information' | 'addresses' | 'bills';
-export type Category = {
+export type AccountCategoryType = 'information' | 'addresses' | 'bills';
+export type AccountCategory = {
     title: string;
     icon: string;
-    to: AccountCategory;
+    to: AccountCategoryType;
 };
 
 @Component({
@@ -61,7 +61,7 @@ export class AccountComponent {
         (state: { auth: AuthState }) => state.auth.userInfo
     );
 
-    categories: Category[] = [
+    categories: AccountCategory[] = [
         {
             title: 'Information',
             icon: 'bootstrapPerson',
@@ -79,5 +79,5 @@ export class AccountComponent {
         },
     ];
 
-    currentCategory: AccountCategory = 'information';
+    currentCategory: AccountCategoryType = 'information';
 }

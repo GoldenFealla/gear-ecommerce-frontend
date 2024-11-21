@@ -5,6 +5,7 @@
         variant="ghost"
         class="w-full justify-start"
         brnHoverCardTrigger
+        (click)="handleOnChangeCategory(category)"
     >
         <hlm-icon size="sm" class="mr-4" [name]="category.icon" />
         {{ category.title }}

@@ -6,6 +6,26 @@
 <ng-container [ngTemplateOutlet]="loading"></ng-container>
 }
 
+<div class="sm:hidden absolute bottom-5 right-5">
+    <button 
+        hlmBtn 
+        [brnMenuTriggerFor]="menu"
+        size="icon" 
+        variant="default"
+    >
+        <hlm-icon size="sm" name="bootstrapList"></hlm-icon>
+    </button>
+</div>
+
+<ng-template #menu>
+    <div>
+        <main-category-list-mobile 
+            [categories]="categories"
+            [(current)]="currentCategory"
+        ></main-category-list-mobile>
+    </div>
+</ng-template>
+
 <ng-template #loading>
     <div class="w-full h-full flex flex-col justify-center items-center">
         <hlm-spinner />
@@ -14,6 +34,7 @@
 </ng-template>
 
 <ng-template #body>
+    {{ currentCategory.title }}
     <div class="flex flex-row sm:space-x-4">
         <div class="hidden sm:block">
             <ng-container [ngTemplateOutlet]="categoriesRef"></ng-container>
@@ -26,7 +47,7 @@
 </ng-template>
 
 <ng-template #categoriesRef>
-    <category-list></category-list>
+    <main-category-list [categories]="categories" [(current)]="currentCategory"></main-category-list>
 </ng-template>
 <ng-template #deals>
     <carousel></carousel>

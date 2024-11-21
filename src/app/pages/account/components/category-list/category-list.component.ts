@@ -21,7 +21,10 @@ import {
     bootstrapBag,
 } from '@ng-icons/bootstrap-icons';
 
-import { AccountCategory, Category } from '@pages/account/account.component';
+import {
+    AccountCategory,
+    AccountCategoryType,
+} from '@pages/account/account.component';
 
 @Component({
     selector: 'account-category-list',
@@ -40,11 +43,11 @@ import { AccountCategory, Category } from '@pages/account/account.component';
 export class CategoryListComponent implements OnInit {
     ngOnInit(): void {}
 
-    @Input() categories!: Category[];
-    @Input() current!: AccountCategory;
-    @Output() currentChange = new EventEmitter<AccountCategory>();
+    @Input() categories!: AccountCategory[];
+    @Input() current!: AccountCategoryType;
+    @Output() currentChange = new EventEmitter<AccountCategoryType>();
 
-    handleOnChangeCategory(category: AccountCategory) {
+    handleOnChangeCategory(category: AccountCategoryType) {
         if (this.current === category) return;
         this.currentChange.emit(category);
     }
