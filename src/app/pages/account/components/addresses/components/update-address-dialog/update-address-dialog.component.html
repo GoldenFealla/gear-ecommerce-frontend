@@ -36,15 +36,15 @@
         <label
             hlmLabel
             for="address"
-            class="h-10 text-left sm:text-right col-span-2 mr-2 py-3"
+            class="sm:h-10 text-left sm:text-right col-span-2 mr-2 sm:py-3"
             >Address*</label
         >
         <textarea
             hlmInput
             id="street"
             type="text"
-            class="h-16 col-span-8"
-            [rows]="4"
+            class="w-full h-24 col-span-8"
+            [rows]="6"
             [formControl]="updateAddressForm.controls.address"
         ></textarea>
     </div>
