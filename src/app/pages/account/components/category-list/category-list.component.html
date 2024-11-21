@@ -2,7 +2,7 @@
     @for (category of categories;track $index) {
     <button
         hlmBtn
-        [variant]="_current === category.to ? 'default' : 'ghost'"
+        [variant]="current === category.to ? 'default' : 'ghost'"
         class="w-full justify-start"
         brnHoverCardTrigger
         (click)="handleOnChangeCategory(category.to)"

@@ -1,17 +1,22 @@
-import { CommonModule } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     Component,
     EventEmitter,
     Input,
     Output,
-    type OnInit,
 } from '@angular/core';
 
 // Spartan
-import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
-import { HlmCardDirective } from '@spartan-ng/ui-card-helm';
+import {
+    HlmMenuComponent,
+    HlmMenuGroupComponent,
+    HlmMenuItemDirective,
+    HlmMenuItemIconDirective,
+    HlmMenuLabelComponent,
+    HlmMenuSeparatorComponent,
+    HlmMenuShortcutComponent,
+} from '@spartan-ng/ui-menu-helm';
 
 // Icon
 import { provideIcons } from '@ng-icons/core';
@@ -19,25 +24,39 @@ import {
     bootstrapPerson,
     bootstrapGeo,
     bootstrapBag,
+    bootstrapArrowLeft,
 } from '@ng-icons/bootstrap-icons';
 
+// Parents
 import { AccountCategory, Category } from '@pages/account/account.component';
 
 @Component({
-    selector: 'account-category-list',
+    selector: 'account-category-list-mobile',
     standalone: true,
     imports: [
-        CommonModule,
-        HlmButtonDirective,
         HlmIconComponent,
-        HlmCardDirective,
+
+        HlmMenuComponent,
+        HlmMenuGroupComponent,
+        HlmMenuItemDirective,
+        HlmMenuItemIconDirective,
+        HlmMenuLabelComponent,
+        HlmMenuSeparatorComponent,
+        HlmMenuShortcutComponent,
     ],
-    templateUrl: './category-list.component.html',
-    styleUrl: './category-list.component.scss',
-    providers: [provideIcons({ bootstrapPerson, bootstrapGeo, bootstrapBag })],
+    templateUrl: './category-list-mobile.component.html',
+    styleUrl: './category-list-mobile.component.scss',
+    providers: [
+        provideIcons({
+            bootstrapPerson,
+            bootstrapGeo,
+            bootstrapBag,
+            bootstrapArrowLeft,
+        }),
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CategoryListComponent implements OnInit {
+export class CategoryListMobileComponent {
     ngOnInit(): void {}
 
     @Input() categories!: Category[];

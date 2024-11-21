@@ -3,6 +3,9 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 // Spartan
 import { HlmSpinnerComponent } from '@spartan-ng/ui-spinner-helm';
+import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
+import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
+import { BrnMenuTriggerDirective } from '@spartan-ng/ui-menu-brain';
 
 // Components
 import { CategoryListComponent } from './components/category-list/category-list.component';
@@ -16,7 +19,15 @@ import { AuthState } from '@store/auth/auth.state';
 
 // Icon
 import { provideIcons } from '@ng-icons/core';
-import { bootstrapPlus } from '@ng-icons/bootstrap-icons';
+import { bootstrapList, bootstrapPlus } from '@ng-icons/bootstrap-icons';
+import { CategoryListMobileComponent } from './components/category-list-mobile/category-list-mobile.component';
+
+export type AccountCategory = 'information' | 'addresses' | 'bills';
+export type Category = {
+    title: string;
+    icon: string;
+    to: AccountCategory;
+};
 
 @Component({
     selector: 'app-account',
@@ -26,14 +37,21 @@ import { bootstrapPlus } from '@ng-icons/bootstrap-icons';
 
         HlmSpinnerComponent,
 
+        HlmButtonDirective,
+
+        HlmIconComponent,
+
+        BrnMenuTriggerDirective,
+
         CategoryListComponent,
+        CategoryListMobileComponent,
         InformationComponent,
         AddressesComponent,
         BillsComponent,
     ],
     templateUrl: './account.component.html',
     styleUrl: './account.component.scss',
-    providers: [provideIcons({ bootstrapPlus })],
+    providers: [provideIcons({ bootstrapPlus, bootstrapList })],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccountComponent {
@@ -43,9 +61,23 @@ export class AccountComponent {
         (state: { auth: AuthState }) => state.auth.userInfo
     );
 
-    currentCategory = 'information';
+    categories: Category[] = [
+        {
+            title: 'Information',
+            icon: 'bootstrapPerson',
+            to: 'information',
+        },
+        {
+            title: 'Addresses',
+            icon: 'bootstrapGeo',
+            to: 'addresses',
+        },
+        {
+            title: 'Your Bill',
+            icon: 'bootstrapBag',
+            to: 'bills',
+        },
+    ];
 
-    handleCategory(current: 'information' | 'addresses' | 'bills') {
-        this.currentCategory = current;
-    }
+    currentCategory: AccountCategory = 'information';
 }

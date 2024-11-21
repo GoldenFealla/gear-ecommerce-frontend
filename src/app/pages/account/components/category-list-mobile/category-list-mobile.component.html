@@ -1,0 +1,21 @@
+<hlm-menu class="w-56">
+    <hlm-menu-label>Category</hlm-menu-label>
+    <hlm-menu-separator />
+    <hlm-menu-group>
+        @for (category of categories; track $index) {
+            <button 
+                hlmMenuItem 
+                (triggered)="handleOnChangeCategory(category.to)"
+                [disabled]="category.to === current"
+            >
+                <hlm-icon [name]="category.icon" hlmMenuIcon />
+                <span>{{ category.title }}</span>
+                @if (category.to === current) {
+                    <hlm-menu-shortcut>
+                        <hlm-icon name="bootstrapArrowLeft" hlmMenuIcon />
+                    </hlm-menu-shortcut>
+                }
+            </button>
+        }
+    </hlm-menu-group>
+</hlm-menu>
