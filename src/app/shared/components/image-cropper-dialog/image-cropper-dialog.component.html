@@ -1,0 +1,26 @@
+<hlm-dialog>
+    <hlm-dialog-header>
+        <h3 hlmDialogTitle>Crop image</h3>
+        <p hlmDialogDescription>Crop image to the zone you want to see</p>
+    </hlm-dialog-header>
+    <div class="p-4">
+        <image-cropper
+            [imageFile]="imageFile"
+            [maintainAspectRatio]="true"
+            [aspectRatio]="1"
+            format="jpeg"
+            (imageCropped)="imageCropped($event)"
+            (imageLoaded)="imageLoaded($event)"
+            (cropperReady)="cropperReady()"
+            (loadImageFailed)="loadImageFailed()"
+        ></image-cropper>
+    </div>
+    <hlm-dialog-footer>
+        <div>
+            <button hlmBtn type="button" (click)="handleOnCancel()" variant="ghost">Cancel</button>
+            <button hlmBtn type="submit" (click)="handleOnSave()" variant="default">
+                Save
+            </button>
+        </div>
+    </hlm-dialog-footer>
+</hlm-dialog>

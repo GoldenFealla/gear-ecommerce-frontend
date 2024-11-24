@@ -20,7 +20,7 @@ import { ProductCardComponent } from './components/product-card/product-card.com
 import { ProductsService } from './services/products.service';
 
 // Model
-import { Product } from '@shared/models/product';
+import { Product } from '@shared/models/gear';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { ActivatedRoute } from '@angular/router';
 

@@ -21,6 +21,14 @@ export const routes: Routes = [
             ),
     },
     {
+        path: 'admin',
+        canActivate: [authenticatedGuard],
+        loadComponent: () =>
+            import('@pages/admin/admin.component').then(
+                (c) => c.AdminComponent
+            ),
+    },
+    {
         path: 'main',
         redirectTo: '',
         pathMatch: 'full',

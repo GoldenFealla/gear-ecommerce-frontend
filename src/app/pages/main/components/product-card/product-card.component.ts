@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 
 // Model
-import { Product } from '@shared/models/product';
+import { Product } from '@shared/models/gear';
 
 // Spartan
 import {
