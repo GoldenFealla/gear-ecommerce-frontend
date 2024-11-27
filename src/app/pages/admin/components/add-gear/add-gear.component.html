@@ -114,6 +114,143 @@
     </div>
 </ng-template>
 
+<<<<<<< HEAD
+=======
+<ng-template #brandField>
+    <div class="flex flex-col sm:items-center sm:grid sm:grid-cols-10 gap-1 mt-2">
+        <label hlmLabel for="brand-field" class="text-left sm:text-right sm:col-span-2 mr-2"
+            >Brand: </label
+        >
+        <input
+            hlmInput
+            id="brand-field"
+            type="text"
+            class="col-span-8"
+            [formControl]="addGearForm.controls.brand"
+        />
+    </div>
+    <div class="sm:items-center sm:grid sm:grid-cols-10 gap-1 mb-2 min-h-6">
+        @let b = addGearForm.controls.brand;
+
+        <div class="text-right col-span-2">
+            <span></span>
+        </div>
+
+        @if(b?.invalid && (b?.dirty || b?.touched)) {
+        <div class="col-span-8">
+            <span class="font-bold text-xs text-destructive">
+                @if(b?.hasError("required")) { 
+                    This field is required 
+                } 
+            </span>
+        </div>
+        }
+    </div>
+</ng-template>
+
+<ng-template #priceField>
+    <div class="flex flex-col sm:items-center sm:grid sm:grid-cols-10 gap-1 mt-2">
+        <label hlmLabel for="price-field" class="text-left sm:text-right sm:col-span-2 mr-2"
+            >Price: </label
+        >
+        <input
+            hlmInput
+            id="price-field"
+            type="text"
+            class="col-span-8"
+            [formControl]="addGearForm.controls.price"
+        />
+    </div>
+    <div class="sm:items-center sm:grid sm:grid-cols-10 gap-1 mb-2 min-h-6">
+        @let p = addGearForm.controls.price;
+
+        <div class="text-right col-span-2">
+            <span></span>
+        </div>
+
+        @if(p?.invalid && (p?.dirty || p?.touched)) {
+        <div class="col-span-8">
+            <span class="font-bold text-xs text-destructive">
+                @if(p?.hasError("required")) { 
+                    This field is required 
+                } @else if (p?.hasError("pattern")) {
+                    This field is number only and can't start with 0
+                }
+            </span>
+        </div>
+        }
+    </div>
+</ng-template>
+
+<ng-template #discountField>
+    <div class="flex flex-col sm:items-center sm:grid sm:grid-cols-10 gap-1 mt-2">
+        <label hlmLabel for="discount-field" class="text-left sm:text-right sm:col-span-2 mr-2"
+            >Discount: </label
+        >
+        <input
+            hlmInput
+            id="discount-field"
+            type="text"
+            class="col-span-8"
+            [formControl]="addGearForm.controls.discount"
+        />
+    </div>
+    <div class="sm:items-center sm:grid sm:grid-cols-10 gap-1 mb-2 min-h-6">
+        @let d = addGearForm.controls.discount;
+
+        <div class="text-right col-span-2">
+            <span></span>
+        </div>
+
+        @if(d?.invalid && (d?.dirty || d?.touched)) {
+        <div class="col-span-8">
+            <span class="font-bold text-xs text-destructive">
+                @if(d?.hasError("required")) { 
+                    This field is required 
+                } @else if (d?.hasError("pattern")) {
+                    This field is number only and can't start with 0
+                }
+            </span>
+        </div>
+        }
+    </div>
+</ng-template>
+
+<ng-template #quantityField>
+    <div class="flex flex-col sm:items-center sm:grid sm:grid-cols-10 gap-1 mt-2">
+        <label hlmLabel for="quantity-field" class="text-left sm:text-right sm:col-span-2 mr-2"
+            >Quantity: </label
+        >
+        <input
+            hlmInput
+            id="quantity-field"
+            type="text"
+            class="col-span-8"
+            [formControl]="addGearForm.controls.quantity"
+        />
+    </div>
+    <div class="sm:items-center sm:grid sm:grid-cols-10 gap-1 mb-2 min-h-6">
+        @let q = addGearForm.controls.quantity;
+
+        <div class="text-right col-span-2">
+            <span></span>
+        </div>
+
+        @if(q?.invalid && (q?.dirty || q?.touched)) {
+        <div class="col-span-8">
+            <span class="font-bold text-xs text-destructive">
+                @if(q?.hasError("required")) { 
+                    This field is required 
+                } @else if (q?.hasError("pattern")) {
+                    This field is number only and can't start with 0
+                }
+            </span>
+        </div>
+        }
+    </div>
+</ng-template>
+
+>>>>>>> ed8177e (fix(admin): change regex for number field)
 <ng-template #displayError>
     @if(!vm.success && vm.message) {
     <div hlmAlert variant="destructive" class="mb-5">

@@ -91,7 +91,7 @@ export class AddGearComponent {
 
     vm$ = this._addGearStore.vm$;
 
-    numberPattern = /^[0-9]+$/;
+    numberPattern = /^[1-9][0-9]*$/;
     addGearForm = new FormGroup({
         name: new FormControl('', [Validators.required]),
         type: new FormControl('', [Validators.required]),
