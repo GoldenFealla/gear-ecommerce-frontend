@@ -47,6 +47,10 @@ import { AddGearForm, GearType, GearTypeList } from '@shared/models/gear';
 import { ImageCropperDialogComponent } from '@shared/components/image-cropper-dialog/image-cropper-dialog.component';
 import { TextFormFieldComponent } from '@shared/components/text-form-field/text-form-field.component';
 import { NumberFormFieldComponent } from '@shared/components/number-form-field/number-form-field.component';
+import {
+    SelectFormFieldComponent,
+    SelectType,
+} from '@shared/components/select-form-field/select-form-field.component';
 
 @Component({
     selector: 'admin-add-gear',
@@ -73,12 +77,9 @@ import { NumberFormFieldComponent } from '@shared/components/number-form-field/n
         HlmLabelDirective,
         HlmInputDirective,
 
-        BrnSelectComponent,
-        BrnSelectImports,
-        HlmSelectImports,
-
         TextFormFieldComponent,
         NumberFormFieldComponent,
+        SelectFormFieldComponent,
     ],
     templateUrl: './add-gear.component.html',
     styleUrl: './add-gear.component.scss',
@@ -102,26 +103,10 @@ export class AddGearComponent {
         image: new FormControl('', [Validators.required]),
     });
 
-    gearTypeList: string[] = [];
+    gearTypeList: SelectType[] = [];
 
     ngOnInit() {
-        this.gearTypeList = [...GearTypeList];
-    }
-
-    @ViewChild('gearTypeSelect') gearTypeSelect: BrnSelectComponent | undefined;
-
-    ngAfterViewInit() {
-        if (this.gearTypeSelect) {
-            this.gearTypeSelect.registerOnChange((type: string) => {
-                this.addGearForm.patchValue({
-                    type,
-                });
-            });
-
-            this.gearTypeSelect.registerOnTouched(() => {
-                this.addGearForm.controls.type.markAsTouched();
-            });
-        }
+        this.gearTypeList = GearTypeList.map((e) => ({ label: e, value: e }));
     }
 
     imageReview: string | null = null;

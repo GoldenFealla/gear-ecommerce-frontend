@@ -33,7 +33,7 @@
     </div>
 
     @if(c.invalid && (c.dirty || c.touched)) {
-    <div class="col-span-7">
+    <div [ngClass]="'col-span-' + inputSpan().toString()">
         <span class="font-bold text-xs text-destructive">
             @if (c.hasError('pattern')) { 
                 This field only contain number

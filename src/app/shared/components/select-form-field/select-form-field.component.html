@@ -1,0 +1,48 @@
+<div 
+    class="flex flex-col sm:items-center sm:grid gap-1 mt-2"
+    [ngClass]="'sm:grid-cols-' + col().toString()"
+>
+    <label 
+        hlmLabel 
+        class="text-left sm:text-right mr-2" 
+        [ngClass]="'col-span-' + labelSpan().toString()"
+    >
+    {{ label() }} :
+    </label>
+    <div class="col-span-8">
+        <brn-select class="inline-block w-full" placeholder="Select gearType" #select>
+            <hlm-select-trigger class="w-full">
+                <hlm-select-value />
+            </hlm-select-trigger>
+            <hlm-select-content>
+                @for (item of list(); track $index) {
+                    <hlm-option [value]="item.value"> {{ item.label }} </hlm-option>
+                }
+            </hlm-select-content>
+        </brn-select>
+    </div>
+    
+</div>
+<div 
+    class="flex flex-col sm:items-center sm:grid gap-1 mb-2 min-h-6"
+    [ngClass]="'sm:grid-cols-' + col().toString()"
+>
+    @let c = control();
+
+    <div 
+        class="text-left sm:text-right"
+        [ngClass]="'col-span-' + labelSpan().toString()"
+    >
+        @if(errorLabel()) {
+            <span>{{ errorLabel() }}</span>
+        }
+    </div>
+
+    @if(c?.invalid && (c?.dirty || c?.touched)) {
+        <div [ngClass]="'col-span-' + inputSpan().toString()">
+            <span class="font-bold text-xs text-destructive">
+                @if(c?.hasError("required")) { This field is required }
+            </span>
+        </div>
+    }
+</div>
