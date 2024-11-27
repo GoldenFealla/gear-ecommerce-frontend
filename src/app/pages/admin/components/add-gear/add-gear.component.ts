@@ -45,6 +45,8 @@ import { AddGearForm, GearType, GearTypeList } from '@shared/models/gear';
 
 // Shared Component
 import { ImageCropperDialogComponent } from '@shared/components/image-cropper-dialog/image-cropper-dialog.component';
+import { TextFormFieldComponent } from '@shared/components/text-form-field/text-form-field.component';
+import { NumberFormFieldComponent } from '@shared/components/number-form-field/number-form-field.component';
 
 @Component({
     selector: 'admin-add-gear',
@@ -74,6 +76,9 @@ import { ImageCropperDialogComponent } from '@shared/components/image-cropper-di
         BrnSelectComponent,
         BrnSelectImports,
         HlmSelectImports,
+
+        TextFormFieldComponent,
+        NumberFormFieldComponent,
     ],
     templateUrl: './add-gear.component.html',
     styleUrl: './add-gear.component.scss',
@@ -91,18 +96,9 @@ export class AddGearComponent {
         name: new FormControl('', [Validators.required]),
         type: new FormControl('', [Validators.required]),
         brand: new FormControl('', [Validators.required]),
-        price: new FormControl('', [
-            Validators.required,
-            Validators.pattern(this.numberPattern),
-        ]),
-        discount: new FormControl('', [
-            Validators.required,
-            Validators.pattern(this.numberPattern),
-        ]),
-        quantity: new FormControl('', [
-            Validators.required,
-            Validators.pattern(this.numberPattern),
-        ]),
+        price: new FormControl(0, [Validators.required]),
+        discount: new FormControl(0, [Validators.required]),
+        quantity: new FormControl(0, [Validators.required]),
         image: new FormControl('', [Validators.required]),
     });
 
@@ -166,9 +162,9 @@ export class AddGearComponent {
                 name: value.name!,
                 type: value.type! as unknown as GearType,
                 brand: value.brand!,
-                price: parseFloat(value.price!),
-                discount: parseFloat(value.discount!),
-                quantity: parseFloat(value.quantity!),
+                price: value.price!,
+                discount: value.discount!,
+                quantity: value.quantity!,
             };
 
             this._addGearStore.add({ form });

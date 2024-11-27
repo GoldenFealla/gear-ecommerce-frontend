@@ -1,0 +1,52 @@
+<div 
+    class="flex flex-col sm:items-center sm:grid gap-1 mt-2"
+    [ngClass]="'sm:grid-cols-' + col().toString()"
+>
+    <label 
+        hlmLabel 
+        class="text-left sm:text-right mr-2" 
+        [ngClass]="'col-span-' + labelSpan().toString()"
+    >
+        {{ label() }} :
+    </label>
+    <input 
+        hlmInput 
+        type="text" 
+        [ngClass]="'col-span-' + inputSpan().toString()" 
+        [formControl]="control()" 
+    />
+</div>
+<div 
+    class="flex flex-col sm:items-center sm:grid gap-1 mb-2 min-h-6"
+    [ngClass]="'sm:grid-cols-' + col().toString()"
+>
+    @let c = control();
+
+    <div 
+        class="text-left sm:text-right"
+        [ngClass]="'col-span-' + labelSpan().toString()"
+    >
+        @if(errorLabel()) {
+            <span>{{ errorLabel() }}</span>
+        }
+    </div>
+
+    @if(c.invalid && (c.dirty || c.touched)) {
+    <div class="col-span-7">
+        <span class="font-bold text-xs text-destructive">
+            @if (c.hasError('required')) { 
+                This field is required 
+            }
+            @if (c.hasError('minlength')) { 
+                The {{ label() }} must be have more {{ c.errors?.["minlength"] }} characters long 
+            }
+            @if (c.hasError('maxlength')) { 
+                The {{ label() }} must be have less {{ c.errors?.["maxlength"] }} characters long 
+            }
+            @if (c.hasError('email')) {
+                Invalid email 
+            }
+        </span>
+    </div>
+    }
+</div>
