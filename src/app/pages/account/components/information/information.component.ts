@@ -44,6 +44,7 @@ import { toast } from 'ngx-sonner';
 
 // Store
 import { InformationStore } from './information.store';
+import { TextFormFieldComponent } from '@shared/components/text-form-field/text-form-field.component';
 
 @Component({
     selector: 'account-information',
@@ -69,6 +70,8 @@ import { InformationStore } from './information.store';
 
         HlmLabelDirective,
         HlmInputDirective,
+
+        TextFormFieldComponent,
     ],
     templateUrl: './information.component.html',
     styleUrl: './information.component.scss',
@@ -93,8 +96,8 @@ export class InformationComponent {
         id: new FormControl({ value: '', disabled: true }),
         username: new FormControl({ value: '', disabled: true }, [
             Validators.required,
-            Validators.min(6),
-            Validators.max(20),
+            Validators.minLength(6),
+            Validators.maxLength(20),
         ]),
         email: new FormControl({ value: '', disabled: true }, [
             Validators.required,
@@ -102,13 +105,13 @@ export class InformationComponent {
         ]),
         firstName: new FormControl({ value: '', disabled: true }, [
             Validators.required,
-            Validators.min(2),
-            Validators.max(30),
+            Validators.minLength(2),
+            Validators.maxLength(30),
         ]),
         lastName: new FormControl({ value: '', disabled: true }, [
             Validators.required,
-            Validators.min(2),
-            Validators.max(30),
+            Validators.minLength(2),
+            Validators.maxLength(30),
         ]),
         phone: new FormControl({ value: '', disabled: true }, [
             Validators.required,

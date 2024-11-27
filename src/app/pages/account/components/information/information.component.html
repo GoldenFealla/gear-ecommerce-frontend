@@ -19,11 +19,11 @@
     <div hlmCardContent>
         <form [formGroup]="userInfoForm" action="">
             <ng-container [ngTemplateOutlet]="idField"></ng-container>
-            <ng-container [ngTemplateOutlet]="usernameField"></ng-container>
-            <ng-container [ngTemplateOutlet]="emailField"></ng-container>
-            <ng-container [ngTemplateOutlet]="firstNameField"></ng-container>
-            <ng-container [ngTemplateOutlet]="lastNameField"></ng-container>
-            <ng-container [ngTemplateOutlet]="phoneField"></ng-container>
+            <text-form-field [control]="userInfoForm.controls.username" label="Username"></text-form-field>
+            <text-form-field [control]="userInfoForm.controls.email" label="Email"></text-form-field>
+            <text-form-field [control]="userInfoForm.controls.firstName" label="First Name"></text-form-field>
+            <text-form-field [control]="userInfoForm.controls.lastName" label="Last Name"></text-form-field>
+            <text-form-field [control]="userInfoForm.controls.phone" label="Phone"></text-form-field>
             <ng-container [ngTemplateOutlet]="displayError"></ng-container>
         </form>
         <div class="h-10">
@@ -45,10 +45,6 @@
     </div>
 </div>
 
-
-
-
-
 <ng-template #idField>
     <div class="flex flex-col sm:items-center sm:grid sm:grid-cols-10 gap-1 mt-2">
         <label hlmLabel for="id-field" class="text-left sm:text-right sm:col-span-2 mr-2"
@@ -66,184 +62,6 @@
         </button>
     </div>
     <div class="flex sm:sm:items-center sm:grid sm:grid-cols-10 gap-1 mb-2 min-h-6"></div>
-</ng-template>
-
-<ng-template #usernameField>
-    <div class="flex flex-col sm:items-center sm:grid sm:grid-cols-10 gap-1 mt-2">
-        <label hlmLabel for="username-field" class="text-left sm:text-right sm:col-span-2 mr-2"
-            >Username: </label
-        >
-        <input
-            hlmInput
-            id="username-field"
-            type="text"
-            class="col-span-8"
-            minlength="6"
-            maxlength="20"
-            [formControl]="userInfoForm.controls.username"
-        />
-    </div>
-    <div class="sm:items-center sm:grid sm:grid-cols-10 gap-1 mb-2 min-h-6">
-        @let u = userInfoForm.controls.username;
-
-        <div class="text-right col-span-2">
-            <span></span>
-        </div>
-
-        @if(u?.invalid && (u?.dirty || u?.touched)) {
-        <div class="col-span-8">
-            <span class="font-bold text-xs text-destructive">
-                @if(u?.hasError("required")) { 
-                    This field is required 
-                } @if(u?.hasError("minlength")) { 
-                    The username must be have more 6 characters long 
-                } @if(u?.hasError("maxlength")) { 
-                    The username must be have less 20 characters long 
-                }
-            </span>
-        </div>
-        }
-    </div>
-</ng-template>
-
-<ng-template #emailField>
-    <div class="flex flex-col sm:items-center sm:grid sm:grid-cols-10 gap-1 mt-2">
-        <label hlmLabel for="email-field" class="text-left sm:text-right sm:col-span-2 mr-2"
-            >Email: </label
-        >
-        <input
-            hlmInput
-            id="email-field"
-            type="text"
-            class="col-span-8"
-            email="true"
-            [formControl]="userInfoForm.controls.email"
-        />
-    </div>
-    <div class="sm:items-center sm:grid sm:grid-cols-10 gap-1 mb-2 min-h-6">
-        @let e = userInfoForm.controls.email;
-
-        <div class="text-right col-span-2">
-            <span></span>
-        </div>
-
-        @if(e?.invalid && (e?.dirty || e?.touched)) {
-        <div class="col-span-8">
-            <span class="font-bold text-xs text-destructive">
-                @if(e?.hasError("required")) { This field is required }
-                @if(e?.hasError("email")) { Invalid email }
-            </span>
-        </div>
-        }
-    </div>
-</ng-template>
-
-<ng-template #firstNameField>
-    <div class="flex flex-col sm:items-center sm:grid sm:grid-cols-10 gap-1 mt-2">
-        <label hlmLabel for="first-name-field" class="text-left sm:text-right sm:col-span-2 mr-2"
-            >First Name: </label
-        >
-        <input
-            hlmInput
-            id="first-name-field"
-            type="text"
-            class="col-span-8"
-            minlength="2"
-            maxlength="30"
-            [formControl]="userInfoForm.controls.firstName"
-        />
-    </div>
-    <div class="sm:items-center sm:grid sm:grid-cols-10 gap-1 mb-2 min-h-6">
-        @let fn = userInfoForm.controls.firstName;
-
-        <div class="text-right col-span-2">
-            <span></span>
-        </div>
-
-        @if(fn?.invalid && (fn?.dirty || fn?.touched)) {
-        <div class="col-span-8">
-            <span class="font-bold text-xs text-destructive">
-                @if(fn?.hasError("required")) { 
-                    This field is required 
-                } @if(fn?.hasError("minlength")) { 
-                    The first name must be have more 2 characters long 
-                } @if(fn?.hasError("maxlength")) { 
-                    The first name must be have less 30 characters long 
-                }
-            </span>
-        </div>
-        }
-    </div>
-</ng-template>
-
-<ng-template #lastNameField>
-    <div class="flex flex-col sm:items-center sm:grid sm:grid-cols-10 gap-1 mt-2">
-        <label hlmLabel for="last-name-field" class="text-left sm:text-right sm:col-span-2 mr-2"
-            >Last Name: </label
-        >
-        <input
-            hlmInput
-            id="last-name-field"
-            type="text"
-            class="col-span-8"
-            minlength="2"
-            maxlength="30"
-            [formControl]="userInfoForm.controls.lastName"
-        />
-    </div>
-    <div class="sm:items-center sm:grid sm:grid-cols-10 gap-1 mb-2 min-h-6">
-        @let ln = userInfoForm.controls.lastName;
-
-        <div class="text-right col-span-2">
-            <span></span>
-        </div>
-
-        @if(ln?.invalid && (ln?.dirty || ln?.touched)) {
-        <div class="col-span-8">
-            <span class="font-bold text-xs text-destructive">
-                @if(ln?.hasError("required")) { 
-                    This field is required 
-                } @if(ln?.hasError("minlength")) { 
-                    The last name must be have more 2 characters long 
-                } @if(ln?.hasError("maxlength")) { 
-                    The last name must be have less 30 characters long 
-                }
-            </span>
-        </div>
-        }
-    </div>
-</ng-template>
-
-<ng-template #phoneField>
-    <div class="flex flex-col sm:items-center sm:grid sm:grid-cols-10 gap-1 mt-2">
-        <label hlmLabel for="phone-field" class="text-left sm:text-right sm:col-span-2 mr-2"
-            >Phone: </label
-        >
-        <input
-            hlmInput
-            id="phone-field"
-            type="text"
-            class="col-span-8"
-            [formControl]="userInfoForm.controls.phone"
-        />
-    </div>
-    <div class="sm:items-center sm:grid sm:grid-cols-10 gap-1 mb-2 min-h-6">
-        @let p = userInfoForm.controls.phone;
-
-        <div class="text-right col-span-2">
-            <span></span>
-        </div>
-
-        @if(p?.invalid && (p?.dirty || p?.touched)) {
-        <div class="col-span-8">
-            <span class="font-bold text-xs text-destructive">
-                @if(p?.hasError("required")) { 
-                    This field is required 
-                } 
-            </span>
-        </div>
-        }
-    </div>
 </ng-template>
 
 <ng-template #displayError>

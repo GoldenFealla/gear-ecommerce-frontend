@@ -38,10 +38,10 @@
                 This field is required 
             }
             @if (c.hasError('minlength')) { 
-                The {{ label() }} must be have more {{ c.errors?.["minlength"] }} characters long 
+                The {{ label() }} must be have more {{ c.errors?.["minlength"]["requiredLength"] }} characters long 
             }
             @if (c.hasError('maxlength')) { 
-                The {{ label() }} must be have less {{ c.errors?.["maxlength"] }} characters long 
+                The {{ label() }} must be have less {{ c.errors?.["maxlength"]["requiredLength"] }} characters long 
             }
             @if (c.hasError('email')) {
                 Invalid email 

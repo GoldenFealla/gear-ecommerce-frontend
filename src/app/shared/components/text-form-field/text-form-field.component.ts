@@ -21,6 +21,7 @@ import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
 })
 export class TextFormFieldComponent {
     control = input.required<FormControl>();
+
     label = input.required<string>();
     errorLabel = input<string>();
 
