@@ -14,13 +14,8 @@ import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 
 // Components
 import { CategoryListComponent } from './components/category-list/category-list.component';
-import { ProductCardComponent } from './components/product-card/product-card.component';
-
-// Services
-import { ProductsService } from './services/products.service';
 
 // Model
-import { Product } from '@shared/models/gear';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { ActivatedRoute } from '@angular/router';
 
@@ -31,6 +26,7 @@ import { CategoryListMobileComponent } from './components/category-list-mobile/c
 // Icons
 import { provideIcons } from '@ng-icons/core';
 import { bootstrapList } from '@ng-icons/bootstrap-icons';
+import { GearListComponent } from './components/gear-list/gear-list.component';
 
 export type MainCategory = {
     title: string;
@@ -53,8 +49,8 @@ export type MainCategory = {
 
         CategoryListComponent,
         CategoryListMobileComponent,
-        ProductCardComponent,
         CarouselComponent,
+        GearListComponent,
     ],
     templateUrl: './main.component.html',
     styleUrl: './main.component.scss',
@@ -63,17 +59,8 @@ export type MainCategory = {
 })
 export class MainComponent implements OnInit {
     private _route = inject(ActivatedRoute);
-    private _productService = inject(ProductsService);
-
-    products: Product[] = [];
 
     ngOnInit(): void {
-        this._productService.list().subscribe({
-            next: (res) => {
-                this.products = res.products;
-            },
-        });
-
         const queryParams = this._route.snapshot.queryParams;
         const { login, type } = queryParams;
 

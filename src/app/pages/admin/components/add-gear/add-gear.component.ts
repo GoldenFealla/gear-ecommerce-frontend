@@ -97,9 +97,9 @@ export class AddGearComponent {
         name: new FormControl('', [Validators.required]),
         type: new FormControl('', [Validators.required]),
         brand: new FormControl('', [Validators.required]),
-        price: new FormControl(0, [Validators.required]),
-        discount: new FormControl(0, [Validators.required]),
-        quantity: new FormControl(0, [Validators.required]),
+        price: new FormControl('', [Validators.required]),
+        discount: new FormControl('', [Validators.required]),
+        quantity: new FormControl('', [Validators.required]),
         image: new FormControl('', [Validators.required]),
     });
 
@@ -147,9 +147,9 @@ export class AddGearComponent {
                 name: value.name!,
                 type: value.type! as unknown as GearType,
                 brand: value.brand!,
-                price: value.price!,
-                discount: value.discount!,
-                quantity: value.quantity!,
+                price: parseFloat(value.price!),
+                discount: parseFloat(value.discount!),
+                quantity: parseInt(value.quantity!),
             };
 
             this._addGearStore.add({ form });

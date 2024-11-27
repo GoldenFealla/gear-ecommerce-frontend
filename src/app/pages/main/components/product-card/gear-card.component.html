@@ -1,0 +1,18 @@
+<section hlmCard class="h-full">
+    <div hlmCardContent class="p-4 pt-6">
+      <div class="aspect-square">
+        <img class="w-full h-full object-center object-contain" [src]="'https://' + gear().image_url" [alt]="gear().name">
+      </div>
+      <div class="mt-6">
+        <h3 class="text-sm font-semibold leading-4 line-clamp-2 text-ellipsis mt-4">{{ gear().name }}</h3>
+      </div>
+      <div class="mt-6">
+        <h5 class="text-sm line-through h-5">
+          @if(gear().discount !== gear().price) {
+            {{ gear().discount | currency:'VND' }}
+          }
+        </h5>
+        <h5 class="text-lg font-semibold h-7">{{ gear().price | currency:'VND' }}</h5>
+      </div>
+    </div>
+</section>

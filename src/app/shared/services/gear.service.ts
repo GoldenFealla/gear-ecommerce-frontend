@@ -16,11 +16,9 @@ const { api } = environment;
 export class GearService {
     private _httpClient = inject(HttpClient);
 
-    getList(user_id: string) {
+    getList() {
         const url = new URL('/gear/list', api).href;
-        return this._httpClient.get<Response<Gear[]>>(url, {
-            params: { user_id },
-        });
+        return this._httpClient.get<Response<Gear[]>>(url);
     }
 
     createGear(form: AddGearForm) {
