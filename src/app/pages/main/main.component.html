@@ -34,7 +34,6 @@
 </ng-template>
 
 <ng-template #body>
-    {{ currentCategory.title }}
     <div class="flex flex-row sm:space-x-4">
         <div class="hidden sm:block">
             <ng-container [ngTemplateOutlet]="categoriesRef"></ng-container>
@@ -47,7 +46,7 @@
 </ng-template>
 
 <ng-template #categoriesRef>
-    <main-category-list [categories]="categories" [(current)]="currentCategory"></main-category-list>
+    <main-category-list [categories]="categories" (currentChange)="handleOnChangeCategory($event)"></main-category-list>
 </ng-template>
 <ng-template #deals>
     <carousel></carousel>

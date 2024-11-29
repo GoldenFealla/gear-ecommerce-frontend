@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { GearCardComponent } from '../product-card/gear-card.component';
 
 // Component store
 import { GearStore } from './gear-list.store';
+
+// Component
+import { GearCardComponent } from '../gear-card/gear-card.component';
 
 @Component({
     selector: 'gear-list',

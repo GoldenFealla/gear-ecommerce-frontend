@@ -1,1 +1,44 @@
-<p>category works!</p>,
+<div class="flex flex-row">
+    <span class="mr-2">
+        <brn-select placeholder="Select price" #priceSelect>
+            <hlm-select-trigger class="w-56">
+                <hlm-select-value />
+            </hlm-select-trigger>
+            <hlm-select-content>
+                <hlm-option value="">No filter</hlm-option>
+                <hlm-option value="0,1000000">0-1.000.000</hlm-option>
+                <hlm-option value="1000000,5000000">1.000.000-5.000.000</hlm-option>
+                <hlm-option value="5000000,10000000">5.000.000-10.000.000</hlm-option>
+                <hlm-option value="10000000,-1">Above 10.000.000</hlm-option>
+            </hlm-select-content>
+        </brn-select>
+    </span>
+
+    <span>
+        <brn-select placeholder="Select brand" #brandSelect>
+            <hlm-select-trigger class="w-56">
+                <hlm-select-value />
+            </hlm-select-trigger>
+            <hlm-select-content>
+                <hlm-option value="">No filter</hlm-option>
+                <hlm-option value="ASUS">ASUS</hlm-option>
+                <hlm-option value="GIGABYTE">GIGABYTE</hlm-option>
+                <hlm-option value="Asrock">Asrock</hlm-option>
+            </hlm-select-content>
+        </brn-select>
+    </span>
+    
+</div>
+
+<div>
+    category: {{ category }}
+</div>
+<div>
+    brand filter: {{ brand }}
+</div>
+<div>
+    price start: {{ priceStart }}
+</div>
+<div>
+    price end: {{ priceEnd }}
+</div>

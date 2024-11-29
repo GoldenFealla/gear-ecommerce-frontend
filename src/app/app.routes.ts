@@ -29,6 +29,18 @@ export const routes: Routes = [
             ),
     },
     {
+        path: 'category/:name',
+        loadComponent: () =>
+            import('@pages/category/category.component').then(
+                (c) => c.CategoryComponent
+            ),
+    },
+    {
+        path: 'category',
+        redirectTo: '',
+        pathMatch: 'full',
+    },
+    {
         path: 'main',
         redirectTo: '',
         pathMatch: 'full',
