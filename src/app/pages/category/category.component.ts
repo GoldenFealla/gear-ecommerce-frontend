@@ -45,16 +45,19 @@ export class CategoryComponent implements OnInit {
         limit: 10,
         category: '',
         brand: undefined,
+        variety: undefined,
         start_price: undefined,
         end_price: undefined,
         sort: undefined,
     });
 
     brands: string[] = [];
+    varieties: string[] = [];
 
     @ViewChild('sortSelect') sortSelect: BrnSelectComponent | undefined;
     @ViewChild('priceSelect') priceSelect: BrnSelectComponent | undefined;
     @ViewChild('brandSelect') brandSelect: BrnSelectComponent | undefined;
+    @ViewChild('varietySelect') varietySelect: BrnSelectComponent | undefined;
 
     ngOnInit(): void {
         this._route.params.subscribe((params) => {
@@ -152,6 +155,26 @@ export class CategoryComponent implements OnInit {
             }
         }
 
+        if (this.varietySelect) {
+            this.varietySelect.registerOnChange((value: string) => {
+                if (value === '') {
+                    this._router.navigate([], {
+                        queryParams: { brand: null },
+                        queryParamsHandling: 'merge',
+                    });
+                } else {
+                    this._router.navigate([], {
+                        queryParams: { brand: value },
+                        queryParamsHandling: 'merge',
+                    });
+                }
+            });
+
+            if (this.filter.value.variety) {
+                this.varietySelect.writeValue(this.filter.value.variety);
+            }
+        }
+
         if (this.priceSelect) {
             this.priceSelect.registerOnChange((value: string) => {
                 if (value === '') {
@@ -202,6 +225,10 @@ export class CategoryComponent implements OnInit {
 
     handleGetBrands(brands: string[]) {
         this.brands = [...brands];
+    }
+
+    handleGetVarieties(varieties: string[]) {
+        this.varieties = [...varieties];
     }
 
     handleOnPageChange(page: number) {

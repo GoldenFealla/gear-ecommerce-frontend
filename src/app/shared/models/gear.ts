@@ -24,6 +24,7 @@ export type Gear = {
     name: string;
     type: GearType;
     brand: string;
+    variety: string;
     price: number;
     discount: number;
     quantity: number;
@@ -35,6 +36,7 @@ export type ListGearFilter = {
     limit: number;
     category: string;
     brand: string | undefined;
+    variety: string | undefined;
     start_price: number | undefined;
     end_price: number | undefined;
     sort: 'asc' | 'desc' | undefined;
@@ -44,6 +46,7 @@ export type AddGearForm = {
     name: string;
     type: GearType;
     brand: string;
+    variety: string;
     price: number;
     discount: number;
     quantity: number;

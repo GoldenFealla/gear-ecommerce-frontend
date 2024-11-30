@@ -40,9 +40,24 @@
             </hlm-select-content>
         </brn-select>
     </span>
+
+    <span>
+        <brn-select placeholder="Select variety" #varietySelect>
+            <hlm-select-trigger class="w-56">
+                <hlm-select-value />
+            </hlm-select-trigger>
+            <hlm-select-content>
+                <hlm-option value="">No filter</hlm-option>
+                @for (variety of varieties; track $index) {
+                    <hlm-option [value]="variety">{{variety}}</hlm-option>
+                }
+            </hlm-select-content>
+        </brn-select>
+    </span>
 </div>
 <gear-list 
     [filter]="(filter | async)!" 
     (brands)="handleGetBrands($event)"
+    (varieties)="handleGetVarieties($event)"
     (pageChange)="handleOnPageChange($event)"
 ></gear-list>

@@ -62,6 +62,7 @@ export class GearListComponent {
     @Input() disablePagination: boolean = false;
 
     @Output() brands = new EventEmitter<string[]>();
+    @Output() varieties = new EventEmitter<string[]>();
     @Output() pageChange = new EventEmitter<number>();
 
     numbers: number[] = [];
@@ -71,10 +72,12 @@ export class GearListComponent {
     ngOnInit() {
         if (this._filter && this._filter.category) {
             this._gearStore.getBrandList(this._filter.category);
+            this._gearStore.getVarietyList(this._filter.category);
         }
 
         this.vm$.subscribe((vm) => {
             this.brands.emit(vm.brands);
+            this.varieties.emit(vm.varieties);
 
             if (!this.disablePagination) {
                 this.maxPage = Math.ceil(vm.total / (this._filter?.limit ?? 1));

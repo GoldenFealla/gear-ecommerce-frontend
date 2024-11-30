@@ -57,6 +57,15 @@ export class GearService {
         });
     }
 
+    getVarietyList(category: string) {
+        const url = new URL('/gear/list-variety', api).href;
+        return this._httpClient.get<Response<string[]>>(url, {
+            params: {
+                category,
+            },
+        });
+    }
+
     createGear(form: AddGearForm) {
         const url = new URL('/gear/create', api).href;
         return this._httpClient.post<Response<null>>(url, form);

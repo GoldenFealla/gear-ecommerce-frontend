@@ -16,6 +16,7 @@ export interface GearState {
     total: number;
     gears: Gear[] | null;
     brands: string[];
+    varieties: string[];
     loading: boolean;
     success: boolean;
     message: string;
@@ -28,6 +29,7 @@ export class GearStore extends ComponentStore<GearState> {
             total: 0,
             gears: null,
             brands: [],
+            varieties: [],
             loading: false,
             success: false,
             message: '',
@@ -106,6 +108,30 @@ export class GearStore extends ComponentStore<GearState> {
         message: errorMsg,
     }));
 
+    setGetVarietyList = this.updater((state) => ({
+        ...state,
+        varieties: [],
+        loading: true,
+        success: false,
+        message: '',
+    }));
+
+    setGetVarietyListSuccess = this.updater((state, varieties: string[]) => ({
+        ...state,
+        varieties: varieties,
+        loading: false,
+        success: true,
+        message: '',
+    }));
+
+    setGetVarietyListError = this.updater((state, errorMsg: string) => ({
+        ...state,
+        varieties: [],
+        loading: false,
+        success: false,
+        message: errorMsg,
+    }));
+
     // *********** Selectors *********** //
     loading$ = this.select((state) => state.loading);
     success$ = this.select((state) => state.success);
@@ -152,7 +178,7 @@ export class GearStore extends ComponentStore<GearState> {
 
     getBrandList = this.effect<string>((trigger$) => {
         return trigger$.pipe(
-            tap(() => this.setGetList()),
+            tap(() => this.setGetBrandList()),
             exhaustMap((category) =>
                 this.gearService.getBrandList(category).pipe(
                     tapResponse({
@@ -169,11 +195,31 @@ export class GearStore extends ComponentStore<GearState> {
         );
     });
 
+    getVarietyList = this.effect<string>((trigger$) => {
+        return trigger$.pipe(
+            tap(() => this.setGetVarietyList()),
+            exhaustMap((category) =>
+                this.gearService.getVarietyList(category).pipe(
+                    tapResponse({
+                        next: (value) => {
+                            const data = value.data;
+                            this.setGetVarietyListSuccess(data);
+                        },
+                        error: (error: HttpErrorResponse) => {
+                            this.setGetVarietyListError(error.error.message);
+                        },
+                    })
+                )
+            )
+        );
+    });
+
     // *********** ViewModel *********** //
     readonly vm$ = this.select(this.state$, (state) => ({
         total: state.total,
         gears: state.gears,
         brands: state.brands,
+        varieties: state.varieties,
         loading: state.loading,
         success: state.success,
         message: state.message,
