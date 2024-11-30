@@ -9,10 +9,10 @@
       <div class="mt-6">
         <h5 class="text-sm line-through h-5">
           @if(gear().discount !== gear().price) {
-            {{ gear().discount | currency:'VND' }}
+            {{ gear().price | currency:'VND' }}
           }
         </h5>
-        <h5 class="text-lg font-semibold h-7">{{ gear().price | currency:'VND' }}</h5>
+        <h5 class="text-lg font-semibold h-7">{{ gear().discount | currency:'VND' }}</h5>
       </div>
     </div>
 </section>
