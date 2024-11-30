@@ -4,7 +4,7 @@
     <ng-container [ngTemplateOutlet]="loading"></ng-container>
 }
 
-@if (!vm.loading) {
+@if (!vm.loading && vm.gears?.length! > 0) {
     <div class="w-full mt-6 grid grid-cols-[repeat(auto-fit,minmax(14rem,max-content))] gap-2 auto-rows-[1fr]">
         @for (gear of vm.gears; track gear.id) {
             <div class="h-full">    
@@ -12,55 +12,63 @@
             </div>
         }
     </div>
-    <div class="mt-5">
-        <nav hlmPagination>
-            <ul hlmPaginationContent>
-                @let page = _filter?.page!;
-
-                @if(page >= 3) {
-                    <li hlmPaginationItem>
-                        <button 
-                            hlmPaginationLink 
-                            (click)="changePage(maxPage)"
-                        >
-                            1
-                        </button>
-                    </li>
-                    @if(page > 3) {
+    @if (!disablePagination) {
+        <div class="mt-5">
+            <nav hlmPagination>
+                <ul hlmPaginationContent>
+                    @let page = _filter?.page!;
+    
+                    @if(page >= 3) {
                         <li hlmPaginationItem>
-                            <hlm-pagination-ellipsis />
+                            <button 
+                                hlmPaginationLink 
+                                (click)="changePage(maxPage)"
+                            >
+                                1
+                            </button>
                         </li>
-                    }   
-                }
-                @for (number of numbers; track $index) {
-                    <li hlmPaginationItem>
-                        <button 
-                            hlmPaginationLink 
-                            (click)="changePage(number)"
-                            [isActive]="_filter?.page === number"
-                        >
-                            {{ number }}
-                        </button>
-                    </li>
-                }
-                @if (maxPage > 3 && page <= maxPage - 2) {
-                    @if (page < maxPage - 2) {
+                        @if(page > 3) {
+                            <li hlmPaginationItem>
+                                <hlm-pagination-ellipsis />
+                            </li>
+                        }   
+                    }
+                    @for (number of numbers; track $index) {
                         <li hlmPaginationItem>
-                            <hlm-pagination-ellipsis />
+                            <button 
+                                hlmPaginationLink 
+                                (click)="changePage(number)"
+                                [isActive]="_filter?.page === number"
+                            >
+                                {{ number }}
+                            </button>
                         </li>
                     }
-                    <li hlmPaginationItem>
-                        <button 
-                            hlmPaginationLink 
-                            (click)="changePage(maxPage)"
-                            [isActive]="_filter?.page === maxPage"
-                        >
-                            {{ maxPage }}
-                        </button>
-                    </li>
-                }
-            </ul>
-        </nav>
+                    @if (maxPage > 3 && page <= maxPage - 2) {
+                        @if (page < maxPage - 2) {
+                            <li hlmPaginationItem>
+                                <hlm-pagination-ellipsis />
+                            </li>
+                        }
+                        <li hlmPaginationItem>
+                            <button 
+                                hlmPaginationLink 
+                                (click)="changePage(maxPage)"
+                                [isActive]="_filter?.page === maxPage"
+                            >
+                                {{ maxPage }}
+                            </button>
+                        </li>
+                    }
+                </ul>
+            </nav>
+        </div>
+    }
+}
+
+@if (!vm.loading && vm.gears?.length! === 0) {
+    <div class="w-full flex flex-col items-center mt-5">
+        <h2 class="text-lg font-bold">No gears found</h2>
     </div>
 }
 

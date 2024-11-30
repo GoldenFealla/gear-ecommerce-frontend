@@ -54,8 +54,12 @@ export class GearListComponent {
         this._filter = value;
         this.page = value.page;
         this._gearStore.getList(value);
-        this._gearStore.getListCount(value);
+        if (!this.disablePagination) {
+            this._gearStore.getListCount(value);
+        }
     }
+
+    @Input() disablePagination: boolean = false;
 
     @Output() brands = new EventEmitter<string[]>();
     @Output() pageChange = new EventEmitter<number>();
@@ -72,18 +76,20 @@ export class GearListComponent {
         this.vm$.subscribe((vm) => {
             this.brands.emit(vm.brands);
 
-            this.maxPage = Math.ceil(vm.total / (this._filter?.limit ?? 1));
-            const pages = Math.min(this.maxPage, 3);
-            this.numbers = new Array(pages).fill(0).map((x, i) => {
-                let p = this.page;
-                if (this.page <= 1) {
-                    p = 2;
-                }
-                if (this.maxPage >= 3 && this.page >= this.maxPage - 1) {
-                    p = this.maxPage - 1;
-                }
-                return p - 2 + i + 1;
-            });
+            if (!this.disablePagination) {
+                this.maxPage = Math.ceil(vm.total / (this._filter?.limit ?? 1));
+                const pages = Math.min(this.maxPage, 3);
+                this.numbers = new Array(pages).fill(0).map((x, i) => {
+                    let p = this.page;
+                    if (this.page <= 1) {
+                        p = 2;
+                    }
+                    if (this.maxPage >= 3 && this.page >= this.maxPage - 1) {
+                        p = this.maxPage - 1;
+                    }
+                    return p - 2 + i + 1;
+                });
+            }
         });
     }
 

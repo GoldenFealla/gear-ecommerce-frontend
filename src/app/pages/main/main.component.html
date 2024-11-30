@@ -52,13 +52,16 @@
     <carousel></carousel>
 </ng-template>
 <ng-template #productsRef>
-    <gear-list [filter]="{
-        page: 1, 
-        limit: 10, 
-        category: 'all',
-        brand: undefined,
-        start_price: undefined,
-        end_price: undefined,
-        sort: undefined
-    }"></gear-list>
+    <gear-list 
+        [disablePagination]="true"
+        [filter]="{
+            page: 1, 
+            limit: 10, 
+            category: 'all',
+            brand: undefined,
+            start_price: undefined,
+            end_price: undefined,
+            sort: undefined
+        }"
+    ></gear-list>
 </ng-template>
