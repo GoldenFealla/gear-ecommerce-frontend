@@ -116,6 +116,10 @@ export class AddGearComponent {
         const file = files ? files[0] : null;
 
         if (file) {
+            this.addGearForm.patchValue({
+                name: file.name.replace(/\.[^/.]+$/, ''),
+            });
+
             const imageCropperRef = this._hlmDialogService.open(
                 ImageCropperDialogComponent,
                 {
