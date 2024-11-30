@@ -30,6 +30,16 @@ export type Gear = {
     image_url: string;
 };
 
+export type ListGearFilter = {
+    page: number;
+    limit: number;
+    category: string;
+    brand: string | undefined;
+    start_price: number | undefined;
+    end_price: number | undefined;
+    sort: 'asc' | 'desc' | undefined;
+};
+
 export type AddGearForm = {
     name: string;
     type: GearType;

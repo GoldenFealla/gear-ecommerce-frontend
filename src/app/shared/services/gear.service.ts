@@ -6,7 +6,7 @@ import { environment } from '@environments/environment.development';
 
 // Models
 import { Response } from '@shared/models/response';
-import { AddGearForm, Gear } from '@shared/models/gear';
+import { AddGearForm, Gear, ListGearFilter } from '@shared/models/gear';
 
 const { api } = environment;
 
@@ -16,9 +16,45 @@ const { api } = environment;
 export class GearService {
     private _httpClient = inject(HttpClient);
 
-    getList() {
+    getList(filter: ListGearFilter) {
         const url = new URL('/gear/list', api).href;
-        return this._httpClient.get<Response<Gear[]>>(url);
+        const params: Record<string, any> = {};
+
+        Object.keys(filter).forEach((key: string) => {
+            const value = filter[key as keyof typeof filter];
+            if (value !== null && value !== undefined) {
+                params[key] = value;
+            }
+        });
+
+        return this._httpClient.get<Response<Gear[]>>(url, {
+            params: params,
+        });
+    }
+
+    getListCount(filter: ListGearFilter) {
+        const url = new URL('/gear/list-count', api).href;
+        const params: Record<string, any> = {};
+
+        Object.keys(filter).forEach((key: string) => {
+            const value = filter[key as keyof typeof filter];
+            if (value !== null && value !== undefined) {
+                params[key] = value;
+            }
+        });
+
+        return this._httpClient.get<Response<number>>(url, {
+            params: params,
+        });
+    }
+
+    getBrandList(category: string) {
+        const url = new URL('/gear/list-brand', api).href;
+        return this._httpClient.get<Response<string[]>>(url, {
+            params: {
+                category,
+            },
+        });
     }
 
     createGear(form: AddGearForm) {

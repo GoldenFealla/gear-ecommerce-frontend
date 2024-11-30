@@ -3,6 +3,7 @@ import {
     ChangeDetectionStrategy,
     Component,
     inject,
+    signal,
     ViewChild,
     type OnInit,
 } from '@angular/core';
@@ -15,10 +16,22 @@ import {
 } from '@spartan-ng/ui-select-brain';
 import { HlmSelectImports } from '@spartan-ng/ui-select-helm';
 
+// Shared Components
+import { GearListComponent } from '@shared/components/gear-list/gear-list.component';
+
+// Models
+import { ListGearFilter } from '@shared/models/gear';
+import { BehaviorSubject } from 'rxjs';
+
 @Component({
     selector: 'app-category',
     standalone: true,
-    imports: [CommonModule, BrnSelectImports, HlmSelectImports],
+    imports: [
+        CommonModule,
+        BrnSelectImports,
+        HlmSelectImports,
+        GearListComponent,
+    ],
     templateUrl: './category.component.html',
     styleUrl: './category.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,24 +40,92 @@ export class CategoryComponent implements OnInit {
     private _route = inject(ActivatedRoute);
     private _router = inject(Router);
 
-    category: string = '';
+    filter = new BehaviorSubject<ListGearFilter>({
+        page: 1,
+        limit: 10,
+        category: '',
+        brand: undefined,
+        start_price: undefined,
+        end_price: undefined,
+        sort: undefined,
+    });
 
-    brand: string = '';
-    priceStart: string = '';
-    priceEnd: string = '';
+    brands: string[] = [];
 
-    @ViewChild('brandSelect') brandSelect: BrnSelectComponent | undefined;
+    @ViewChild('sortSelect') sortSelect: BrnSelectComponent | undefined;
     @ViewChild('priceSelect') priceSelect: BrnSelectComponent | undefined;
+    @ViewChild('brandSelect') brandSelect: BrnSelectComponent | undefined;
 
     ngOnInit(): void {
         this._route.params.subscribe((params) => {
-            this.category = params['name'];
+            if (params['name']) {
+                this.filter.next({
+                    ...this.filter.value,
+                    category: params['name'],
+                });
+            }
         });
 
         this._route.queryParams.subscribe((query) => {
-            this.brand = query['brand'];
-            this.priceStart = query['ps'];
-            this.priceEnd = query['pe'];
+            if (query['page']) {
+                this.filter.next({
+                    ...this.filter.value,
+                    page: parseInt(query['page']),
+                });
+            } else {
+                this.filter.next({
+                    ...this.filter.value,
+                    page: 1,
+                });
+            }
+
+            if (query['brand']) {
+                this.filter.next({
+                    ...this.filter.value,
+                    brand: query['brand'],
+                });
+            } else {
+                this.filter.next({
+                    ...this.filter.value,
+                    brand: undefined,
+                });
+            }
+
+            if (query['ps']) {
+                this.filter.next({
+                    ...this.filter.value,
+                    start_price: query['ps'],
+                });
+            } else {
+                this.filter.next({
+                    ...this.filter.value,
+                    start_price: undefined,
+                });
+            }
+
+            if (query['pe']) {
+                this.filter.next({
+                    ...this.filter.value,
+                    end_price: query['pe'],
+                });
+            } else {
+                this.filter.next({
+                    ...this.filter.value,
+                    end_price: undefined,
+                });
+            }
+
+            if (query['sort']) {
+                this.filter.next({
+                    ...this.filter.value,
+                    sort: query['sort'],
+                });
+            } else {
+                this.filter.next({
+                    ...this.filter.value,
+                    sort: undefined,
+                });
+            }
         });
     }
 
@@ -64,7 +145,9 @@ export class CategoryComponent implements OnInit {
                 }
             });
 
-            this.brandSelect.writeValue(this.brand);
+            if (this.filter.value.brand) {
+                this.brandSelect.writeValue(this.filter.value.brand);
+            }
         }
 
         if (this.priceSelect) {
@@ -86,7 +169,43 @@ export class CategoryComponent implements OnInit {
                 }
             });
 
-            this.priceSelect.writeValue(`${this.priceStart},${this.priceEnd}`);
+            const start_price = this.filter.value.start_price;
+            const end_price = this.filter.value.end_price;
+
+            if (start_price && end_price) {
+                this.priceSelect.writeValue(`${start_price},${end_price}`);
+            }
         }
+
+        if (this.sortSelect) {
+            this.sortSelect.registerOnChange((value: string) => {
+                if (value === '') {
+                    this._router.navigate([], {
+                        queryParams: { sort: null },
+                        queryParamsHandling: 'merge',
+                    });
+                } else {
+                    this._router.navigate([], {
+                        queryParams: { sort: value },
+                        queryParamsHandling: 'merge',
+                    });
+                }
+            });
+
+            if (this.filter.value.sort) {
+                this.sortSelect.writeValue(`${this.filter.value.sort}`);
+            }
+        }
+    }
+
+    handleGetBrands(brands: string[]) {
+        this.brands = [...brands];
+    }
+
+    handleOnPageChange(page: number) {
+        this._router.navigate([], {
+            queryParams: { page: page },
+            queryParamsHandling: 'merge',
+        });
     }
 }

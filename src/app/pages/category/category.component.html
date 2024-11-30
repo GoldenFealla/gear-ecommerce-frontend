@@ -1,5 +1,18 @@
 <div class="flex flex-row">
     <span class="mr-2">
+        <brn-select placeholder="Select sort" #sortSelect>
+            <hlm-select-trigger class="w-56">
+                <hlm-select-value />
+            </hlm-select-trigger>
+            <hlm-select-content>
+                <hlm-option value="">No filter</hlm-option>
+                <hlm-option value="asc">Price ascending</hlm-option>
+                <hlm-option value="desc">Price descending</hlm-option>
+            </hlm-select-content>
+        </brn-select>
+    </span>
+
+    <span class="mr-2">
         <brn-select placeholder="Select price" #priceSelect>
             <hlm-select-trigger class="w-56">
                 <hlm-select-value />
@@ -21,24 +34,15 @@
             </hlm-select-trigger>
             <hlm-select-content>
                 <hlm-option value="">No filter</hlm-option>
-                <hlm-option value="ASUS">ASUS</hlm-option>
-                <hlm-option value="GIGABYTE">GIGABYTE</hlm-option>
-                <hlm-option value="Asrock">Asrock</hlm-option>
+                @for (brand of brands; track $index) {
+                    <hlm-option [value]="brand">{{brand}}</hlm-option>
+                }
             </hlm-select-content>
         </brn-select>
     </span>
-    
 </div>
-
-<div>
-    category: {{ category }}
-</div>
-<div>
-    brand filter: {{ brand }}
-</div>
-<div>
-    price start: {{ priceStart }}
-</div>
-<div>
-    price end: {{ priceEnd }}
-</div>
+<gear-list 
+    [filter]="(filter | async)!" 
+    (brands)="handleGetBrands($event)"
+    (pageChange)="handleOnPageChange($event)"
+></gear-list>
