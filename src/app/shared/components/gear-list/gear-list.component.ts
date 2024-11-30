@@ -79,7 +79,7 @@ export class GearListComponent {
                 if (this.page <= 1) {
                     p = 2;
                 }
-                if (this.page >= this.maxPage - 1) {
+                if (this.maxPage >= 3 && this.page >= this.maxPage - 1) {
                     p = this.maxPage - 1;
                 }
                 return p - 2 + i + 1;

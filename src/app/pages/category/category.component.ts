@@ -63,6 +63,8 @@ export class CategoryComponent implements OnInit {
                     ...this.filter.value,
                     category: params['name'],
                 });
+            } else {
+                this._router.navigate(['/']);
             }
         });
 

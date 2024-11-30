@@ -1,0 +1,11 @@
+/category/pc
+/category/laptop
+/category/mainboard
+/category/cpu
+/category/gpu
+/category/ram
+/category/fan
+/category/storage
+/category/monitor
+/category/keyboard
+/category/mouse

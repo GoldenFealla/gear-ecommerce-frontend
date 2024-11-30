@@ -5,8 +5,8 @@ import { ChangeDetectionStrategy, Component, type OnInit } from '@angular/core';
     selector: 'app-not-found',
     standalone: true,
     imports: [CommonModule],
-    templateUrl: './not-found.component.html',
-    styleUrl: './not-found.component.scss',
+    templateUrl: './404.component.html',
+    styleUrl: './404.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotFoundComponent implements OnInit {

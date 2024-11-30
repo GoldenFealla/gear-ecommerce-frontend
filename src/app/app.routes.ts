@@ -4,7 +4,7 @@ import { Routes } from '@angular/router';
 import { authenticatedGuard } from '@shared/guards/Authenticated.guard';
 
 // Components
-import { NotFoundComponent } from '@pages/not-found/not-found.component';
+import { NotFoundComponent } from '@pages/404/404.component';
 
 export const routes: Routes = [
     {
@@ -37,13 +37,19 @@ export const routes: Routes = [
     },
     {
         path: 'category',
-        redirectTo: '',
-        pathMatch: 'full',
+        loadComponent: () =>
+            import('@pages/category/category.component').then(
+                (c) => c.CategoryComponent
+            ),
     },
     {
         path: 'main',
         redirectTo: '',
         pathMatch: 'full',
+    },
+    {
+        path: '404',
+        component: NotFoundComponent,
     },
     {
         path: '**',
