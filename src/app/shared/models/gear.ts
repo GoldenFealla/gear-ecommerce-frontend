@@ -31,16 +31,20 @@ export type Gear = {
     image_url: string;
 };
 
-export type ListGearFilter = {
+export const DEFAULT_PAGE = 1;
+export const DEFAULT_LIMIT = 10;
+
+export type ListGearFilter = Partial<{
     page: number;
     limit: number;
     category: string;
-    brand: string | undefined;
-    variety: string | undefined;
-    start_price: number | undefined;
-    end_price: number | undefined;
-    sort: 'asc' | 'desc' | undefined;
-};
+    brand: string;
+    variety: string;
+    price: string;
+    sort: 'asc' | 'desc';
+}>;
+
+export type ListGearFilterKey = keyof ListGearFilter;
 
 export type AddGearForm = {
     name: string;

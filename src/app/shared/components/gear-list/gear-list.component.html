@@ -16,8 +16,6 @@
         <div class="mt-5">
             <nav hlmPagination>
                 <ul hlmPaginationContent>
-                    @let page = _filter?.page!;
-    
                     @if(page >= 3) {
                         <li hlmPaginationItem>
                             <button 
@@ -38,7 +36,7 @@
                             <button 
                                 hlmPaginationLink 
                                 (click)="changePage(number)"
-                                [isActive]="_filter?.page === number"
+                                [isActive]="page === number"
                             >
                                 {{ number }}
                             </button>

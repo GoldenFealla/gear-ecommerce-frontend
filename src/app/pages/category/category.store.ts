@@ -9,72 +9,69 @@ import { tapResponse } from '@ngrx/operators';
 // Services
 import { GearService } from '@shared/services/gear.service';
 
-// Models
-import { Gear, ListGearFilter } from '@shared/models/gear';
-
 export interface GearState {
-    total: number;
-    gears: Gear[] | null;
+    brands: string[];
+    varieties: string[];
     loading: boolean;
     success: boolean;
     message: string;
 }
 
 @Injectable()
-export class GearStore extends ComponentStore<GearState> {
+export class CategoryStore extends ComponentStore<GearState> {
     constructor(private gearService: GearService) {
         super({
-            total: 0,
-            gears: null,
+            brands: [],
+            varieties: [],
             loading: false,
             success: false,
             message: '',
         });
     }
     // *********** Updaters ************ //
-    setGetList = this.updater((state) => ({
+    setGetBrandList = this.updater((state) => ({
         ...state,
-        gears: null,
+        brand: [],
         loading: true,
         success: false,
         message: '',
     }));
 
-    setGetListSuccess = this.updater((state, gears: Gear[]) => ({
+    setGetBrandListSuccess = this.updater((state, brands: string[]) => ({
         ...state,
-        gears: gears,
+        brands: brands,
         loading: false,
         success: true,
         message: '',
     }));
 
-    setGetListError = this.updater((state, errorMsg: string) => ({
+    setGetBrandListError = this.updater((state, errorMsg: string) => ({
         ...state,
-        gears: null,
+        brands: [],
         loading: false,
         success: false,
         message: errorMsg,
     }));
 
-    setGetListCount = this.updater((state) => ({
+    setGetVarietyList = this.updater((state) => ({
         ...state,
-        total: 0,
+        varieties: [],
         loading: true,
         success: false,
         message: '',
     }));
 
-    setGetListCountSuccess = this.updater((state, count: number) => ({
+    setGetVarietyListSuccess = this.updater((state, varieties: string[]) => ({
         ...state,
-        total: count,
+        varieties: varieties,
         loading: false,
         success: true,
         message: '',
     }));
 
-    setGetListCountError = this.updater((state, errorMsg: string) => ({
+    setGetVarietyListError = this.updater((state, errorMsg: string) => ({
         ...state,
-        total: 0,
+        varieties: [],
         loading: false,
         success: false,
         message: errorMsg,
@@ -86,18 +83,18 @@ export class GearStore extends ComponentStore<GearState> {
     message$ = this.select((state) => state.message);
 
     // *********** Effects ************* //
-    getList = this.effect<ListGearFilter>((trigger$) => {
+    getBrandList = this.effect<string>((trigger$) => {
         return trigger$.pipe(
-            tap(() => this.setGetList()),
-            exhaustMap((filter) =>
-                this.gearService.getList(filter).pipe(
+            tap(() => this.setGetBrandList()),
+            exhaustMap((category) =>
+                this.gearService.getBrandList(category).pipe(
                     tapResponse({
                         next: (value) => {
                             const data = value.data;
-                            this.setGetListSuccess(data);
+                            this.setGetBrandListSuccess(data);
                         },
                         error: (error: HttpErrorResponse) => {
-                            this.setGetListError(error.error.message);
+                            this.setGetBrandListError(error.error.message);
                         },
                     })
                 )
@@ -105,18 +102,18 @@ export class GearStore extends ComponentStore<GearState> {
         );
     });
 
-    getListCount = this.effect<ListGearFilter>((trigger$) => {
+    getVarietyList = this.effect<string>((trigger$) => {
         return trigger$.pipe(
-            tap(() => this.setGetListCount()),
-            exhaustMap((filter) =>
-                this.gearService.getListCount(filter).pipe(
+            tap(() => this.setGetVarietyList()),
+            exhaustMap((category) =>
+                this.gearService.getVarietyList(category).pipe(
                     tapResponse({
                         next: (value) => {
                             const data = value.data;
-                            this.setGetListCountSuccess(data);
+                            this.setGetVarietyListSuccess(data);
                         },
                         error: (error: HttpErrorResponse) => {
-                            this.setGetListCountError(error.error.message);
+                            this.setGetVarietyListError(error.error.message);
                         },
                     })
                 )
@@ -126,8 +123,8 @@ export class GearStore extends ComponentStore<GearState> {
 
     // *********** ViewModel *********** //
     readonly vm$ = this.select(this.state$, (state) => ({
-        total: state.total,
-        gears: state.gears,
+        brands: state.brands,
+        varieties: state.varieties,
         loading: state.loading,
         success: state.success,
         message: state.message,

@@ -7,7 +7,7 @@ import {
     ViewChild,
     type OnInit,
 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 // Spartan
 import {
@@ -19,8 +19,11 @@ import { HlmSelectImports } from '@spartan-ng/ui-select-helm';
 // Shared Components
 import { GearListComponent } from '@shared/components/gear-list/gear-list.component';
 
+// Component
+import { CategoryStore } from './category.store';
+
 // Models
-import { ListGearFilter } from '@shared/models/gear';
+import { ListGearFilter, ListGearFilterKey } from '@shared/models/gear';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -28,31 +31,25 @@ import { BehaviorSubject } from 'rxjs';
     standalone: true,
     imports: [
         CommonModule,
+
         BrnSelectImports,
         HlmSelectImports,
+
         GearListComponent,
     ],
     templateUrl: './category.component.html',
     styleUrl: './category.component.scss',
+    providers: [CategoryStore],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoryComponent implements OnInit {
-    private _route = inject(ActivatedRoute);
-    private _router = inject(Router);
+    private readonly _route = inject(ActivatedRoute);
+    private readonly _router = inject(Router);
+    private readonly _categoryStore = inject(CategoryStore);
 
-    filter = new BehaviorSubject<ListGearFilter>({
-        page: 1,
-        limit: 10,
-        category: '',
-        brand: undefined,
-        variety: undefined,
-        start_price: undefined,
-        end_price: undefined,
-        sort: undefined,
-    });
+    filter = new BehaviorSubject<ListGearFilter>({});
 
-    brands: string[] = [];
-    varieties: string[] = [];
+    vm$ = this._categoryStore.vm$;
 
     @ViewChild('sortSelect') sortSelect: BrnSelectComponent | undefined;
     @ViewChild('priceSelect') priceSelect: BrnSelectComponent | undefined;
@@ -61,174 +58,82 @@ export class CategoryComponent implements OnInit {
 
     ngOnInit(): void {
         this._route.params.subscribe((params) => {
-            if (params['name']) {
-                this.filter.next({
-                    ...this.filter.value,
-                    category: params['name'],
-                });
+            const category = params['name'];
+
+            if (category) {
+                this.filter.next({ ...this.filter.value, category });
+                this._categoryStore.getBrandList(category);
+                this._categoryStore.getVarietyList(category);
             } else {
                 this._router.navigate(['/']);
             }
         });
 
         this._route.queryParams.subscribe((query) => {
-            if (query['page']) {
-                this.filter.next({
-                    ...this.filter.value,
-                    page: parseInt(query['page']),
-                });
-            } else {
-                this.filter.next({
-                    ...this.filter.value,
-                    page: 1,
-                });
-            }
-
-            if (query['brand']) {
-                this.filter.next({
-                    ...this.filter.value,
-                    brand: query['brand'],
-                });
-            } else {
-                this.filter.next({
-                    ...this.filter.value,
-                    brand: undefined,
-                });
-            }
-
-            if (query['ps']) {
-                this.filter.next({
-                    ...this.filter.value,
-                    start_price: query['ps'],
-                });
-            } else {
-                this.filter.next({
-                    ...this.filter.value,
-                    start_price: undefined,
-                });
-            }
-
-            if (query['pe']) {
-                this.filter.next({
-                    ...this.filter.value,
-                    end_price: query['pe'],
-                });
-            } else {
-                this.filter.next({
-                    ...this.filter.value,
-                    end_price: undefined,
-                });
-            }
-
-            if (query['sort']) {
-                this.filter.next({
-                    ...this.filter.value,
-                    sort: query['sort'],
-                });
-            } else {
-                this.filter.next({
-                    ...this.filter.value,
-                    sort: undefined,
-                });
-            }
+            this.updateSelect(query, 'page', 1);
+            this.updateSelect(query, 'brand');
+            this.updateSelect(query, 'price');
+            this.updateSelect(query, 'sort');
+            this.updateSelect(query, 'variety');
         });
     }
 
     ngAfterViewInit() {
         if (this.brandSelect) {
-            this.brandSelect.registerOnChange((value: string) => {
-                if (value === '') {
-                    this._router.navigate([], {
-                        queryParams: { brand: null },
-                        queryParamsHandling: 'merge',
-                    });
-                } else {
-                    this._router.navigate([], {
-                        queryParams: { brand: value },
-                        queryParamsHandling: 'merge',
-                    });
-                }
-            });
-
-            if (this.filter.value.brand) {
-                this.brandSelect.writeValue(this.filter.value.brand);
-            }
+            this.routeSelect(this.brandSelect, 'brand');
         }
 
         if (this.varietySelect) {
-            this.varietySelect.registerOnChange((value: string) => {
-                if (value === '') {
-                    this._router.navigate([], {
-                        queryParams: { brand: null },
-                        queryParamsHandling: 'merge',
-                    });
-                } else {
-                    this._router.navigate([], {
-                        queryParams: { brand: value },
-                        queryParamsHandling: 'merge',
-                    });
-                }
-            });
-
-            if (this.filter.value.variety) {
-                this.varietySelect.writeValue(this.filter.value.variety);
-            }
+            this.routeSelect(this.varietySelect, 'variety');
         }
 
         if (this.priceSelect) {
-            this.priceSelect.registerOnChange((value: string) => {
-                if (value === '') {
-                    this._router.navigate([], {
-                        queryParams: { ps: null, pe: null },
-                        queryParamsHandling: 'merge',
-                    });
-                } else {
-                    const prices = value.split(',');
-                    const priceStart = prices[0];
-                    const priceEnd = prices[1];
-
-                    this._router.navigate([], {
-                        queryParams: { ps: priceStart, pe: priceEnd },
-                        queryParamsHandling: 'merge',
-                    });
-                }
-            });
-
-            const start_price = this.filter.value.start_price;
-            const end_price = this.filter.value.end_price;
-
-            if (start_price && end_price) {
-                this.priceSelect.writeValue(`${start_price},${end_price}`);
-            }
+            this.routeSelect(this.priceSelect, 'price');
         }
 
         if (this.sortSelect) {
-            this.sortSelect.registerOnChange((value: string) => {
-                if (value === '') {
-                    this._router.navigate([], {
-                        queryParams: { sort: null },
-                        queryParamsHandling: 'merge',
-                    });
-                } else {
-                    this._router.navigate([], {
-                        queryParams: { sort: value },
-                        queryParamsHandling: 'merge',
-                    });
-                }
-            });
-
-            if (this.filter.value.sort) {
-                this.sortSelect.writeValue(`${this.filter.value.sort}`);
-            }
+            this.routeSelect(this.sortSelect, 'sort');
         }
     }
 
-    handleGetBrands(brands: string[]) {
-        this.brands = [...brands];
+    updateSelect(query: Params, key: ListGearFilterKey, defaultValue?: any) {
+        const nextValue = {
+            ...this.filter.value,
+        };
+
+        const value =
+            typeof nextValue[key] === 'number'
+                ? Number(query[key])
+                : query[key];
+
+        if (value) {
+            nextValue[key] = value;
+        } else if (defaultValue) {
+            nextValue[key] = defaultValue;
+        } else {
+            nextValue[key] = undefined;
+        }
+
+        this.filter.next(nextValue);
     }
 
-    handleGetVarieties(varieties: string[]) {
-        this.varieties = [...varieties];
+    routeSelect(select: BrnSelectComponent, key: ListGearFilterKey) {
+        const params: Params = {};
+
+        select.registerOnChange((value: string) => {
+            params[key] = value === '' ? null : value;
+
+            this._router.navigate([], {
+                queryParams: params,
+                queryParamsHandling: 'merge',
+            });
+        });
+
+        const property = this.filter.value[key];
+
+        if (property) {
+            select.writeValue(property);
+        }
     }
 
     handleOnPageChange(page: number) {
