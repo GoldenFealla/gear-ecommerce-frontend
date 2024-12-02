@@ -104,7 +104,7 @@ export class AddGearComponent {
             const form: AddGearForm = {
                 image_base64: value.image!.split(',')[1],
                 name: value.name!,
-                type: value.type! as unknown as GearType,
+                type: value.type! as GearType,
                 brand: value.brand!,
                 variety: value.variety!,
                 price: parseFloat(value.price!),

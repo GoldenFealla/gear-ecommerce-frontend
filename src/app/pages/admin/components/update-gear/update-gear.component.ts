@@ -6,6 +6,7 @@ import {
     ReactiveFormsModule,
     Validators,
 } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 // Spartan
 import { HlmSpinnerComponent } from '@spartan-ng/ui-spinner-helm';
@@ -16,8 +17,6 @@ import {
     HlmAlertTitleDirective,
 } from '@spartan-ng/ui-alert-helm';
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
-import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
-import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
 import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
 import {
     HlmCardDirective,
@@ -25,10 +24,14 @@ import {
     HlmCardTitleDirective,
     HlmCardContentDirective,
 } from '@spartan-ng/ui-card-helm';
-import { HlmDialogService } from '@spartan-ng/ui-dialog-helm';
 
 // Models
-import { GearType, GearTypeList, UpdateGearForm } from '@shared/models/gear';
+import {
+    GearType,
+    GearTypeList,
+    GearTypeMapper,
+    UpdateGearForm,
+} from '@shared/models/gear';
 
 // Shared Component
 import { ImageCropperDialogComponent } from '@shared/components/image-cropper-dialog/image-cropper-dialog.component';
@@ -76,6 +79,8 @@ import { ImageFormFieldComponent } from '@shared/components/image-form-field/ima
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UpdateGearComponent {
+    private readonly _route = inject(ActivatedRoute);
+    private readonly _router = inject(Router);
     private readonly _updateGearStore = inject(UpdateGearStore);
 
     vm$ = this._updateGearStore.vm$;
@@ -96,8 +101,34 @@ export class UpdateGearComponent {
     gearTypeList: SelectType[] = [];
 
     ngOnInit() {
+        const id = this._route.snapshot.queryParams['id'];
+
+        if (id) {
+            this.idFieldControl.setValue(id);
+            this._updateGearStore.getGear({ id });
+        }
+
         this.gearTypeList = GearTypeList.map((e) => ({ label: e, value: e }));
         this.updateGearForm.disable();
+
+        this.vm$.subscribe((vm) => {
+            const gear = vm.check.gear;
+            if (gear) {
+                this.updateGearForm.patchValue({
+                    image: gear.image_url,
+                    name: gear.name,
+                    type: GearTypeMapper[gear.type],
+                    brand: gear.brand,
+                    variety: gear.variety,
+                    price: gear.price.toString(),
+                    discount: gear.discount.toString(),
+                    quantity: gear.quantity.toString(),
+                });
+
+                this.updateGearForm.enable();
+                this.updateGearForm.markAsPristine();
+            }
+        });
     }
 
     handleOnUpdate() {
@@ -115,7 +146,22 @@ export class UpdateGearComponent {
                 quantity: parseInt(value.quantity!),
             };
 
-            this._updateGearStore.update({ form });
+            const id = this.idFieldControl.value!;
+
+            this._updateGearStore.update({ id, form });
+        }
+    }
+
+    handleOnCheck() {
+        if (this.idFieldControl.valid) {
+            const value = this.idFieldControl.value;
+            this._updateGearStore.getGear({ id: value! });
+            this._router.navigate([], {
+                queryParams: {
+                    id: value,
+                },
+                queryParamsHandling: 'merge',
+            });
         }
     }
 }

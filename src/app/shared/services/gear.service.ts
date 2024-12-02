@@ -62,6 +62,15 @@ export class GearService {
         });
     }
 
+    getGearID(id: string) {
+        const url = new URL('/gear/', api).href;
+        return this._httpClient.get<Response<Gear | null>>(url, {
+            params: {
+                id,
+            },
+        });
+    }
+
     getVarietyList(category: string) {
         const url = new URL('/gear/list-variety', api).href;
         return this._httpClient.get<Response<string[]>>(url, {
@@ -76,8 +85,12 @@ export class GearService {
         return this._httpClient.post<Response<null>>(url, form);
     }
 
-    updateGear(form: UpdateGearForm) {
+    updateGear(id: string, form: UpdateGearForm) {
         const url = new URL('/gear/update', api).href;
-        return this._httpClient.put<Response<null>>(url, form);
+        return this._httpClient.put<Response<null>>(url, form, {
+            params: {
+                id,
+            },
+        });
     }
 }

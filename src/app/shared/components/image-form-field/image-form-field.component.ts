@@ -45,7 +45,27 @@ export class ImageFormFieldComponent {
     cols = listOfCol;
     spans = listOfSpan;
 
+    disable = false;
+
     @Output() changeFile = new EventEmitter<File>();
+
+    ngOnInit() {
+        this.imageReview = this.control().value;
+        this.disable = this.control().disabled;
+
+        this.control().registerOnDisabledChange((isDisabled: boolean) => {
+            this.disable = isDisabled;
+            this._changeDetectorRef.detectChanges();
+        });
+
+        this.control().registerOnChange(() => {
+            this.imageReview = this.control().value;
+            console.log(this.imageReview);
+            this._changeDetectorRef.detectChanges();
+        });
+
+        this._changeDetectorRef.detectChanges();
+    }
 
     imageReview: string | null = null;
     handleOnImageFileChange(event: HTMLInputElement) {

@@ -1,6 +1,6 @@
 @let vm = (vm$ | async)!;
 
-<div>
+<div class="mb-5">
     <text-form-field 
         [control]="idFieldControl" 
         label="ID"
@@ -8,6 +8,16 @@
         labelSpan="1"
         inputSpan="7"
     ></text-form-field>
+    <ng-container [ngTemplateOutlet]="displayCheckingError"></ng-container>
+    <div class="w-full flex flex-row items-center justify-end">
+        <button hlmBtn (click)="handleOnCheck()">
+            @if(vm.check.loading) {
+                <hlm-spinner class="w-5 h-5" />
+            } @else { 
+                Check 
+            }
+        </button>
+    </div>
 </div>
 
 <div hlmCard>
@@ -31,8 +41,8 @@
             <ng-container [ngTemplateOutlet]="displayError"></ng-container>
         </form>
         <div class="flex flex-row items-center justify-end h-10">
-            <button hlmBtn (click)="handleOnUpdate()">
-                @if(vm.updating) {
+            <button hlmBtn (click)="handleOnUpdate()" [disabled]="updateGearForm.pristine">
+                @if(vm.update.updating) {
                     <hlm-spinner class="w-5 h-5" />
                 } @else { 
                     Update 
@@ -42,13 +52,22 @@
     </div>
 </div>
 
-
-<ng-template #displayError>
-    @if(!vm.success && vm.message) {
+<ng-template #displayCheckingError>
+    @if(!vm.check.success && vm.check.message) {
     <div hlmAlert variant="destructive" class="mb-5">
         <hlm-icon hlmAlertIcon name="lucideTriangleAlert" />
         <h4 hlmAlertTitle>Error</h4>
-        <p hlmAlertDesc>{{ vm.message }}</p>
+        <p hlmAlertDesc>{{ vm.check.message }}</p>
+    </div>
+    }
+</ng-template>
+
+<ng-template #displayError>
+    @if(!vm.update.success && vm.update.message) {
+    <div hlmAlert variant="destructive" class="mb-5">
+        <hlm-icon hlmAlertIcon name="lucideTriangleAlert" />
+        <h4 hlmAlertTitle>Error</h4>
+        <p hlmAlertDesc>{{ vm.update.message }}</p>
     </div>
     }
 </ng-template>

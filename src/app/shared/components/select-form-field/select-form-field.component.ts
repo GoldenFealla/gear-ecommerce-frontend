@@ -16,6 +16,7 @@ import { HlmSelectImports } from '@spartan-ng/ui-select-helm';
 
 // Tailwind Variables
 import { listOfCol, listOfSpan } from '@shared/models/tailwind_variables';
+import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
 
 export type SelectType = {
     label: string;
@@ -25,7 +26,15 @@ export type SelectType = {
 @Component({
     selector: 'select-form-field',
     standalone: true,
-    imports: [NgClass, ReactiveFormsModule, BrnSelectImports, HlmSelectImports],
+    imports: [
+        NgClass,
+        ReactiveFormsModule,
+
+        BrnSelectImports,
+        HlmSelectImports,
+
+        HlmLabelDirective,
+    ],
     templateUrl: './select-form-field.component.html',
     styleUrl: './select-form-field.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -51,6 +60,10 @@ export class SelectFormFieldComponent {
         const select = this.select;
         if (select) {
             select.disabled = this.control().disabled;
+
+            this.control().registerOnChange(() => {
+                select.writeValue(this.control().value);
+            });
 
             select.registerOnChange((value: string) => {
                 this.control().setValue(value);

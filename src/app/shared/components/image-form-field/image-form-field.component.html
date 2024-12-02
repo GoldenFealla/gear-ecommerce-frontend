@@ -14,7 +14,7 @@
         type="file"
         [ngClass]="spans[inputSpan()]" 
         (change)="handleOnImageFileChange($any($event.target))"
-        [disabled]="control().disabled"
+        [disabled]="disable"
     />
 </div>
 @if (imageReview) {

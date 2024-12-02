@@ -13,7 +13,14 @@ import { tapResponse } from '@ngrx/operators';
 import { GearService } from '@shared/services/gear.service';
 
 // Models
-import { UpdateGearForm } from '@shared/models/gear';
+import { Gear, UpdateGearForm } from '@shared/models/gear';
+
+export interface CheckGearState {
+    gear: Gear | null;
+    loading: boolean;
+    success: boolean;
+    message: string;
+}
 
 export interface UpdateGearState {
     updating: boolean;
@@ -21,54 +28,86 @@ export interface UpdateGearState {
     message: string;
 }
 
+export interface UpdateGearStoreState {
+    check: CheckGearState;
+    update: UpdateGearState;
+}
+
 @Injectable()
-export class UpdateGearStore extends ComponentStore<UpdateGearState> {
+export class UpdateGearStore extends ComponentStore<UpdateGearStoreState> {
     constructor(private gearService: GearService) {
         super({
-            updating: false,
-            success: false,
-            message: '',
+            check: {
+                gear: null,
+                loading: false,
+                success: false,
+                message: '',
+            },
+            update: {
+                updating: false,
+                success: false,
+                message: '',
+            },
         });
     }
     // *********** Updaters ************ //
     setUpdate = this.updater((state) => ({
         ...state,
-        updating: true,
+        update: { ...state.update, updating: true },
     }));
 
     setUpdateSuccess = this.updater((state) => ({
         ...state,
-        updating: false,
-        success: true,
-        message: '',
+        update: { updating: false, success: true, message: '' },
     }));
 
     setUpdateError = this.updater((state, errorMsg: string) => ({
         ...state,
-        updating: false,
-        success: false,
-        message: errorMsg,
+        update: { updating: false, success: false, message: errorMsg },
+    }));
+
+    setGetGear = this.updater((state) => ({
+        ...state,
+        check: { ...state.check, loading: true },
+    }));
+
+    setGetGearSuccess = this.updater((state, gear: Gear | null) => ({
+        ...state,
+        check: {
+            gear: gear,
+            loading: false,
+            success: true,
+            message: '',
+        },
+    }));
+
+    setGetGearError = this.updater((state, errorMsg: string) => ({
+        ...state,
+        check: {
+            gear: null,
+            loading: false,
+            success: false,
+            message: errorMsg,
+        },
     }));
 
     // *********** Selectors *********** //
-    updating$ = this.select((state) => state.updating);
-    success$ = this.select((state) => state.success);
-    message$ = this.select((state) => state.message);
 
     // *********** Effects ************* //
     update = this.effect<{
+        id: string;
         form: UpdateGearForm;
         success?: () => void;
     }>((trigger$) => {
         return trigger$.pipe(
             tap(() => this.setUpdate()),
-            exhaustMap(({ form, success }) =>
-                this.gearService.updateGear(form).pipe(
+            exhaustMap(({ id, form, success }) =>
+                this.gearService.updateGear(id, form).pipe(
                     tapResponse({
-                        next: (value) => {
+                        next: () => {
                             this.setUpdateSuccess();
-                            toast('Add Suceeded', {
-                                description: 'You successfully added',
+                            toast('Update Suceeded', {
+                                description: 'You successfully updated',
                             });
                             if (success) {
                                 success();
@@ -76,8 +115,39 @@ export class UpdateGearStore extends ComponentStore<UpdateGearState> {
                         },
                         error: (error: HttpErrorResponse) => {
                             this.setUpdateError(error.error.message);
-                            toast('Add Failed', {
+                            toast('Update Failed', {
                                 description: 'An error occured while updating',
+                            });
+                        },
+                    })
+                )
+            )
+        );
+    });
+
+    getGear = this.effect<{
+        id: string;
+        success?: () => void;
+    }>((trigger$) => {
+        return trigger$.pipe(
+            tap(() => this.setGetGear()),
+            exhaustMap(({ id, success }) =>
+                this.gearService.getGearID(id).pipe(
+                    tapResponse({
+                        next: (value) => {
+                            const data = value.data;
+                            this.setGetGearSuccess(data);
+                            toast('Check gear Suceeded', {
+                                description: 'Successfully check',
+                            });
+                            if (success) {
+                                success();
+                            }
+                        },
+                        error: (error: HttpErrorResponse) => {
+                            this.setGetGearError(error.error.message);
+                            toast('Check gear Failed', {
+                                description: 'Invalid uuid',
                             });
                         },
                     })
@@ -88,8 +158,7 @@ export class UpdateGearStore extends ComponentStore<UpdateGearState> {
 
     // *********** ViewModel *********** //
     readonly vm$ = this.select(this.state$, (state) => ({
-        updating: state.updating,
-        success: state.success,
-        message: state.message,
+        check: state.check,
+        update: state.update,
     }));
 }

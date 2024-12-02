@@ -9,7 +9,7 @@ export type Product = {
 export const GearTypeList = [
     'PC',
     'Laptop',
-    'MainBoard',
+    'Mainboard',
     'CPU',
     'GPU',
     'PSU',
@@ -18,7 +18,21 @@ export const GearTypeList = [
     'Storage',
     'Monitor',
 ] as const;
-export type GearType = typeof GearTypeList;
+
+export const GearTypeMapper: Record<string, GearType> = {
+    PERSONAL_COMPUTER: 'PC',
+    LAPTOP: 'Laptop',
+    MAINBOARD: 'Mainboard',
+    CENTRAL_PROCESSING_UNIT: 'CPU',
+    GRAPHICS_PROCESSING_UNIT: 'GPU',
+    POWER_SUPPLY_UNIT: 'PSU',
+    RANDOM_ACCESS_MEMORY: 'RAM',
+    FAN: 'Fan',
+    STORAGE: 'Storage',
+    MONITOR: 'Monitor',
+};
+
+export type GearType = (typeof GearTypeList)[number];
 export type Gear = {
     id: string;
     name: string;
