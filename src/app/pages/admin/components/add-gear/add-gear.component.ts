@@ -118,7 +118,7 @@ export class AddGearComponent {
 
     handleOnAddFile(file: File) {
         this.addGearForm.patchValue({
-            name: file.name,
+            name: file.name.replace(/\.[^/.]+$/, ''),
         });
     }
 }

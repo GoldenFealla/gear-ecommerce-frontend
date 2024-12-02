@@ -136,13 +136,13 @@ export class UpdateGearComponent {
 
     handleOnUpdate() {
         const value = this.updateGearForm.getRawValue();
-        console.log(value);
 
         if (value) {
             let image_base64: string | undefined = undefined;
 
             if (this.originalImage && this.originalImage !== value.image) {
                 image_base64 = value.image!.split(',')[1];
+                console.log('true');
             }
 
             const form: UpdateGearForm = {
@@ -158,6 +158,8 @@ export class UpdateGearComponent {
             if (image_base64) {
                 form['image_base64'] = image_base64;
             }
+
+            console.log(form);
 
             const id = this.idFieldControl.value!;
 
