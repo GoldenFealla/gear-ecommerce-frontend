@@ -60,7 +60,6 @@ export class ImageFormFieldComponent {
 
         this.control().registerOnChange(() => {
             this.imageReview = this.control().value;
-            console.log(this.imageReview);
             this._changeDetectorRef.detectChanges();
         });
 
@@ -90,6 +89,7 @@ export class ImageFormFieldComponent {
                 this.imageReview = result;
 
                 this.control().markAsTouched();
+                this.control().markAsDirty();
                 this._changeDetectorRef.detectChanges();
             });
         }
