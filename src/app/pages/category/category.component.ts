@@ -127,6 +127,8 @@ export class CategoryComponent implements OnInit {
                 queryParams: params,
                 queryParamsHandling: 'merge',
             });
+
+            this.filter.next({ ...this.filter.value, page: 1 });
         });
 
         const property = this.filter.value[key];

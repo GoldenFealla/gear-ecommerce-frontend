@@ -6,7 +6,6 @@ import {
     inject,
     Input,
     Output,
-    ViewChild,
 } from '@angular/core';
 
 // Component store
