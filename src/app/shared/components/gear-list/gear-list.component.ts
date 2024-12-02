@@ -55,6 +55,9 @@ export class GearListComponent {
         if (value.page) {
             this.page = value.page;
         }
+        if (value.limit) {
+            this.limit = value.limit;
+        }
         this._gearStore.getList(value);
         if (!this.disablePagination) {
             this._gearStore.getListCount(value);
@@ -65,13 +68,14 @@ export class GearListComponent {
     @Output() pageChange = new EventEmitter<number>();
 
     numbers: number[] = [];
-    page: number = 0;
+    page: number = 1;
+    limit: number = 10;
     maxPage: number = 0;
 
     ngOnInit() {
         this.vm$.subscribe((vm) => {
             if (!this.disablePagination) {
-                this.maxPage = Math.ceil(vm.total / (this._filter?.limit ?? 1));
+                this.maxPage = Math.ceil(vm.total / this.limit);
                 const pages = Math.min(this.maxPage, 3);
                 this.numbers = new Array(pages).fill(0).map((x, i) => {
                     let p = this.page;
