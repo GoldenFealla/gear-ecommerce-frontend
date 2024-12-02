@@ -79,5 +79,5 @@ export type UpdateGearForm = {
     price: number;
     discount: number;
     quantity: number;
-    image_base64: string;
+    image_base64?: string;
 };

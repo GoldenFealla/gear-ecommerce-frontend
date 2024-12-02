@@ -10,7 +10,7 @@
         {{ label() }} :
     </label>
     <div [ngClass]="spans[inputSpan()]">
-        <brn-select class="inline-block w-full" placeholder="Select gearType" #select>
+        <brn-select class="inline-block w-full" [placeholder]="placeholder()" #select>
             <hlm-select-trigger class="w-full">
                 <hlm-select-value />
             </hlm-select-trigger>

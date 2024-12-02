@@ -99,6 +99,7 @@ export class UpdateGearComponent {
     });
 
     gearTypeList: SelectType[] = [];
+    originalImage: string | null = null;
 
     ngOnInit() {
         const id = this._route.snapshot.queryParams['id'];
@@ -114,6 +115,8 @@ export class UpdateGearComponent {
         this.vm$.subscribe((vm) => {
             const gear = vm.check.gear;
             if (gear) {
+                this.originalImage = gear.image_url;
+
                 this.updateGearForm.patchValue({
                     image: gear.image_url,
                     name: gear.name,
@@ -133,10 +136,16 @@ export class UpdateGearComponent {
 
     handleOnUpdate() {
         const value = this.updateGearForm.getRawValue();
+        console.log(value);
 
         if (value) {
+            let image_base64: string | undefined = undefined;
+
+            if (this.originalImage && this.originalImage !== value.image) {
+                image_base64 = value.image!.split(',')[1];
+            }
+
             const form: UpdateGearForm = {
-                image_base64: value.image!.split(',')[1],
                 name: value.name!,
                 type: value.type! as unknown as GearType,
                 brand: value.brand!,
@@ -145,6 +154,10 @@ export class UpdateGearComponent {
                 discount: parseFloat(value.discount!),
                 quantity: parseInt(value.quantity!),
             };
+
+            if (image_base64) {
+                form['image_base64'] = image_base64;
+            }
 
             const id = this.idFieldControl.value!;
 

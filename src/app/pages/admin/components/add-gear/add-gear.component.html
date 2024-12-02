@@ -12,7 +12,7 @@
         <form [formGroup]="addGearForm" action="">
             <image-form-field [control]="addGearForm.controls.image" label="Image"></image-form-field>
             <text-form-field [control]="addGearForm.controls.name" label="Name"> </text-form-field>
-            <select-form-field [control]="addGearForm.controls.type" label="Type" [list]="gearTypeList"></select-form-field>
+            <select-form-field [control]="addGearForm.controls.type" label="Type" [list]="gearTypeList" placeholder="Select gear type"></select-form-field>
             <text-form-field [control]="addGearForm.controls.brand" label="Brand"> </text-form-field>
             <text-form-field [control]="addGearForm.controls.variety" label="Variety"> </text-form-field>
             <number-form-field [control]="addGearForm.controls.price" label="Price" > </number-form-field>

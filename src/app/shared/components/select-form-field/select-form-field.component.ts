@@ -43,6 +43,7 @@ export class SelectFormFieldComponent {
     control = input.required<FormControl>();
 
     label = input.required<string>();
+    placeholder = input.required<string>();
     errorLabel = input<string>();
 
     col = input<number>(10);
@@ -67,10 +68,13 @@ export class SelectFormFieldComponent {
 
             select.registerOnChange((value: string) => {
                 this.control().setValue(value);
+                this.control().markAsTouched();
+                this.control().markAsDirty();
             });
 
             select.registerOnTouched(() => {
                 this.control().markAsTouched();
+                this.control().markAsDirty();
             });
 
             this.control().registerOnDisabledChange((isDisabled: boolean) => {

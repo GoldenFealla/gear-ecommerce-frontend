@@ -32,7 +32,7 @@
         <form [formGroup]="updateGearForm" action="">
             <image-form-field [control]="updateGearForm.controls.image" label="Image"></image-form-field>
             <text-form-field [control]="updateGearForm.controls.name" label="Name"> </text-form-field>
-            <select-form-field [control]="updateGearForm.controls.type" label="Type" [list]="gearTypeList"></select-form-field>
+            <select-form-field [control]="updateGearForm.controls.type" label="Type" [list]="gearTypeList" placeholder="Select gear type"></select-form-field>
             <text-form-field [control]="updateGearForm.controls.brand" label="Brand"> </text-form-field>
             <text-form-field [control]="updateGearForm.controls.variety" label="Variety"> </text-form-field>
             <number-form-field [control]="updateGearForm.controls.price" label="Price" > </number-form-field>
