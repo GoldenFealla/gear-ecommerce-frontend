@@ -115,4 +115,10 @@ export class AddGearComponent {
             this._addGearStore.add({ form });
         }
     }
+
+    handleOnAddFile(file: File) {
+        this.addGearForm.patchValue({
+            name: file.name,
+        });
+    }
 }

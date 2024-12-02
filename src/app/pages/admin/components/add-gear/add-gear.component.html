@@ -10,7 +10,7 @@
     </div>
     <div hlmCardContent>
         <form [formGroup]="addGearForm" action="">
-            <image-form-field [control]="addGearForm.controls.image" label="Image"></image-form-field>
+            <image-form-field [control]="addGearForm.controls.image" label="Image" (changeFile)="handleOnAddFile($event)"></image-form-field>
             <text-form-field [control]="addGearForm.controls.name" label="Name"> </text-form-field>
             <select-form-field [control]="addGearForm.controls.type" label="Type" [list]="gearTypeList" placeholder="Select gear type"></select-form-field>
             <text-form-field [control]="addGearForm.controls.brand" label="Brand"> </text-form-field>
