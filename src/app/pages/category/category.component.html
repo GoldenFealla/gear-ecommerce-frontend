@@ -1,9 +1,9 @@
 @let vm = (vm$ | async)!;
 
-<div class="flex flex-row">
-    <span class="mr-2">
+<div class="w-full grid grid-cols-[repeat(auto-fit,minmax(16rem,min-content))] gap-2 auto-rows-fr justify-center justify-center">
+    <span>
         <brn-select placeholder="Select sort" #sortSelect>
-            <hlm-select-trigger class="w-56">
+            <hlm-select-trigger class="w-full">
                 <hlm-select-value />
             </hlm-select-trigger>
             <hlm-select-content>
@@ -14,9 +14,9 @@
         </brn-select>
     </span>
 
-    <span class="mr-2">
+    <span>
         <brn-select placeholder="Select price" #priceSelect>
-            <hlm-select-trigger class="w-56">
+            <hlm-select-trigger class="w-full">
                 <hlm-select-value />
             </hlm-select-trigger>
             <hlm-select-content>
@@ -29,9 +29,9 @@
         </brn-select>
     </span>
 
-    <span class="mr-2">
+    <span>
         <brn-select placeholder="Select brand" #brandSelect>
-            <hlm-select-trigger class="w-56">
+            <hlm-select-trigger class="w-full">
                 <hlm-select-value />
             </hlm-select-trigger>
             <hlm-select-content>
@@ -45,7 +45,7 @@
 
     <span>
         <brn-select placeholder="Select variety" #varietySelect>
-            <hlm-select-trigger class="w-56">
+            <hlm-select-trigger class="w-full">
                 <hlm-select-value />
             </hlm-select-trigger>
             <hlm-select-content>

@@ -21,7 +21,7 @@
     <div>
         <main-category-list-mobile 
             [categories]="categories"
-            [(current)]="currentCategory"
+            (currentChange)="handleOnChangeCategory($event)"
         ></main-category-list-mobile>
     </div>
 </ng-template>
