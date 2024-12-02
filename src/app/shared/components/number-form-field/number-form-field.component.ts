@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     Component,
-    computed,
     effect,
     input,
 } from '@angular/core';
@@ -11,6 +10,9 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 // Spartan
 import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
+
+// Tailwind Variables
+import { listOfCol, listOfSpan } from '@shared/models/tailwind_variables';
 
 @Component({
     selector: 'number-form-field',
@@ -44,4 +46,7 @@ export class NumberFormFieldComponent {
     col = input<number>(10);
     labelSpan = input<number>(2);
     inputSpan = input<number>(8);
+
+    cols = listOfCol;
+    spans = listOfSpan;
 }

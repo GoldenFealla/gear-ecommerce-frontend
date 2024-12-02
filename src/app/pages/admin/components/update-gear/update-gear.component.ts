@@ -27,11 +27,8 @@ import {
 } from '@spartan-ng/ui-card-helm';
 import { HlmDialogService } from '@spartan-ng/ui-dialog-helm';
 
-// Component Store
-import { AddGearStore } from './add-gear.store';
-
 // Models
-import { AddGearForm, GearType, GearTypeList } from '@shared/models/gear';
+import { GearType, GearTypeList, UpdateGearForm } from '@shared/models/gear';
 
 // Shared Component
 import { ImageCropperDialogComponent } from '@shared/components/image-cropper-dialog/image-cropper-dialog.component';
@@ -41,10 +38,13 @@ import {
     SelectFormFieldComponent,
     SelectType,
 } from '@shared/components/select-form-field/select-form-field.component';
+
+// Component Store
+import { UpdateGearStore } from './update-gear.store';
 import { ImageFormFieldComponent } from '@shared/components/image-form-field/image-form-field.component';
 
 @Component({
-    selector: 'admin-add-gear',
+    selector: 'admin-update-gear',
     standalone: true,
     imports: [
         CommonModule,
@@ -70,17 +70,19 @@ import { ImageFormFieldComponent } from '@shared/components/image-form-field/ima
         NumberFormFieldComponent,
         SelectFormFieldComponent,
     ],
-    templateUrl: './add-gear.component.html',
-    styleUrl: './add-gear.component.scss',
-    providers: [AddGearStore],
+    templateUrl: './update-gear.component.html',
+    styleUrl: './update-gear.component.scss',
+    providers: [UpdateGearStore],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddGearComponent {
-    private readonly _addGearStore = inject(AddGearStore);
+export class UpdateGearComponent {
+    private readonly _updateGearStore = inject(UpdateGearStore);
 
-    vm$ = this._addGearStore.vm$;
+    vm$ = this._updateGearStore.vm$;
 
-    addGearForm = new FormGroup({
+    idFieldControl = new FormControl('');
+
+    updateGearForm = new FormGroup({
         name: new FormControl('', [Validators.required]),
         type: new FormControl('', [Validators.required]),
         brand: new FormControl('', [Validators.required]),
@@ -95,13 +97,14 @@ export class AddGearComponent {
 
     ngOnInit() {
         this.gearTypeList = GearTypeList.map((e) => ({ label: e, value: e }));
+        this.updateGearForm.disable();
     }
 
-    handleOnAdd() {
-        const value = this.addGearForm.getRawValue();
+    handleOnUpdate() {
+        const value = this.updateGearForm.getRawValue();
 
         if (value) {
-            const form: AddGearForm = {
+            const form: UpdateGearForm = {
                 image_base64: value.image!.split(',')[1],
                 name: value.name!,
                 type: value.type! as unknown as GearType,
@@ -112,7 +115,7 @@ export class AddGearComponent {
                 quantity: parseInt(value.quantity!),
             };
 
-            this._addGearStore.add({ form });
+            this._updateGearStore.update({ form });
         }
     }
 }

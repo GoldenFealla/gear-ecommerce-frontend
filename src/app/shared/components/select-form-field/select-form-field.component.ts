@@ -14,6 +14,9 @@ import {
 } from '@spartan-ng/ui-select-brain';
 import { HlmSelectImports } from '@spartan-ng/ui-select-helm';
 
+// Tailwind Variables
+import { listOfCol, listOfSpan } from '@shared/models/tailwind_variables';
+
 export type SelectType = {
     label: string;
     value: string;
@@ -37,18 +40,28 @@ export class SelectFormFieldComponent {
     labelSpan = input<number>(2);
     inputSpan = input<number>(8);
 
+    cols = listOfCol;
+    spans = listOfSpan;
+
     list = input<SelectType[]>([]);
 
     @ViewChild('select') select: BrnSelectComponent | undefined;
 
     ngAfterViewInit() {
-        if (this.select) {
-            this.select.registerOnChange((value: string) => {
+        const select = this.select;
+        if (select) {
+            select.disabled = this.control().disabled;
+
+            select.registerOnChange((value: string) => {
                 this.control().setValue(value);
             });
 
-            this.select.registerOnTouched(() => {
+            select.registerOnTouched(() => {
                 this.control().markAsTouched();
+            });
+
+            this.control().registerOnDisabledChange((isDisabled: boolean) => {
+                select.disabled = isDisabled;
             });
         }
     }

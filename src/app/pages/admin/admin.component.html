@@ -35,10 +35,17 @@
             @if (currentCategory === 'add-gear') {
                 <admin-add-gear></admin-add-gear>
             } 
+            @if (currentCategory === 'update-gear') {
+                <admin-update-gear></admin-update-gear>
+            } 
         </div>
     </div>
 </ng-template>
 
 <ng-template #categoriesRef>
-    <admin-category-list [categories]="categories" [(current)]="currentCategory"></admin-category-list>
+    <admin-category-list 
+        [categories]="categories"
+        [current]="currentCategory" 
+        (currentChange)="handleOnChangeCategory($event)"
+    ></admin-category-list>
 </ng-template>

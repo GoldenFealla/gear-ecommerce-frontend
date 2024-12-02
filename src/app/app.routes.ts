@@ -21,6 +21,14 @@ export const routes: Routes = [
             ),
     },
     {
+        path: 'admin/:operator',
+        canActivate: [authenticatedGuard],
+        loadComponent: () =>
+            import('@pages/admin/admin.component').then(
+                (c) => c.AdminComponent
+            ),
+    },
+    {
         path: 'admin',
         canActivate: [authenticatedGuard],
         loadComponent: () =>

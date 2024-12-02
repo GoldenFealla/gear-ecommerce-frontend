@@ -10,7 +10,7 @@
     </div>
     <div hlmCardContent>
         <form [formGroup]="addGearForm" action="">
-            <ng-container [ngTemplateOutlet]="imageField"></ng-container>
+            <image-form-field [control]="addGearForm.controls.image" label="Image"></image-form-field>
             <text-form-field [control]="addGearForm.controls.name" label="Name"> </text-form-field>
             <select-form-field [control]="addGearForm.controls.type" label="Type" [list]="gearTypeList"></select-form-field>
             <text-form-field [control]="addGearForm.controls.brand" label="Brand"> </text-form-field>
@@ -31,50 +31,6 @@
         </div>
     </div>
 </div>
-
-<ng-template #imageField>
-    <div class="flex flex-col sm:items-center sm:grid sm:grid-cols-10 gap-1 mt-2">
-        <label hlmLabel for="image-field" class="text-left sm:text-right sm:col-span-2 mr-2"
-            >Image: </label
-        >
-        <input
-            hlmInput
-            id="image-field"
-            type="file"
-            class="col-span-8"
-            (change)="handleOnImageFileChange($any($event.target))"
-        />
-    </div>
-    @if (imageReview) {
-        <div class="flex flex-col sm:items-center sm:grid sm:grid-cols-10 gap-1 mt-2">
-            <label hlmLabel class="text-left sm:text-right sm:col-span-2 mr-2"
-                >Review: </label
-            >
-            <img
-                id="image-review"
-                class="col-span-8 max-h-40"
-                [src]="imageReview"
-            />
-        </div>
-    }
-    <div class="sm:items-center sm:grid sm:grid-cols-10 gap-1 mb-2 min-h-6">
-        @let i = addGearForm.controls.image;
-
-        <div class="text-right col-span-2">
-            <span></span>
-        </div>
-
-        @if(i?.invalid && (i?.dirty || i?.touched)) {
-        <div class="col-span-8">
-            <span class="font-bold text-xs text-destructive">
-                @if(i?.hasError("required")) { 
-                    This field is required 
-                } 
-            </span>
-        </div>
-        }
-    </div>
-</ng-template>
 
 <ng-template #displayError>
     @if(!vm.success && vm.message) {

@@ -1,0 +1,61 @@
+<div 
+    class="flex flex-col sm:items-center sm:grid gap-1 mt-2"
+    [ngClass]="cols[col()]"
+>
+    <label 
+        hlmLabel 
+        class="text-left sm:text-right mr-2" 
+        [ngClass]="spans[labelSpan()]"
+    >
+        {{ label() }} :
+    </label>
+    <input
+        hlmInput
+        type="file"
+        [ngClass]="spans[inputSpan()]" 
+        (change)="handleOnImageFileChange($any($event.target))"
+        [disabled]="control().disabled"
+    />
+</div>
+@if (imageReview) {
+    <div 
+        class="flex flex-col sm:items-center sm:grid gap-1 mt-2"
+        [ngClass]="cols[col()]"
+    >
+        <label 
+            hlmLabel 
+            class="text-left sm:text-right mr-2"
+            [ngClass]="spans[labelSpan()]"
+            >Review: </label
+        >
+        <img
+            id="image-review"
+            class="max-h-40"
+            [ngClass]="spans[inputSpan()]" 
+            [src]="imageReview"
+        />
+    </div>
+}
+<div 
+    class="flex flex-col sm:items-center sm:grid gap-1 mb-2 min-h-6"
+    [ngClass]="cols[col()]"
+>
+    @let c = control();
+
+    <div 
+        class="text-left sm:text-right"
+        [ngClass]="spans[labelSpan()]"
+    >
+        <span></span>
+    </div>
+
+    @if(c?.invalid && (c?.dirty || c?.touched)) {
+    <div [ngClass]="spans[inputSpan()]">
+        <span class="font-bold text-xs text-destructive">
+            @if(c?.hasError("required")) { 
+                This field is required 
+            } 
+        </span>
+    </div>
+    }
+</div>

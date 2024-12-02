@@ -56,3 +56,14 @@ export type AddGearForm = {
     quantity: number;
     image_base64: string;
 };
+
+export type UpdateGearForm = {
+    name: string;
+    type: GearType;
+    brand: string;
+    variety: string;
+    price: number;
+    discount: number;
+    quantity: number;
+    image_base64: string;
+};

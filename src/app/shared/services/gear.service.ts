@@ -6,7 +6,12 @@ import { environment } from '@environments/environment.development';
 
 // Models
 import { Response } from '@shared/models/response';
-import { AddGearForm, Gear, ListGearFilter } from '@shared/models/gear';
+import {
+    AddGearForm,
+    Gear,
+    ListGearFilter,
+    UpdateGearForm,
+} from '@shared/models/gear';
 
 const { api } = environment;
 
@@ -69,5 +74,10 @@ export class GearService {
     createGear(form: AddGearForm) {
         const url = new URL('/gear/create', api).href;
         return this._httpClient.post<Response<null>>(url, form);
+    }
+
+    updateGear(form: UpdateGearForm) {
+        const url = new URL('/gear/update', api).href;
+        return this._httpClient.put<Response<null>>(url, form);
     }
 }
