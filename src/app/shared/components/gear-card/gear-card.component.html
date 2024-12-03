@@ -1,47 +1,55 @@
-<section hlmCard class="h-full max-w-64">
-    <div hlmCardContent class="p-4 pt-6">
-      <div class="aspect-square">
-        <img class="w-full h-full object-center object-contain" [src]="gear().image_url" [alt]="gear().name">
-      </div>
-      <div class="h-8 mt-6">
-        <h3 class="text-sm font-semibold leading-4 line-clamp-2 text-ellipsis mt-4">{{ gear().name }}</h3>
-      </div>
-      <div class="mt-6 flex flex-row items-center justify-between">
-        <div>
-          <h5 class="text-sm line-through h-5">
-            @if(gear().discount !== gear().price) {
-              {{ gear().price | currency:'VND' }}
-            }
-          </h5>
-          <h5 class="text-lg font-semibold h-7">{{ gear().discount | currency:'VND' }}</h5>
+<section hlmCard 
+    class="
+        h-full
+        hover:shadow-sm hover:shadow-[hsl(var(--foreground))] 
+        transition-all"
+>
+    <div hlmCardContent class="p-3 sm:p-4 sm:pt-6">
+        <div class="aspect-square">
+            <img class="w-full h-full object-center object-contain" [src]="gear().image_url" [alt]="gear().name">
         </div>
-        <div class="flex flex-col items-end">
-          <div class="h-full flex flex-row items-center">
-            <hlm-tooltip>
-              <button 
-                class="h-10 w-10 mr-1" 
-                hlmBtn size="icon" 
-                hlmTooltipTrigger
-                variant="ghost"
-              >
-                <hlm-icon size="sm" name="bootstrapCartPlus"></hlm-icon>
-              </button>
-              <span *brnTooltipContent>Add Gear to Cart</span>
-            </hlm-tooltip>
-            <hlm-tooltip>
-              <button 
-                class="h-10 w-10" 
-                hlmBtn size="icon"
-                hlmTooltipTrigger
-                variant="ghost" 
-                (click)="handleOnCopyGearID(gear().id)"
-              >
-                <hlm-icon size="sm" name="bootstrapCopy"></hlm-icon>
-              </button>
-              <span *brnTooltipContent>Copy Gear ID</span>
-            </hlm-tooltip>
-          </div>
+        <div class="h-8 mt-6">
+            <h3 class="text-sm font-semibold leading-4 line-clamp-2 text-ellipsis mt-4">{{ gear().name }}</h3>
         </div>
-      </div>
+        <div class="mt-6 flex flex-col sm:flex-row items-center justify-between">
+            <div class="text-center sm:text-left">
+                <span class="flex flex-row items-center text-xs sm:text-sm h-5">
+                    @if(gear().discount !== gear().price) {
+                        <h5 class="line-through">
+                            {{ gear().price | currency:'VND' }}
+                        </h5>
+                        <div class="
+                            p-0.5 ml-2 font-semibold border rounded 
+                            text-[hsl(var(--primary))]
+                            border-[hsl(var(--primary))]"
+                        >
+                            {{ gear().price | DiscountPercent:gear().discount }}
+                        </div>
+                    }
+                </span>
+                <h5 
+                    class="p-1 text-sm sm:text-lg text-[hsl(var(--popover-foreground))] font-semibold h-7"
+                >
+                    {{ gear().discount | currency:'VND' }}
+                </h5>
+            </div>
+            <div class="flex flex-col items-end">
+                <div class="h-full flex flex-row items-center">
+                    <hlm-tooltip>
+                        <button class="h-10 w-10 mr-1" hlmBtn size="icon" hlmTooltipTrigger variant="ghost">
+                            <hlm-icon size="sm" name="bootstrapCartPlus"></hlm-icon>
+                        </button>
+                        <span *brnTooltipContent>Add Gear to Cart</span>
+                    </hlm-tooltip>
+                    <hlm-tooltip>
+                        <button class="h-10 w-10" hlmBtn size="icon" hlmTooltipTrigger variant="ghost"
+                            (click)="handleOnCopyGearID(gear().id)">
+                            <hlm-icon size="sm" name="bootstrapCopy"></hlm-icon>
+                        </button>
+                        <span *brnTooltipContent>Copy Gear ID</span>
+                    </hlm-tooltip>
+                </div>
+            </div>
+        </div>
     </div>
 </section>

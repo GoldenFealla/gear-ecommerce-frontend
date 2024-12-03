@@ -5,7 +5,12 @@
 }
 
 @if (!vm.loading && vm.gears?.length! > 0) {
-    <div class="w-full mt-6 grid grid-cols-[repeat(auto-fit,minmax(14rem,max-content))] gap-2 auto-rows-[1fr]">
+    <div class="
+        w-full mt-6 grid 
+        grid-cols-[repeat(auto-fit,minmax(10rem,max-content))] 
+        sm:grid-cols-[repeat(auto-fit,minmax(14rem,max-content))] 
+        gap-2 auto-rows-[1fr]"
+    >
         @for (gear of vm.gears; track gear.id) {
             <div class="h-full">    
                 <gear-card [gear]="gear"></gear-card>

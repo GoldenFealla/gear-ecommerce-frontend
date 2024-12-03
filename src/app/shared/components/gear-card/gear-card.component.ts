@@ -28,12 +28,15 @@ import { bootstrapCartPlus, bootstrapCopy } from '@ng-icons/bootstrap-icons';
 
 // Toast
 import { toast } from 'ngx-sonner';
+import { DiscountPercentPipe } from './discount-percent.pipe';
 
 @Component({
     selector: 'gear-card',
     standalone: true,
     imports: [
         CommonModule,
+
+        DiscountPercentPipe,
 
         HlmCardContentDirective,
         HlmCardDirective,

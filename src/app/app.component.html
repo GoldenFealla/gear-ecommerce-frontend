@@ -2,7 +2,9 @@
 
 
 @defer() {
-<ng-container [ngTemplateOutlet]="body"></ng-container>
+    <div>
+        <ng-container [ngTemplateOutlet]="body"></ng-container>
+    </div>
 } @loading (after 100ms; minimum 500ms) {
 <ng-container [ngTemplateOutlet]="loading"></ng-container>
 } @placeholder (minimum 500ms) {
@@ -17,7 +19,7 @@
 </ng-template>
 
 <ng-template #body>
-    <nav class="shadow-md sticky top-0 bg-[hsl(var(--background))]" #nav>
+    <nav class="shadow-sm shadow-[hsla(var(--foreground)/0.2)] sticky top-0 bg-[hsl(var(--background))] z-50" #nav>
         <div class="max-w-screen-xl mx-auto ">
             <app-navigation-bar> </app-navigation-bar>
         </div>
