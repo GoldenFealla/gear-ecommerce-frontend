@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 
 // Spartan
 import { HlmSpinnerComponent } from '@spartan-ng/ui-spinner-helm';
@@ -11,6 +11,12 @@ import { NavigationBarComponent } from './components/navigation-bar/navigation-b
 
 // Component Store
 import { AppStore } from './app.store';
+
+// ngrx
+import { Store } from '@ngrx/store';
+import { CartState } from '@store/cart/cart.state';
+import { CartActions } from '@store/cart/cart.actions';
+
 @Component({
     selector: 'app-root',
     standalone: true,
@@ -28,10 +34,12 @@ import { AppStore } from './app.store';
     styleUrl: './app.component.scss',
 })
 export class AppComponent {
+    private readonly _store = inject(Store<{ cart: CartState }>);
     private readonly _componentStore = inject(AppStore);
 
     ngOnInit() {
         this._componentStore.check();
+        this._store.dispatch(CartActions.GetCart());
     }
 
     vm$ = this._componentStore.vm$;

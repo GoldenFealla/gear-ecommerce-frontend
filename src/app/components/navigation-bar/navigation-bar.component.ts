@@ -23,6 +23,12 @@ import {
     HlmMenuLabelComponent,
     HlmMenuSeparatorComponent,
 } from '@spartan-ng/ui-menu-helm';
+import {
+    BrnPopoverComponent,
+    BrnPopoverContentDirective,
+    BrnPopoverTriggerDirective,
+} from '@spartan-ng/ui-popover-brain';
+import { HlmPopoverContentDirective } from '@spartan-ng/ui-popover-helm';
 
 // Icon
 import { provideIcons } from '@ng-icons/core';
@@ -52,6 +58,7 @@ import { ThemeService } from 'src/shared/services/theme.service';
 
 // Store
 import { AuthState } from 'src/store/auth/auth.state';
+import { CartState } from '@store/cart/cart.state';
 
 @Component({
     selector: 'app-navigation-bar',
@@ -75,6 +82,11 @@ import { AuthState } from 'src/store/auth/auth.state';
         HlmMenuItemIconDirective,
         HlmMenuLabelComponent,
         HlmMenuSeparatorComponent,
+
+        BrnPopoverComponent,
+        BrnPopoverTriggerDirective,
+        BrnPopoverContentDirective,
+        HlmPopoverContentDirective,
     ],
     templateUrl: './navigation-bar.component.html',
     styleUrl: './navigation-bar.component.scss',
@@ -94,13 +106,16 @@ import { AuthState } from 'src/store/auth/auth.state';
 export class NavigationBarComponent {
     private readonly _themeService = inject(ThemeService);
     private readonly _hlmDialogService = inject(HlmDialogService);
-    private readonly _store = inject(Store<{ auth: AuthState }>);
+    private readonly _store = inject(
+        Store<{ auth: AuthState; cart: CartState }>
+    );
     private readonly _router = inject(Router);
 
     theme$ = this._themeService.theme$;
     userInfo$ = this._store.select(
         (state: { auth: AuthState }) => state.auth.userInfo
     );
+    cart$ = this._store.select((state: { cart: CartState }) => state.cart.cart);
 
     toggleTheme(): void {
         this._themeService.toggleDarkMode();

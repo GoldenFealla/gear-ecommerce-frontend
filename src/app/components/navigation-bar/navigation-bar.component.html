@@ -17,9 +17,7 @@
             </button>
         </span>
         <span>
-            <button hlmBtn size="icon" variant='ghost'>
-                <hlm-icon size="sm" name="lucideShoppingCart"></hlm-icon>
-            </button>
+            <ng-container [ngTemplateOutlet]="cart"></ng-container>
         </span>
         <span>
             @if(userInfo) {
@@ -62,4 +60,42 @@
             </button>
         </hlm-menu>
     </ng-template>
+</ng-template>
+
+<ng-template #cart>
+    <brn-popover sideOffset="5" closeDelay="100" [align]="'end'">
+        <button hlmBtn size="icon" variant='ghost' brnPopoverTrigger>
+            <hlm-icon size="sm" name="lucideShoppingCart"></hlm-icon>
+        </button>
+        <div hlmPopoverContent class="w-80 grid gap-4" *brnPopoverContent="let ctx">
+            <div class="space-y-2">
+                <h4 class="font-medium leading-none">Cart</h4>
+                <p class="text-sm text-muted-foreground">Gears will be bought</p>
+            </div>
+            <div>
+                @let cart = (cart$ | async);
+
+                @if(!cart) {
+                    No items
+                }
+
+                @if (cart) {
+                    @for (gear of cart.order_gear; track $index) {
+                        <div class="w-full border-b border-gray-800 my-4"></div>
+                        <div class="h-24 flex flex-row items-center">
+                            <div class="h-24 w-24 p-2">
+                                <div class="h-full w-full">
+                                    <img class="aspect-square" [src]="gear.gear.image_url" />
+                                </div>
+                            </div>
+                            <div class="h-24 ml-5 flex flex-col justify-evenly">
+                                <span class="text-xs sm:text-sm font-semibold">{{ gear.gear.name }}</span>
+                                <span class="text-xs sm:text-sm">quantity {{ gear.quantity }}</span>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </brn-popover>
 </ng-template>

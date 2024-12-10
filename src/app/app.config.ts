@@ -12,10 +12,15 @@ import {
 // Interceptor
 import { logInterceptor } from 'src/shared/interceptors/log.interceptor';
 import { credentialInterceptor } from 'src/shared/interceptors/credential.interceptor';
-import { provideStore } from '@ngrx/store';
 
 // Reducers
+import { provideStore } from '@ngrx/store';
 import { AuthReducer } from '../store/auth/auth.reducer';
+import { CartReducer } from '@store/cart/cart.reducer';
+
+// Effects
+import { provideEffects } from '@ngrx/effects';
+import { CartEffects } from '@store/cart/cart.effects';
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -28,6 +33,8 @@ export const appConfig: ApplicationConfig = {
         ),
         provideStore({
             auth: AuthReducer,
+            cart: CartReducer,
         }),
+        provideEffects(CartEffects),
     ],
 };
