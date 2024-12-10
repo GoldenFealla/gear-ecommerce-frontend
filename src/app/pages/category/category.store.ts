@@ -7,7 +7,7 @@ import { ComponentStore } from '@ngrx/component-store';
 import { tapResponse } from '@ngrx/operators';
 
 // Services
-import { GearService } from '@shared/services/gear.service';
+import { GearService } from 'src/shared/services/gear.service';
 
 export interface GearState {
     brands: string[];

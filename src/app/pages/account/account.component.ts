@@ -15,7 +15,7 @@ import { BillsComponent } from './components/bills/bills.component';
 
 // Store
 import { Store } from '@ngrx/store';
-import { AuthState } from '@store/auth/auth.state';
+import { AuthState } from 'src/store/auth/auth.state';
 
 // Icon
 import { provideIcons } from '@ng-icons/core';

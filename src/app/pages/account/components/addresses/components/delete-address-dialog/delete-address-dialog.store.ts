@@ -10,7 +10,7 @@ import { ComponentStore } from '@ngrx/component-store';
 import { tapResponse } from '@ngrx/operators';
 
 // Services
-import { AddressService } from '@shared/services/address.service';
+import { AddressService } from 'src/shared/services/address.service';
 
 export interface DeleteAddressDialogState {
     deleting: boolean;

@@ -19,7 +19,7 @@ import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 import { ImageCropperDialogComponent } from '../image-cropper-dialog/image-cropper-dialog.component';
 
 // Tailwind Variables
-import { listOfCol, listOfSpan } from '@shared/models/tailwind_variables';
+import { listOfCol, listOfSpan } from 'src/shared/models/tailwind_variables';
 
 @Component({
     selector: 'image-form-field',

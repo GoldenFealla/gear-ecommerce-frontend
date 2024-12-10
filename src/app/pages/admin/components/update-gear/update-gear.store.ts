@@ -10,10 +10,10 @@ import { ComponentStore } from '@ngrx/component-store';
 import { tapResponse } from '@ngrx/operators';
 
 // Services
-import { GearService } from '@shared/services/gear.service';
+import { GearService } from 'src/shared/services/gear.service';
 
 // Models
-import { Gear, UpdateGearForm } from '@shared/models/gear';
+import { Gear, UpdateGearForm } from 'src/shared/models/gear';
 
 export interface CheckGearState {
     gear: Gear | null;

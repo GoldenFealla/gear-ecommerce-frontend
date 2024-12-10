@@ -14,7 +14,7 @@ import {
 } from '@angular/forms';
 
 // Models
-import { UpdateUserForm, UserInfo } from '@shared/models/auth';
+import { UpdateUserForm, UserInfo } from 'src/shared/models/auth';
 
 // Spartan
 import { HlmSpinnerComponent } from '@spartan-ng/ui-spinner-helm';
@@ -44,7 +44,7 @@ import { toast } from 'ngx-sonner';
 
 // Store
 import { InformationStore } from './information.store';
-import { TextFormFieldComponent } from '@shared/components/text-form-field/text-form-field.component';
+import { TextFormFieldComponent } from 'src/shared/components/text-form-field/text-form-field.component';
 
 @Component({
     selector: 'account-information',

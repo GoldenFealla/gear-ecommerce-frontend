@@ -13,7 +13,7 @@ import { GearStore } from './gear-list.store';
 
 // Component
 import { GearCardComponent } from '../gear-card/gear-card.component';
-import { ListGearFilter } from '@shared/models/gear';
+import { ListGearFilter } from 'src/shared/models/gear';
 
 // Spartan
 import { HlmSpinnerComponent } from '@spartan-ng/ui-spinner-helm';

@@ -17,13 +17,13 @@ import {
 import { HlmSelectImports } from '@spartan-ng/ui-select-helm';
 
 // Shared Components
-import { GearListComponent } from '@shared/components/gear-list/gear-list.component';
+import { GearListComponent } from 'src/shared/components/gear-list/gear-list.component';
 
 // Component
 import { CategoryStore } from './category.store';
 
 // Models
-import { ListGearFilter, ListGearFilterKey } from '@shared/models/gear';
+import { ListGearFilter, ListGearFilterKey } from 'src/shared/models/gear';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({

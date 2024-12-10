@@ -6,7 +6,7 @@ import { filter, map } from 'rxjs';
 
 // Store
 import { Store } from '@ngrx/store';
-import { AuthState } from '@store/auth/auth.state';
+import { AuthState } from 'src/store/auth/auth.state';
 
 export const authenticatedGuard: CanActivateFn = (route, state) => {
     const _router = inject(Router);

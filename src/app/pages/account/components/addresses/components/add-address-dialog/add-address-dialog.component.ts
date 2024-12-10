@@ -36,7 +36,7 @@ import { HlmSelectImports } from '@spartan-ng/ui-select-helm';
 import { AddAddressDialogStore } from './add-address-dialog.store';
 
 // Models
-import { AddAddressForm } from '@shared/models/address';
+import { AddAddressForm } from 'src/shared/models/address';
 
 @Component({
     selector: 'app-add-address-dialog',

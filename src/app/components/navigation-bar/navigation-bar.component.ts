@@ -48,10 +48,10 @@ import {
 import { LogoutDialogComponent } from './logout-dialog/logout-dialog.component';
 
 // Services
-import { ThemeService } from '@shared/services/theme.service';
+import { ThemeService } from 'src/shared/services/theme.service';
 
 // Store
-import { AuthState } from '@store/auth/auth.state';
+import { AuthState } from 'src/store/auth/auth.state';
 
 @Component({
     selector: 'app-navigation-bar',

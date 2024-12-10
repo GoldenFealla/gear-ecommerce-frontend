@@ -10,10 +10,10 @@ import { ComponentStore } from '@ngrx/component-store';
 import { tapResponse } from '@ngrx/operators';
 
 // Services
-import { AddressService } from '@shared/services/address.service';
+import { AddressService } from 'src/shared/services/address.service';
 
 // Models
-import { UpdateAddressForm } from '@models/address';
+import { UpdateAddressForm } from 'src/shared/models/address';
 
 export interface UpdateAddressDialogState {
     updating: boolean;

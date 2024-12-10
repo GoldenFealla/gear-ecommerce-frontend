@@ -7,10 +7,10 @@ import { ComponentStore } from '@ngrx/component-store';
 import { tapResponse } from '@ngrx/operators';
 
 // Services
-import { AddressService } from '@shared/services/address.service';
+import { AddressService } from 'src/shared/services/address.service';
 
 // Models
-import { Address } from '@shared/models/address';
+import { Address } from 'src/shared/models/address';
 
 export interface AddressState {
     addresses: Address[] | null;

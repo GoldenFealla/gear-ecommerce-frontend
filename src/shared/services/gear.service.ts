@@ -5,13 +5,13 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '@environments/environment.development';
 
 // Models
-import { Response } from '@shared/models/response';
+import { Response } from 'src/shared/models/response';
 import {
     AddGearForm,
     Gear,
     ListGearFilter,
     UpdateGearForm,
-} from '@shared/models/gear';
+} from 'src/shared/models/gear';
 
 const { api } = environment;
 

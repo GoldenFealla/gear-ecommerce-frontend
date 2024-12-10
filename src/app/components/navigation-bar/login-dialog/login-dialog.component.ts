@@ -35,7 +35,7 @@ import {
 import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
 
 // Models
-import { LoginForm } from '../../../shared/models/auth';
+import { LoginForm } from '../../../../shared/models/auth';
 
 // Component Store
 import { LoginDialogStore } from './login-dialog.store';

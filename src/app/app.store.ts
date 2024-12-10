@@ -8,14 +8,14 @@ import { ComponentStore } from '@ngrx/component-store';
 import { tapResponse } from '@ngrx/operators';
 
 // Services
-import { AuthService } from '@shared/services/auth.service';
+import { AuthService } from 'src/shared/services/auth.service';
 
 // Store
-import { AuthState } from '@store/auth/auth.state';
-import { AuthActions } from '@store/auth/auth.actions';
+import { AuthState } from 'src/store/auth/auth.state';
+import { AuthActions } from 'src/store/auth/auth.actions';
 
 // Models
-import { UserInfo } from '@shared/models/auth';
+import { UserInfo } from 'src/shared/models/auth';
 
 export interface AppStoreState {
     loading: boolean;

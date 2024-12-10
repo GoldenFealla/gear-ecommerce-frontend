@@ -5,12 +5,12 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '@environments/environment.development';
 
 // Models
-import { Response } from '@models/response';
+import { Response } from 'src/shared/models/response';
 import {
     AddAddressForm,
     Address,
     UpdateAddressForm,
-} from '@shared/models/address';
+} from 'src/shared/models/address';
 
 const { api } = environment;
 

@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
 // Guards
-import { authenticatedGuard } from '@shared/guards/Authenticated.guard';
+import { authenticatedGuard } from 'src/shared/guards/Authenticated.guard';
 
 // Components
 import { NotFoundComponent } from '@pages/404/404.component';

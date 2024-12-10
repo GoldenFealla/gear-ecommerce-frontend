@@ -11,8 +11,8 @@ import {
     UpdateUserForm,
     UserCredential,
     UserInfo,
-} from '@models/auth';
-import { Response } from '@models/response';
+} from 'src/shared/models/auth';
+import { Response } from 'src/shared/models/response';
 
 const { api } = environment;
 

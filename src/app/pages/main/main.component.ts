@@ -14,7 +14,7 @@ import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 
 // Components
 import { CategoryListComponent } from './components/category-list/category-list.component';
-import { GearListComponent } from '@shared/components/gear-list/gear-list.component';
+import { GearListComponent } from 'src/shared/components/gear-list/gear-list.component';
 
 // Model
 import { CarouselComponent } from './components/carousel/carousel.component';

@@ -11,14 +11,14 @@ import { tapResponse } from '@ngrx/operators';
 import { Store } from '@ngrx/store';
 
 // Services
-import { AuthService } from '@services/auth.service';
+import { AuthService } from 'src/shared/services/auth.service';
 
 // Models
-import { UpdateUserForm } from '@models/auth';
+import { UpdateUserForm } from 'src/shared/models/auth';
 
 // Store
-import { AuthState } from '@store/auth/auth.state';
-import { AuthActions } from '@store/auth/auth.actions';
+import { AuthState } from 'src/store/auth/auth.state';
+import { AuthActions } from 'src/store/auth/auth.actions';
 
 export interface InfomationState {
     updating: boolean;

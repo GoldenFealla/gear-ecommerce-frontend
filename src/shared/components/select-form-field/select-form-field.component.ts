@@ -15,7 +15,7 @@ import {
 import { HlmSelectImports } from '@spartan-ng/ui-select-helm';
 
 // Tailwind Variables
-import { listOfCol, listOfSpan } from '@shared/models/tailwind_variables';
+import { listOfCol, listOfSpan } from 'src/shared/models/tailwind_variables';
 import { HlmLabelDirective } from '@spartan-ng/ui-label-helm';
 
 export type SelectType = {

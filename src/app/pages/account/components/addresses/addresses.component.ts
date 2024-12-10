@@ -22,8 +22,8 @@ import { HlmSpinnerComponent } from '@spartan-ng/ui-spinner-helm';
 import { AddressStore } from './addresses.store';
 
 // Models
-import { UserInfo } from '@shared/models/auth';
-import { Address } from '@shared/models/address';
+import { UserInfo } from 'src/shared/models/auth';
+import { Address } from 'src/shared/models/address';
 
 // Icon
 import { provideIcons } from '@ng-icons/core';

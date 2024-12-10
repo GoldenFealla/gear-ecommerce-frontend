@@ -10,12 +10,12 @@ import {
 } from '@angular/common/http';
 
 // Interceptor
-import { logInterceptor } from '@interceptors/log.interceptor';
-import { credentialInterceptor } from '@interceptors/credential.interceptor';
+import { logInterceptor } from 'src/shared/interceptors/log.interceptor';
+import { credentialInterceptor } from 'src/shared/interceptors/credential.interceptor';
 import { provideStore } from '@ngrx/store';
 
 // Reducers
-import { AuthReducer } from './store/auth/auth.reducer';
+import { AuthReducer } from '../store/auth/auth.reducer';
 
 export const appConfig: ApplicationConfig = {
     providers: [

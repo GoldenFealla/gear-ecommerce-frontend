@@ -31,20 +31,20 @@ import {
     GearTypeList,
     GearTypeMapper,
     UpdateGearForm,
-} from '@shared/models/gear';
+} from 'src/shared/models/gear';
 
 // Shared Component
-import { ImageCropperDialogComponent } from '@shared/components/image-cropper-dialog/image-cropper-dialog.component';
-import { TextFormFieldComponent } from '@shared/components/text-form-field/text-form-field.component';
-import { NumberFormFieldComponent } from '@shared/components/number-form-field/number-form-field.component';
+import { ImageCropperDialogComponent } from 'src/shared/components/image-cropper-dialog/image-cropper-dialog.component';
+import { TextFormFieldComponent } from 'src/shared/components/text-form-field/text-form-field.component';
+import { NumberFormFieldComponent } from 'src/shared/components/number-form-field/number-form-field.component';
 import {
     SelectFormFieldComponent,
     SelectType,
-} from '@shared/components/select-form-field/select-form-field.component';
+} from 'src/shared/components/select-form-field/select-form-field.component';
 
 // Component Store
 import { UpdateGearStore } from './update-gear.store';
-import { ImageFormFieldComponent } from '@shared/components/image-form-field/image-form-field.component';
+import { ImageFormFieldComponent } from 'src/shared/components/image-form-field/image-form-field.component';
 
 @Component({
     selector: 'admin-update-gear',
