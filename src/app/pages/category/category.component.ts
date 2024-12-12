@@ -120,7 +120,7 @@ export class CategoryComponent implements OnInit {
     routeSelect(select: BrnSelectComponent, key: ListGearFilterKey) {
         const params: Params = {};
 
-        select.registerOnChange((value: string) => {
+        select.registerOnChange((value) => {
             params[key] = value === '' ? null : value;
 
             this._router.navigate([], {

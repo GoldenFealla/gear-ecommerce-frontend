@@ -80,7 +80,9 @@ export class UpdateAddressDialogComponent {
         country: new FormControl('', [Validators.required]),
     });
 
-    @ViewChild('countrySelect') countrySelect: BrnSelectComponent | undefined;
+    @ViewChild('countrySelect') countrySelect:
+        | BrnSelectComponent<string>
+        | undefined;
 
     ngOnInit() {
         const { address, country } = this._dialogContext.address;
@@ -96,7 +98,7 @@ export class UpdateAddressDialogComponent {
 
     ngAfterViewInit() {
         if (this.countrySelect) {
-            this.countrySelect.registerOnChange((country: string) => {
+            this.countrySelect.registerOnChange((country) => {
                 this.updateAddressForm.patchValue({
                     country,
                 });

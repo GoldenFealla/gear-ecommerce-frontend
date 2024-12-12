@@ -2,12 +2,15 @@ import { CommonModule } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     Component,
+    computed,
+    inject,
     input,
     type OnInit,
 } from '@angular/core';
 
 // Model
 import { Gear } from 'src/shared/models/gear';
+import { OrderGear } from '@shared/models/cart';
 
 // Spartan
 import {
@@ -24,11 +27,19 @@ import {
 
 // Icons
 import { provideIcons } from '@ng-icons/core';
-import { bootstrapCartPlus, bootstrapCopy } from '@ng-icons/bootstrap-icons';
+import {
+    bootstrapCartPlus,
+    bootstrapCartCheck,
+    bootstrapCartDash,
+    bootstrapCopy,
+} from '@ng-icons/bootstrap-icons';
 
 // Toast
 import { toast } from 'ngx-sonner';
 import { DiscountPercentPipe } from './discount-percent.pipe';
+
+// Component Store
+import { GearCardStore } from './gear-card.store';
 
 @Component({
     selector: 'gear-card',
@@ -51,16 +62,43 @@ import { DiscountPercentPipe } from './discount-percent.pipe';
     ],
     templateUrl: './gear-card.component.html',
     styleUrl: './gear-card.component.scss',
-    providers: [provideIcons({ bootstrapCartPlus, bootstrapCopy })],
+    providers: [
+        GearCardStore,
+        provideIcons({
+            bootstrapCartPlus,
+            bootstrapCartCheck,
+            bootstrapCartDash,
+            bootstrapCopy,
+        }),
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GearCardComponent implements OnInit {
+    private readonly _gearCartStore = inject(GearCardStore);
+
     gear = input.required<Gear>();
+    orderGears = input<OrderGear[]>([]);
+
+    isAdded = computed(() => {
+        if (!this.orderGears()) return;
+
+        return this.orderGears().some((orderGear) => {
+            return orderGear.gear.id === this.gear().id;
+        });
+    });
 
     ngOnInit(): void {}
 
     handleOnCopyGearID(id: string) {
         navigator.clipboard.writeText(id);
         toast('✓ Copied Gear ID');
+    }
+
+    handleOnAddToCart(id: string) {
+        this._gearCartStore.addToCart(id);
+    }
+
+    handleOnRemoveFromCart(id: string) {
+        this._gearCartStore.removeFromCart(id);
     }
 }

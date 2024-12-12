@@ -81,7 +81,7 @@
 
                 @if (cart) {
                     @for (gear of cart.order_gear; track $index) {
-                        <div class="w-full border-b border-gray-800 my-4"></div>
+                        <div class="w-full border-b border-border my-4"></div>
                         <div class="h-24 flex flex-row items-center">
                             <div class="h-24 w-24 p-2">
                                 <div class="h-full w-full">
@@ -94,6 +94,10 @@
                             </div>
                         </div>
                     }
+
+                    <button hlmBtn class="w-full mt-5 text-center" size="sm">
+                        Go to Payment
+                    </button>
                 }
             </div>
         </div>

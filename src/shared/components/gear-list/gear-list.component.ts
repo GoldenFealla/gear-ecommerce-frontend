@@ -25,6 +25,10 @@ import {
     HlmPaginationLinkDirective,
 } from '@spartan-ng/ui-pagination-helm';
 
+// Store
+import { Store } from '@ngrx/store';
+import { CartState } from '@store/cart/cart.state';
+
 @Component({
     selector: 'gear-list',
     standalone: true,
@@ -45,8 +49,13 @@ import {
 })
 export class GearListComponent {
     private readonly _gearStore = inject(GearStore);
+    private readonly _store = inject(Store<{ cart: CartState }>);
 
     vm$ = this._gearStore.vm$;
+    cart$ = this._store.select(
+        (state: { cart: CartState }) => state.cart.cart?.order_gear
+    );
+
     _filter: ListGearFilter | null = null;
 
     @Input() set filter(value: ListGearFilter) {

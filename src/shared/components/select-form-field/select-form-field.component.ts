@@ -55,18 +55,18 @@ export class SelectFormFieldComponent {
 
     list = input<SelectType[]>([]);
 
-    @ViewChild('select') select: BrnSelectComponent | undefined;
+    @ViewChild('select') select: BrnSelectComponent<string> | undefined;
 
     ngAfterViewInit() {
         const select = this.select;
         if (select) {
-            select.disabled = this.control().disabled;
+            select.setDisabledState(this.control().disabled);
 
             this.control().registerOnChange(() => {
                 select.writeValue(this.control().value);
             });
 
-            select.registerOnChange((value: string) => {
+            select.registerOnChange((value) => {
                 this.control().setValue(value);
                 this.control().markAsTouched();
                 this.control().markAsDirty();
@@ -78,7 +78,7 @@ export class SelectFormFieldComponent {
             });
 
             this.control().registerOnDisabledChange((isDisabled: boolean) => {
-                select.disabled = isDisabled;
+                select.setDisabledState(this.control().disabled);
             });
         }
     }

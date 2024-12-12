@@ -22,4 +22,30 @@ export class OrderService {
         const url = new URL('/order/cart', api).href;
         return this._httpClient.get<Response<FullOrder>>(url);
     }
+
+    addToCart(id: string) {
+        const url = new URL('/order/add-to-cart', api).href;
+        return this._httpClient.put<Response<FullOrder>>(
+            url,
+            {},
+            {
+                params: {
+                    gear_id: id,
+                },
+            }
+        );
+    }
+
+    removeFromCart(id: string) {
+        const url = new URL('/order/remove-from-cart', api).href;
+        return this._httpClient.put<Response<FullOrder>>(
+            url,
+            {},
+            {
+                params: {
+                    gear_id: id,
+                },
+            }
+        );
+    }
 }

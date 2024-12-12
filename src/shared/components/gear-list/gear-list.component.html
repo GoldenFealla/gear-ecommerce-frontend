@@ -1,4 +1,5 @@
 @let vm = (vm$ | async)!;
+@let orderGears = (cart$ | async)!;
 
 @if (vm.loading) {
     <ng-container [ngTemplateOutlet]="loading"></ng-container>
@@ -13,7 +14,7 @@
     >
         @for (gear of vm.gears; track gear.id) {
             <div class="h-full max-w-[15.25rem]">    
-                <gear-card [gear]="gear"></gear-card>
+                <gear-card [gear]="gear" [orderGears]="orderGears"></gear-card>
             </div>
         }
     </div>
