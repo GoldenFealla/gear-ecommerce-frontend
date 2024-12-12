@@ -1,0 +1,41 @@
+@let gears = orderGears();
+
+<div hlmPopoverContent class="w-80 grid gap-4" *brnPopoverContent="let ctx">
+    <div class="space-y-2">
+        <h4 class="font-medium leading-none">Cart</h4>
+        <p class="text-sm text-muted-foreground">Gears will be bought</p>
+    </div>
+    <div>
+        @let isEmpty = !gears  || gears.length === 0;        
+
+        @if(isEmpty) {
+            <div class="w-full text-center">
+                No items. Add one!
+            </div>
+        }
+
+        @if (!isEmpty) {
+            @for (gear of gears; track $index) {
+                <div class="grid grid-cols-10">
+                    <div class="col-span-2">
+                        <div class="h-full w-full">
+                            <img class="aspect-square" [src]="gear.gear.image_url" />
+                        </div>
+                    </div>
+                    <div class="col-span-8 ml-5 flex flex-col justify-evenly">
+                        <span class="text-xs sm:text-sm font-semibold leading-4 line-clamp-2 text-ellipsis">{{ gear.gear.name }}</span>
+                        <span class="text-xs sm:text-sm">quantity {{ gear.quantity }}</span>
+                    </div>
+                </div>
+
+                @if(!$last) {
+                    <div class="w-full border-b border-border my-4"></div>
+                }
+            }
+        }
+
+        <button hlmBtn class="w-full mt-10 text-center" size="sm" [disabled]="isEmpty">
+            Go to Payment
+        </button>
+    </div>
+</div>

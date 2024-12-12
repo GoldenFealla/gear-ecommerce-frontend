@@ -7,25 +7,27 @@
         </a>
     </span>
     <span class="flex flex-row items-center">
-        <span>
-            <button hlmBtn size="icon" variant='ghost' (click)="toggleTheme()">
-                @if((theme$ | async) === "light") {
-                    <hlm-icon 
-                        class="drop-shadow-[0_0_2px_hsl(55,95%,57%)]"
-                        size="sm" 
-                        name="lucideSun"
-                    ></hlm-icon>
-                } @else { 
-                    <hlm-icon 
-                        class="drop-shadow-[0_0_2px_hsl(207,75%,95%)]"
-                        size="sm" 
-                        name="lucideMoon"
-                    ></hlm-icon>
-                }
-            </button>
-        </span>
-        <span>
-            <ng-container [ngTemplateOutlet]="cart"></ng-container>
+        <span class="mr-0 sm:mr-5">
+            <span>
+                <button hlmBtn size="icon" variant='ghost' (click)="toggleTheme()">
+                    @if((theme$ | async) === "light") {
+                        <hlm-icon 
+                            class="drop-shadow-[0_0_2px_hsl(55,95%,57%)]"
+                            size="sm" 
+                            name="lucideSun"
+                        ></hlm-icon>
+                    } @else { 
+                        <hlm-icon 
+                            class="drop-shadow-[0_0_2px_hsl(207,75%,95%)]"
+                            size="sm" 
+                            name="lucideMoon"
+                        ></hlm-icon>
+                    }
+                </button>
+            </span>
+            <span>
+                <ng-container [ngTemplateOutlet]="cart"></ng-container>
+            </span>
         </span>
         <span>
             @if(userInfo) {
@@ -74,43 +76,15 @@
 </ng-template>
 
 <ng-template #cart>
+    @let orderGears = (cart$ | async)?.order_gear!;
+
     <brn-popover sideOffset="5" closeDelay="100" [align]="'end'">
         <button hlmBtn size="icon" variant='ghost' brnPopoverTrigger>
             <hlm-icon size="sm" name="lucideShoppingCart"></hlm-icon>
+            @if(orderGears) {
+                <div hlmBadge class="absolute px-1 py-0 translate-x-3 translate-y-[-8px]" variant='destructive' size="default"> {{ orderGears.length }} </div>
+            }
         </button>
-        <div hlmPopoverContent class="w-80 grid gap-4" *brnPopoverContent="let ctx">
-            <div class="space-y-2">
-                <h4 class="font-medium leading-none">Cart</h4>
-                <p class="text-sm text-muted-foreground">Gears will be bought</p>
-            </div>
-            <div>
-                @let cart = (cart$ | async);
-
-                @if(!cart) {
-                    No items
-                }
-
-                @if (cart) {
-                    @for (gear of cart.order_gear; track $index) {
-                        <div class="w-full border-b border-border my-4"></div>
-                        <div class="grid grid-cols-10">
-                            <div class="col-span-2">
-                                <div class="h-full w-full">
-                                    <img class="aspect-square" [src]="gear.gear.image_url" />
-                                </div>
-                            </div>
-                            <div class="col-span-8 ml-5 flex flex-col justify-evenly">
-                                <span class="text-xs sm:text-sm font-semibold leading-4 line-clamp-2 text-ellipsis">{{ gear.gear.name }}</span>
-                                <span class="text-xs sm:text-sm">quantity {{ gear.quantity }}</span>
-                            </div>
-                        </div>
-                    }
-
-                    <button hlmBtn class="w-full mt-5 text-center" size="sm">
-                        Go to Payment
-                    </button>
-                }
-            </div>
-        </div>
+        <cart-list [orderGears]="orderGears"></cart-list>
     </brn-popover>
 </ng-template>

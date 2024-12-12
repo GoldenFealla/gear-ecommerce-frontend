@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 
 // rxjs
-import { catchError, exhaustMap, map, of } from 'rxjs';
+import { catchError, switchMap, map, of } from 'rxjs';
 
 // Service
 import { OrderService } from '@shared/services/order.service';
@@ -18,7 +18,7 @@ export class CartEffects {
     getCart$ = createEffect(() =>
         this.actions$.pipe(
             ofType(CartActions.GetCart),
-            exhaustMap(() =>
+            switchMap(() =>
                 this.orderService.getCart().pipe(
                     map((res) =>
                         CartActions.GetCartSuccess({ cart: res.data })

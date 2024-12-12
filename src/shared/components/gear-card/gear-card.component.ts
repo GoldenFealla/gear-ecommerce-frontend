@@ -30,6 +30,7 @@ import { HlmSpinnerComponent } from '@spartan-ng/ui-spinner-helm';
 import { provideIcons } from '@ng-icons/core';
 import {
     bootstrapCartPlus,
+    bootstrapCartCheck,
     bootstrapCartDash,
     bootstrapCopy,
 } from '@ng-icons/bootstrap-icons';
@@ -56,8 +57,8 @@ import { GearCardStore } from './gear-card.store';
 
         HlmIconComponent,
 
-        HlmTooltipComponent,
         BrnTooltipContentDirective,
+        HlmTooltipComponent,
         HlmTooltipTriggerDirective,
 
         HlmSpinnerComponent,
@@ -68,6 +69,7 @@ import { GearCardStore } from './gear-card.store';
         GearCardStore,
         provideIcons({
             bootstrapCartPlus,
+            bootstrapCartCheck,
             bootstrapCartDash,
             bootstrapCopy,
         }),

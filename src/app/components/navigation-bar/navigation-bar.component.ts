@@ -25,10 +25,9 @@ import {
 } from '@spartan-ng/ui-menu-helm';
 import {
     BrnPopoverComponent,
-    BrnPopoverContentDirective,
     BrnPopoverTriggerDirective,
 } from '@spartan-ng/ui-popover-brain';
-import { HlmPopoverContentDirective } from '@spartan-ng/ui-popover-helm';
+import { HlmBadgeDirective } from '@spartan-ng/ui-badge-helm';
 
 // Icon
 import { provideIcons } from '@ng-icons/core';
@@ -59,6 +58,7 @@ import { ThemeService } from 'src/shared/services/theme.service';
 // Store
 import { AuthState } from 'src/store/auth/auth.state';
 import { CartState } from '@store/cart/cart.state';
+import { CartListComponent } from './cart-list/cart-list.component';
 
 @Component({
     selector: 'app-navigation-bar',
@@ -68,8 +68,8 @@ import { CartState } from '@store/cart/cart.state';
         RouterLink,
 
         HlmIconComponent,
-
         HlmButtonDirective,
+        HlmBadgeDirective,
 
         HlmAvatarComponent,
         HlmAvatarFallbackDirective,
@@ -85,8 +85,8 @@ import { CartState } from '@store/cart/cart.state';
 
         BrnPopoverComponent,
         BrnPopoverTriggerDirective,
-        BrnPopoverContentDirective,
-        HlmPopoverContentDirective,
+
+        CartListComponent,
     ],
     templateUrl: './navigation-bar.component.html',
     styleUrl: './navigation-bar.component.scss',
