@@ -82,14 +82,14 @@
                 @if (cart) {
                     @for (gear of cart.order_gear; track $index) {
                         <div class="w-full border-b border-border my-4"></div>
-                        <div class="h-24 flex flex-row items-center">
-                            <div class="h-24 w-24 p-2">
+                        <div class="grid grid-cols-10">
+                            <div class="col-span-2">
                                 <div class="h-full w-full">
                                     <img class="aspect-square" [src]="gear.gear.image_url" />
                                 </div>
                             </div>
-                            <div class="h-24 ml-5 flex flex-col justify-evenly">
-                                <span class="text-xs sm:text-sm font-semibold">{{ gear.gear.name }}</span>
+                            <div class="col-span-8 ml-5 flex flex-col justify-evenly">
+                                <span class="text-xs sm:text-sm font-semibold leading-4 line-clamp-2 text-ellipsis">{{ gear.gear.name }}</span>
                                 <span class="text-xs sm:text-sm">quantity {{ gear.quantity }}</span>
                             </div>
                         </div>
