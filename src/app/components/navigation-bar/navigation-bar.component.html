@@ -10,9 +10,17 @@
         <span>
             <button hlmBtn size="icon" variant='ghost' (click)="toggleTheme()">
                 @if((theme$ | async) === "light") {
-                    <hlm-icon size="sm" name="lucideSun"></hlm-icon>
+                    <hlm-icon 
+                        class="drop-shadow-[0_0_2px_hsl(55,95%,57%)]"
+                        size="sm" 
+                        name="lucideSun"
+                    ></hlm-icon>
                 } @else { 
-                    <hlm-icon size="sm" name="lucideMoon"></hlm-icon>
+                    <hlm-icon 
+                        class="drop-shadow-[0_0_2px_hsl(207,75%,95%)]"
+                        size="sm" 
+                        name="lucideMoon"
+                    ></hlm-icon>
                 }
             </button>
         </span>
@@ -30,7 +38,10 @@
 </div>
 
 <ng-template #avatar>
-    <button hlmBtn size="icon" variant='ghost' [brnMenuTriggerFor]="dropdown" class="rounded-full">
+    <button 
+        hlmBtn size="icon" variant='ghost' [brnMenuTriggerFor]="dropdown" 
+        class="rounded-full"
+    >
         <hlm-avatar class="p-1">
             <img alt="User logo" hlmAvatarImage />
             <span class="bg-[#FD005B] text-white text-xs" hlmAvatarFallback>U</span>
