@@ -56,8 +56,8 @@ import { GearCardStore } from './gear-card.store';
 
         HlmIconComponent,
 
-        BrnTooltipContentDirective,
         HlmTooltipComponent,
+        BrnTooltipContentDirective,
         HlmTooltipTriggerDirective,
 
         HlmSpinnerComponent,

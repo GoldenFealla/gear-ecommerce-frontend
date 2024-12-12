@@ -51,11 +51,13 @@
                     @if(!vm.process) {
                         @if (added) {
                             <hlm-tooltip>
+                                @let id = gear().id;
                                 <button 
                                     class="h-10 w-10 mr-1" 
                                     hlmBtn size="icon" 
                                     hlmTooltipTrigger variant="ghost"
-                                    (click)="handleOnRemoveFromCart(gear().id)"
+                                    (click)="handleOnRemoveFromCart(id)"
+                                    [aria-describedby]="'remove'+id"
                                 >
                                     <hlm-icon 
                                         size="sm" 
@@ -63,31 +65,39 @@
                                         class="text-[hsl(var(--destructive))]"
                                     ></hlm-icon>
                                 </button>
-                                <span *brnTooltipContent>Remove Gear from Cart</span>
+                                <span *brnTooltipContent [id]="'remove'+id">Remove Gear from Cart</span>
                             </hlm-tooltip>
                         }
                         @if (!added) {
                             <hlm-tooltip>
+                                @let id = gear().id;
                                 <button 
                                     class="h-10 w-10 mr-1" 
                                     hlmBtn size="icon" 
                                     hlmTooltipTrigger variant="ghost"
-                                    (click)="handleOnAddToCart(gear().id)"
+                                    (click)="handleOnAddToCart(id)"
+                                    [aria-describedby]="'add'+id"
                                 >
                                     <hlm-icon size="sm" name="bootstrapCartPlus" class="text-[hsl(var(--primary))]"></hlm-icon>
                                 </button>
-                                <span *brnTooltipContent>Add Gear to Cart</span>
+                                <span *brnTooltipContent [id]="'add'+id">Add Gear to Cart</span>
                             </hlm-tooltip>
                         }
                     }
 
                     
                     <hlm-tooltip>
-                        <button class="h-10 w-10" hlmBtn size="icon" hlmTooltipTrigger variant="ghost"
-                            (click)="handleOnCopyGearID(gear().id)">
+                        @let id = gear().id;
+                        <button 
+                            class="h-10 w-10" 
+                            hlmBtn size="icon" 
+                            hlmTooltipTrigger variant="ghost"
+                            (click)="handleOnCopyGearID(id)"
+                            [aria-describedby]="'copy'+id"
+                            >
                             <hlm-icon size="sm" name="bootstrapCopy" class="text-[hsl(var(--muted-foreground))]"></hlm-icon>
                         </button>
-                        <span *brnTooltipContent>Copy Gear ID</span>
+                        <span *brnTooltipContent [id]="'copy'+id">Copy Gear ID</span>
                     </hlm-tooltip>
                 </div>
             </div>
