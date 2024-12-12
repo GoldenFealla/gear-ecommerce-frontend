@@ -12,6 +12,7 @@ import { OrderService } from 'src/shared/services/order.service';
 // Store
 import { Store } from '@ngrx/store';
 import { CartActions } from '@store/cart/cart.actions';
+import { toast } from 'ngx-sonner';
 
 export interface GearCardState {
     process: boolean;
@@ -65,9 +66,11 @@ export class GearCardStore extends ComponentStore<GearCardState> {
                         next: () => {
                             this.setProcessCartSuccess();
                             this.store.dispatch(CartActions.GetCart());
+                            toast('✓ Added to cart');
                         },
                         error: (error: HttpErrorResponse) => {
                             this.setProcessCartError(error.error.message);
+                            toast('Error while adding to cart');
                         },
                     })
                 )
@@ -84,9 +87,11 @@ export class GearCardStore extends ComponentStore<GearCardState> {
                         next: () => {
                             this.setProcessCartSuccess();
                             this.store.dispatch(CartActions.GetCart());
+                            toast('✓ Removed from cart');
                         },
                         error: (error: HttpErrorResponse) => {
                             this.setProcessCartError(error.error.message);
+                            toast('Error while removing from cart');
                         },
                     })
                 )

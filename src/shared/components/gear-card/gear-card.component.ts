@@ -24,12 +24,12 @@ import {
     HlmTooltipComponent,
     HlmTooltipTriggerDirective,
 } from '@spartan-ng/ui-tooltip-helm';
+import { HlmSpinnerComponent } from '@spartan-ng/ui-spinner-helm';
 
 // Icons
 import { provideIcons } from '@ng-icons/core';
 import {
     bootstrapCartPlus,
-    bootstrapCartCheck,
     bootstrapCartDash,
     bootstrapCopy,
 } from '@ng-icons/bootstrap-icons';
@@ -59,6 +59,8 @@ import { GearCardStore } from './gear-card.store';
         BrnTooltipContentDirective,
         HlmTooltipComponent,
         HlmTooltipTriggerDirective,
+
+        HlmSpinnerComponent,
     ],
     templateUrl: './gear-card.component.html',
     styleUrl: './gear-card.component.scss',
@@ -66,7 +68,6 @@ import { GearCardStore } from './gear-card.store';
         GearCardStore,
         provideIcons({
             bootstrapCartPlus,
-            bootstrapCartCheck,
             bootstrapCartDash,
             bootstrapCopy,
         }),
@@ -78,6 +79,7 @@ export class GearCardComponent implements OnInit {
 
     gear = input.required<Gear>();
     orderGears = input<OrderGear[]>([]);
+    vm$ = this._gearCartStore.vm$;
 
     isAdded = computed(() => {
         if (!this.orderGears()) return;
