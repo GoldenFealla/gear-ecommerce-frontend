@@ -1,0 +1,103 @@
+@let fullOrder = (fullOrder$ | async)!;
+@let gears = (fullOrder$ | async)?.order_gear!;
+@let processing = (processing$ | async)!;
+
+@if (processing) {
+    <ng-container [ngTemplateOutlet]="loading"></ng-container>
+}
+
+@if (!processing) {
+    <section hlmCard class="max-w-md mx-auto">
+        <div hlmCardHeader>
+          <h3 hlmCardTitle>Payment</h3>
+          <p hlmCardDescription>Cart id: {{ fullOrder.order.id }}</p>
+        </div>
+        <div hlmCardContent>
+            <ng-container [ngTemplateOutlet]="list"></ng-container>
+            <div class="mt-5 text-base font-bold ">
+                Total to pay: 
+                <span class="text-[hsl(var(--primary))]">
+                    {{ gears | TotalPrice | currency:"VND"  }}
+                </span>
+            </div>
+        </div>
+        <div hlmCardFooter>
+            <button hlmBtn class="w-full">Pay</button>
+        </div>
+    </section>
+}
+
+<ng-template #list>
+    <div>
+        @let isEmpty = !gears  || gears.length === 0;        
+
+        @if(isEmpty) {
+            <div class="w-full text-center">
+                No items. You will be redirected to home in 5(s)
+            </div>
+        }
+
+        @if (!isEmpty) {
+            @for (gear of gears; track $index) {
+                <div class="grid grid-cols-12 sm:grid-cols-10">
+                    <div class="col-span-3 sm:col-span-2">
+                        <div class="h-full w-full">
+                            <img class="aspect-square" [src]="gear.gear.image_url" />
+                        </div>
+                    </div>
+                    <div class="col-span-9 sm:col-span-8 ml-5 flex flex-col justify-evenly">
+                        <span class="text-xs sm:text-sm font-semibold leading-4 line-clamp-2 text-ellipsis">{{ gear.gear.name }}</span>
+                        <span class="text-xs sm:text-sm">price {{ gear.gear.discount|currency:"VND" }}</span>
+                        <span class="text-xs sm:text-sm"> {{ gear.gear.quantity }} left</span>
+                    </div>
+                </div>
+
+                
+                <div class="grid grid-cols-12 sm:grid-cols-10 mt-5">
+                    <div class="col-span-3 sm:col-span-2">
+                        <span class="text-sm sm:text-base"> Quantity: </span>
+                    </div>
+                    <div class="col-span-9 sm:col-span-8 ml-5 flex flex-row items-center">
+                        <button 
+                            hlmBtn 
+                            variant="outline" 
+                            size="icon" 
+                            class="w-8 h-8"
+                            (click)="handleOnDecreaseQuantity(gear)"
+                            [disabled]="gear.quantity === 1"
+                        >-</button>
+                        <span class="text-sm sm:text-base mx-3">{{ gear.quantity }}</span>
+                        <button 
+                            hlmBtn 
+                            variant="outline" 
+                            size="icon" 
+                            class="w-8 h-8"
+                            (click)="handleOnIncreaseQuantity(gear)"
+                            [disabled]="gear.quantity === gear.gear.quantity"
+                        >+</button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-12 sm:grid-cols-10 mt-2">
+                    <div class="col-span-3 sm:col-span-2">
+                        <span class="text-sm sm:text-base"> Price: </span>
+                    </div>
+                    <div class="col-span-9 sm:col-span-8 ml-5 flex flex-col justify-evenly">
+                        <div class="text-sm sm:text-base font-semibold">
+                            {{ (gear.quantity * gear.gear.discount) | currency:"VND" }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full border-b border-border my-5"></div>
+            }
+        }
+    </div>
+</ng-template>
+
+<ng-template #loading>
+    <div class="w-full h-full flex flex-col justify-center items-center mt-5">
+        <hlm-spinner />
+        <p class="font-bold mt-2">LOADING</p>
+    </div>
+</ng-template>

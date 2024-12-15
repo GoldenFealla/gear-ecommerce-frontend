@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 
 // rxjs
-import { catchError, switchMap, map, of } from 'rxjs';
+import { catchError, switchMap, map, of, debounceTime } from 'rxjs';
 
 // Service
 import { OrderService } from '@shared/services/order.service';
@@ -25,6 +25,21 @@ export class CartEffects {
                     ),
                     catchError((error) =>
                         of(CartActions.GetCartError({ error }))
+                    )
+                )
+            )
+        )
+    );
+
+    setQuantity$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(CartActions.SetQuantity),
+            debounceTime(300),
+            switchMap(({ gear_id, quantity }) =>
+                this.orderService.setQuantity(gear_id, quantity).pipe(
+                    map(() => CartActions.SetQuantitySuccess()),
+                    catchError((error) =>
+                        of(CartActions.SetQuantityError({ error }))
                     )
                 )
             )

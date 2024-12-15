@@ -51,6 +51,11 @@ export const routes: Routes = [
             ),
     },
     {
+        path: 'pay',
+        loadComponent: () =>
+            import('@pages/pay/pay.component').then((c) => c.PayComponent),
+    },
+    {
         path: 'main',
         redirectTo: '',
         pathMatch: 'full',

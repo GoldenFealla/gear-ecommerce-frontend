@@ -76,15 +76,19 @@
 </ng-template>
 
 <ng-template #cart>
+    @let order = (cart$ | async)?.order!;
     @let orderGears = (cart$ | async)?.order_gear!;
 
-    <brn-popover sideOffset="5" closeDelay="100" [align]="'end'">
+    <brn-popover sideOffset="5" closeDelay="100" [align]="'end'" #popover>
         <button hlmBtn size="icon" variant='ghost' brnPopoverTrigger>
             <hlm-icon size="sm" name="lucideShoppingCart"></hlm-icon>
             @if(orderGears) {
                 <div hlmBadge class="absolute px-1 py-0 translate-x-3 translate-y-[-8px]" variant='destructive' size="default"> {{ orderGears.length }} </div>
             }
         </button>
-        <cart-list [orderGears]="orderGears"></cart-list>
+        <cart-list 
+            [orderGears]="orderGears"
+            (onPay)="goToPayment(order.id)"
+        ></cart-list>
     </brn-popover>
 </ng-template>

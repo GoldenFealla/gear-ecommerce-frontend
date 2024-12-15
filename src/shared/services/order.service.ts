@@ -23,6 +23,20 @@ export class OrderService {
         return this._httpClient.get<Response<FullOrder>>(url);
     }
 
+    setQuantity(gear_id: string, quantity: string | number) {
+        const url = new URL('/order/set-quantity', api).href;
+        return this._httpClient.put<Response<null>>(
+            url,
+            {},
+            {
+                params: {
+                    gear_id,
+                    quantity,
+                },
+            }
+        );
+    }
+
     addToCart(id: string) {
         const url = new URL('/order/add-to-cart', api).href;
         return this._httpClient.put<Response<FullOrder>>(

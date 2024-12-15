@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    EventEmitter,
+    input,
+    Output,
+} from '@angular/core';
 
 // Spartan
 import { BrnPopoverContentDirective } from '@spartan-ng/ui-popover-brain';
@@ -21,5 +27,11 @@ import { OrderGear } from '@shared/models/cart';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CartListComponent {
+    @Output() onPay = new EventEmitter<void>();
+
     orderGears = input.required<OrderGear[]>();
+
+    pay() {
+        this.onPay.emit();
+    }
 }

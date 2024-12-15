@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    inject,
+    ViewChild,
+} from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 
 // ngrx
@@ -119,6 +124,20 @@ export class NavigationBarComponent {
 
     toggleTheme(): void {
         this._themeService.toggleDarkMode();
+    }
+
+    @ViewChild('popover') popover: BrnPopoverComponent | undefined;
+
+    goToPayment(id: string) {
+        if (this.popover) {
+            this.popover.close(null);
+        }
+
+        this._router.navigate(['/', 'pay'], {
+            queryParams: {
+                id: id,
+            },
+        });
     }
 
     login() {

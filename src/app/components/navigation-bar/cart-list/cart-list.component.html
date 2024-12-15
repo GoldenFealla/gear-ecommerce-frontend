@@ -34,7 +34,13 @@
             }
         }
 
-        <button hlmBtn class="w-full mt-10 text-center" size="sm" [disabled]="isEmpty">
+        <button 
+            hlmBtn 
+            class="w-full mt-10 text-center" 
+            size="sm" 
+            [disabled]="isEmpty"
+            (click)="pay()"
+        >
             Go to Payment
         </button>
     </div>

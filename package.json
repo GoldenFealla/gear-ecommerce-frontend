@@ -62,6 +62,8 @@
     "embla-carousel-angular": "18.0.0",
     "express": "^4.18.2",
     "gear-manager-frontend": "file:",
+    "immer": "^10.1.1",
+    "ngrx-immer": "^3.0.0",
     "ngx-cookie": "^6.0.1",
     "ngx-cookie-service": "^18.0.0",
     "ngx-image-cropper": "^9.0.0",
