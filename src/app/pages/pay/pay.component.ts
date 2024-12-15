@@ -120,7 +120,11 @@ export class PayComponent {
         this._payStore.payToCart({
             id,
             success: () => {
-                this._router.navigate(['/']);
+                this._router.navigate(['/order'], {
+                    queryParams: {
+                        id,
+                    },
+                });
             },
         });
     }
