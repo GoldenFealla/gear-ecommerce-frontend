@@ -57,47 +57,57 @@ export class GearCardStore extends ComponentStore<GearCardState> {
     message$ = this.select((state) => state.message);
 
     // *********** Effects ************* //
-    addToCart = this.effect<string>((trigger$) => {
-        return trigger$.pipe(
-            tap(() => this.setProcessCart()),
-            exhaustMap((id) =>
-                this.orderService.addToCart(id).pipe(
-                    tapResponse({
-                        next: () => {
-                            this.setProcessCartSuccess();
-                            this.store.dispatch(CartActions.GetCart());
-                            toast('✓ Added to cart');
-                        },
-                        error: (error: HttpErrorResponse) => {
-                            this.setProcessCartError(error.error.message);
-                            toast('Error while adding to cart');
-                        },
-                    })
+    addToCart = this.effect<{ id: string; success?: () => void }>(
+        (trigger$) => {
+            return trigger$.pipe(
+                tap(() => this.setProcessCart()),
+                exhaustMap(({ id, success }) =>
+                    this.orderService.addToCart(id).pipe(
+                        tapResponse({
+                            next: () => {
+                                this.setProcessCartSuccess();
+                                this.store.dispatch(CartActions.GetCart());
+                                toast('✓ Added to cart');
+                                if (success) {
+                                    success();
+                                }
+                            },
+                            error: (error: HttpErrorResponse) => {
+                                this.setProcessCartError(error.error.message);
+                                toast('Error while adding to cart');
+                            },
+                        })
+                    )
                 )
-            )
-        );
-    });
+            );
+        }
+    );
 
-    removeFromCart = this.effect<string>((trigger$) => {
-        return trigger$.pipe(
-            tap(() => this.setProcessCart()),
-            exhaustMap((id) =>
-                this.orderService.removeFromCart(id).pipe(
-                    tapResponse({
-                        next: () => {
-                            this.setProcessCartSuccess();
-                            this.store.dispatch(CartActions.GetCart());
-                            toast('✓ Removed from cart');
-                        },
-                        error: (error: HttpErrorResponse) => {
-                            this.setProcessCartError(error.error.message);
-                            toast('Error while removing from cart');
-                        },
-                    })
+    removeFromCart = this.effect<{ id: string; success?: () => void }>(
+        (trigger$) => {
+            return trigger$.pipe(
+                tap(() => this.setProcessCart()),
+                exhaustMap(({ id, success }) =>
+                    this.orderService.removeFromCart(id).pipe(
+                        tapResponse({
+                            next: () => {
+                                this.setProcessCartSuccess();
+                                this.store.dispatch(CartActions.GetCart());
+                                toast('✓ Removed from cart');
+                                if (success) {
+                                    success();
+                                }
+                            },
+                            error: (error: HttpErrorResponse) => {
+                                this.setProcessCartError(error.error.message);
+                                toast('Error while removing from cart');
+                            },
+                        })
+                    )
                 )
-            )
-        );
-    });
+            );
+        }
+    );
 
     // *********** ViewModel *********** //
     readonly vm$ = this.select(this.state$, (state) => ({

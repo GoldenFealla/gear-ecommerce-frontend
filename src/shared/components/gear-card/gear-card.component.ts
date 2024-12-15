@@ -91,6 +91,8 @@ export class GearCardComponent implements OnInit {
         });
     });
 
+    isActionSuccess: 'added' | 'removed' | null = null;
+
     ngOnInit(): void {}
 
     handleOnCopyGearID(id: string) {
@@ -99,10 +101,20 @@ export class GearCardComponent implements OnInit {
     }
 
     handleOnAddToCart(id: string) {
-        this._gearCartStore.addToCart(id);
+        this._gearCartStore.addToCart({
+            id,
+            success: () => {
+                this.isActionSuccess = 'added';
+            },
+        });
     }
 
     handleOnRemoveFromCart(id: string) {
-        this._gearCartStore.removeFromCart(id);
+        this._gearCartStore.removeFromCart({
+            id,
+            success: () => {
+                this.isActionSuccess = 'removed';
+            },
+        });
     }
 }
