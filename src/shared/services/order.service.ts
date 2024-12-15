@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 
 // Models
 import { Response } from 'src/shared/models/response';
-import { FullOrder } from '@shared/models/cart';
+import { FullOrder, Order } from '@shared/models/cart';
 
 // environment
 import { environment } from '@environments/environment.development';
@@ -21,6 +21,38 @@ export class OrderService {
     getCart() {
         const url = new URL('/order/cart', api).href;
         return this._httpClient.get<Response<FullOrder>>(url);
+    }
+
+    getOrder(id: string) {
+        const url = new URL('/order', api).href;
+        return this._httpClient.get<Response<FullOrder>>(url, {
+            params: {
+                id,
+            },
+        });
+    }
+
+    getOrderList(page: number = 1, limit: number = 10) {
+        const url = new URL('/order/list', api).href;
+        return this._httpClient.get<Response<Order[]>>(url, {
+            params: {
+                page,
+                limit,
+            },
+        });
+    }
+
+    payCart(id: string) {
+        const url = new URL('/order/pay', api).href;
+        return this._httpClient.put<Response<null>>(
+            url,
+            {},
+            {
+                params: {
+                    id,
+                },
+            }
+        );
     }
 
     setQuantity(gear_id: string, quantity: string | number) {

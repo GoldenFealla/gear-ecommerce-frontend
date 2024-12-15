@@ -11,7 +11,7 @@ import { BrnMenuTriggerDirective } from '@spartan-ng/ui-menu-brain';
 import { CategoryListComponent } from './components/category-list/category-list.component';
 import { InformationComponent } from './components/information/information.component';
 import { AddressesComponent } from './components/addresses/addresses.component';
-import { BillsComponent } from './components/bills/bills.component';
+import { OrdersComponent } from './components/orders/orders.component';
 
 // Store
 import { Store } from '@ngrx/store';
@@ -22,7 +22,7 @@ import { provideIcons } from '@ng-icons/core';
 import { bootstrapList, bootstrapPlus } from '@ng-icons/bootstrap-icons';
 import { CategoryListMobileComponent } from './components/category-list-mobile/category-list-mobile.component';
 
-export type AccountCategoryType = 'information' | 'addresses' | 'bills';
+export type AccountCategoryType = 'information' | 'addresses' | 'orders';
 export type AccountCategory = {
     title: string;
     icon: string;
@@ -47,7 +47,7 @@ export type AccountCategory = {
         CategoryListMobileComponent,
         InformationComponent,
         AddressesComponent,
-        BillsComponent,
+        OrdersComponent,
     ],
     templateUrl: './account.component.html',
     styleUrl: './account.component.scss',
@@ -73,9 +73,9 @@ export class AccountComponent {
             to: 'addresses',
         },
         {
-            title: 'Your Bill',
+            title: 'Your Orders',
             icon: 'bootstrapBag',
-            to: 'bills',
+            to: 'orders',
         },
     ];
 

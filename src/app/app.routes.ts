@@ -56,6 +56,13 @@ export const routes: Routes = [
             import('@pages/pay/pay.component').then((c) => c.PayComponent),
     },
     {
+        path: 'order',
+        loadComponent: () =>
+            import('@pages/order/order.component').then(
+                (c) => c.OrderComponent
+            ),
+    },
+    {
         path: 'main',
         redirectTo: '',
         pathMatch: 'full',

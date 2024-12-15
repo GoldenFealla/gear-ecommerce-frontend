@@ -27,6 +27,10 @@ import { TotalPricePipe } from '@shared/pipe/total-price.pipe';
 // Models
 import { OrderGear } from '@shared/models/cart';
 
+// Component Store
+import { PayStore } from './pay.store';
+import { finalize, interval, last, map, Observable, take } from 'rxjs';
+
 @Component({
     selector: 'app-pay',
     standalone: true,
@@ -47,17 +51,22 @@ import { OrderGear } from '@shared/models/cart';
     ],
     templateUrl: './pay.component.html',
     styleUrl: './pay.component.scss',
+    providers: [PayStore],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PayComponent {
     private readonly _route = inject(ActivatedRoute);
     private readonly _router = inject(Router);
+    private readonly _payStore = inject(PayStore);
     private readonly _store = inject<Store<{ cart: CartState }>>(
         Store<{ cart: CartState }>
     );
 
     fullOrder$ = this._store.select((state) => state.cart.cart);
     processing$ = this._store.select((state) => state.cart.processing);
+    vm$ = this._payStore.vm$;
+
+    number$: Observable<number> | undefined;
 
     ngOnInit() {
         const id = this._route.snapshot.queryParams['id'];
@@ -69,6 +78,18 @@ export class PayComponent {
         if (id) {
             this._store.dispatch(CartActions.GetCart());
         }
+
+        this.fullOrder$.subscribe((f) => {
+            if (!f || !f.order_gear || f.order_gear.length === 0) {
+                this.number$ = interval(1000).pipe(
+                    take(6),
+                    map((v) => 5 - v),
+                    finalize(() => {
+                        this._router.navigate(['/']);
+                    })
+                );
+            }
+        });
     }
 
     handleOnIncreaseQuantity(gear: OrderGear) {
@@ -93,5 +114,18 @@ export class PayComponent {
                 quantity: gear.quantity - 1,
             })
         );
+    }
+
+    handleOnPay(id: string) {
+        this._payStore.payToCart({
+            id,
+            success: () => {
+                this._router.navigate(['/']);
+            },
+        });
+    }
+
+    handleOnBackHome() {
+        this._router.navigate(['/']);
     }
 }

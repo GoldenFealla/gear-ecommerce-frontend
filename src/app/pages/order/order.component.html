@@ -1,0 +1,71 @@
+@let vm = (vm$ | async)!;
+
+@if (vm.process) {
+    <ng-container [ngTemplateOutlet]="loading"></ng-container>
+}
+
+@if (!vm.process) {
+    <section hlmCard class="max-w-md mx-auto">
+        <div hlmCardHeader>
+          <h3 hlmCardTitle>Order detail</h3>
+          <p hlmCardDescription>id: {{ vm.order?.order?.id }}</p>
+        </div>
+        <div hlmCardContent>
+            <ng-container [ngTemplateOutlet]="list"></ng-container>
+        </div>
+    </section>
+}
+
+<ng-template #list>
+    <div>
+        @for (gear of vm.order?.order_gear; track $index) {
+            <div class="grid grid-cols-12 sm:grid-cols-10">
+                <div class="col-span-2 sm:col-span-2">
+                    <div class="h-full w-full">
+                        <img class="aspect-square" [src]="gear.gear.image_url" />
+                    </div>
+                </div>
+                <div class="col-span-10 sm:col-span-8 ml-5 flex flex-col justify-evenly">
+                    <span class="text-xs sm:text-sm font-semibold leading-4 line-clamp-2 text-ellipsis">{{ gear.gear.name }}</span>
+                </div>
+            </div>
+
+            
+            <div class="grid grid-cols-12 sm:grid-cols-10 mt-5">
+                <div class="col-span-3 sm:col-span-2">
+                    <span class="text-sm sm:text-base"> Quantity: </span>
+                </div>
+                <div class="col-span-9 sm:col-span-8 ml-5 flex flex-row items-center">
+                    <span class="text-sm sm:text-base mx-3">{{ gear.quantity }}</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-12 sm:grid-cols-10 mt-2">
+                <div class="col-span-3 sm:col-span-2">
+                    <span class="text-sm sm:text-base"> Price: </span>
+                </div>
+                <div class="col-span-9 sm:col-span-8 ml-5 flex flex-col justify-evenly">
+                    <div class="text-sm sm:text-base font-semibold">
+                        {{ (gear.quantity * gear.gear.discount) | currency:"VND" }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full border-b border-border my-5"></div>
+        }
+
+        <div class="mt-5 text-base font-bold ">
+            Total: 
+            <span class="text-[hsl(var(--primary))]">
+                {{ vm.order?.order?.total | currency:"VND"  }}
+            </span>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #loading>
+    <div class="w-full h-full flex flex-col justify-center items-center mt-5">
+        <hlm-spinner />
+        <p class="font-bold mt-2">LOADING</p>
+    </div>
+</ng-template>
