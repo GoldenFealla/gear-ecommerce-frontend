@@ -54,8 +54,6 @@ export class OrdersComponent {
     private readonly _ordersStore = inject(OrdersStore);
     private readonly _router = inject(Router);
 
-    userInfo = input.required<UserInfo>();
-
     vm$ = this._ordersStore.vm$;
 
     ngOnInit() {
